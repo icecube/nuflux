@@ -8,12 +8,9 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/shared_ptr.hpp>
 
-#ifdef ICETRAY
-	#include <dataclasses/physics/I3Particle.h>
-#else
-	#include <nuflux/logging.h>
-	#include <nuflux/particleType.h>
-#endif
+#include <nuflux/logging.h>
+#include <nuflux/particleType.h>
+
 
 namespace NewNuFlux{
 
@@ -37,19 +34,6 @@ namespace NewNuFlux{
 		  return (getFlux( type, energy, cosZenith));
 		}
 
-
-#ifdef ICETRAY
-		// Computes the expected flux for neutrinos whose properties are those given by particle
-		virtual double getFlux(const I3Particle& particle) const{
-		  return(getFlux(particle.GetType(),
-				 particle.GetEnergy()/I3Units::GeV,
-				 particle.GetAzimuth()/I3Units::radian,
-				 cos(particle.GetZenith()/I3Units::radian)));
-		}
-		
-	protected:
-		SET_LOGGER("NewNuFlux");
-#endif
 	protected:
 		std::string name;
 	};

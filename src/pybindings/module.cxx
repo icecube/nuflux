@@ -1,11 +1,6 @@
-
-#ifdef ICETRAY
-#include <icetray/load_project.h>
-#else
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/python.hpp>
 #include <boost/python/to_python_converter.hpp>
-#endif
 #include <nuflux/NewNuFlux.h>
 
 namespace bp = boost::python;
@@ -68,13 +63,7 @@ getFlux(const NewNuFlux::FluxFunction &self, bp::object ptype_obj, bp::object en
 }
 #endif
 
-bool isStandAlone=
-#ifdef ICETRAY
-	false
-#else
-	true
-#endif
-;
+bool isStandAlone=true;
 
 void
 register_FluxFunction()
@@ -99,9 +88,6 @@ register_FluxFunction()
 	     ":param cos_zen: cosine of the zenith angle in radians\n\n"
 	     ":returns: a differential flux in units of 1/GeV cm^2 sr s",
 	     (bp::args("particle_type"), "energy", "cos_zen"))
-#ifdef ICETRAY
-	    .def("getFlux", (double (FluxFunction::*)(const I3Particle&) const)&FluxFunction::getFlux)
-#endif
 	    .add_property("name", &FluxFunction::getName)
 	;
 	
@@ -122,7 +108,7 @@ register_FluxFunction()
 	    bp::bases<FluxFunction, KneeReweightable> >("LegacyPromptFlux", bp::no_init)
 	;
 
-#ifndef ICETRAY
+
 	{
 		using namespace I3Particle;
 		#define ENUM_DEF(r,data,T) .value(BOOST_PP_STRINGIZE(T), data::T)
@@ -132,7 +118,7 @@ register_FluxFunction()
 		;
 		#undef ENUM_DEF
 	}
-#endif
+
 
 #ifndef NO_PHOTOSPLINE
 	bp::class_<SimpleSplineFlux, boost::shared_ptr<SimpleSplineFlux>,
@@ -156,10 +142,6 @@ namespace NewNuFlux{
 
 BOOST_PYTHON_MODULE(_NuFlux)
 {  
-#ifdef ICETRAY
-	load_project("NewNuFlux", false);
-#endif
-	
 #ifdef USE_NUMPY
 	import_array();
 #endif
