@@ -1,18 +1,18 @@
-from setuptools import setup, Extension , find_packages
+from setuptools import setup, Extension ,find_packages
 import numpy
 
 extension = Extension(
     'nuflux._NuFlux',
-    ['src/pybindings/module.cxx',
-     'src/library/particleType.cpp',
+    ['src/library/particleType.cpp',
      'src/library/logging.cpp',
-     'src/library/Fluxes/SplineFlux.cpp',
-     'src/library/Fluxes/LegacyPromptFlux.cpp',
-     'src/library/Fluxes/LegacyConventionalFlux.cpp',
-     'src/library/Fluxes/ANFlux.cpp',
-     'src/library/Fluxes/LEFlux.cpp',
-     'src/library/Fluxes/IPLEFlux.cpp',
+     'src/library/SplineFlux.cpp',
+     'src/library/LegacyPromptFlux.cpp',
+     'src/library/LegacyConventionalFlux.cpp',
+     'src/library/ANFlux.cpp',
+     'src/library/LEFlux.cpp',
+     'src/library/IPLEFlux.cpp',
      'src/library/FluxFunction.cpp',
+     'src/pybindings/module.cxx',
     ],
     include_dirs=['src/include',numpy.get_include()],
     libraries=['hdf5','boost_python27','photospline'],
@@ -25,7 +25,6 @@ setup(
     package_data={"nuflux":["data/*/*.fits",'data/*/*.dat']},
     packages=find_packages(),
     ext_modules=[extension],
-
     zip_safe=False
     )
     
