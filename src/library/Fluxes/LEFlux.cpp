@@ -7,13 +7,11 @@ namespace NewNuFlux {
 
   LEFlux::LEFlux(const std::string& fluxName) : FluxFunction(fluxName)
   {
-    std::string base = detail::getDataDir() + fluxName;
+    fluxes_[I3Particle::NuMu]    = boost::make_shared<Evaluator>(detail::getDataPath(fluxName+"_numu.fits"));
+    fluxes_[I3Particle::NuMuBar] = boost::make_shared<Evaluator>(detail::getDataPath(fluxName+"_numubar.fits"));
 
-    fluxes_[I3Particle::NuMu]    = boost::make_shared<Evaluator>(base+"_numu.fits");
-    fluxes_[I3Particle::NuMuBar] = boost::make_shared<Evaluator>(base+"_numubar.fits");
-
-    fluxes_[I3Particle::NuE]    = boost::make_shared<Evaluator>(base+"_nue.fits");
-    fluxes_[I3Particle::NuEBar] = boost::make_shared<Evaluator>(base+"_nuebar.fits");
+    fluxes_[I3Particle::NuE]    = boost::make_shared<Evaluator>(detail::getDataPath(fluxName+"_nue.fits"));
+    fluxes_[I3Particle::NuEBar] = boost::make_shared<Evaluator>(detail::getDataPath(fluxName+"_nuebar.fits"));
   }
 
   boost::shared_ptr<FluxFunction>

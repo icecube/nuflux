@@ -88,7 +88,6 @@ register_FluxFunction()
 	bp::def("availableFluxes", &availableFluxes, "Get a list of valid flux model names");
 	bp::def("kneesForFlux", &kneesForFlux, "Get a list of valid knee-reweighting scheme names for the given model");
 	bp::def("printModels", &printModels, "Print a list of models to stdout");
-	bp::def("getDataDir", &detail::getDataDir);
 	
 	bp::class_<FluxFunction, boost::shared_ptr<FluxFunction>, boost::noncopyable>("FluxFunction", bp::no_init)
 	    .def("getFlux",

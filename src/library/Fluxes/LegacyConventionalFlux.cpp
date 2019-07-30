@@ -23,7 +23,6 @@ namespace NewNuFlux{
 	FluxFunction(fluxName),
 	KneeReweightable("none"),
 	PionKaonAdjustable(1.0,1.0){
-          //std::string dir=detail::getDataDir();
 		components[I3Particle::NuMu]=readConvComponent(fluxName+"_numu.dat");
 		components[I3Particle::NuMuBar]=readConvComponent(fluxName+"_numubar.dat");
 		components[I3Particle::NuE]=readConvComponent(fluxName+"_nue.dat");
@@ -245,11 +244,7 @@ namespace NewNuFlux{
 			kneeCorrection=kneeSpline();
 			return;
 		}
-
-
-
-		//std::string correctionFilePath=detail::getDataDir()+"/"+name+"_"+reweightModel+".dat";
-                std::string correctionFilePath=detail::getDataDir()+"/"+name+"_"+reweightModel+".dat";
+                std::string correctionFilePath=detail::getDataPath(name+"_"+reweightModel+".dat");
 		std::ifstream infile(correctionFilePath.c_str());
 		if(!infile)
 			throw std::runtime_error("Unable to read "+correctionFilePath+"; are you sure that "

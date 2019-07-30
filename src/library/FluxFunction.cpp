@@ -42,33 +42,7 @@ namespace NewNuFlux{
 			kneeRegistry->insert(std::make_pair(baseModel,name));
 		}
 		
-#ifdef ICETRAY
-		std::string getDataDir(){
-			const char* workspacePtr = getenv("I3_SRC");
-			if(!workspacePtr)
-				log_fatal("getenv(\"I3_SRC\") Failed");		
-			std::string workspace(workspacePtr);
-			std::string dataDir = workspace + "/NewNuFlux/resources/data/";
-			return dataDir;
-		}
-#else
-		std::string getDataDir(){
-			const char* dataDirPtr = getenv("NEWNUFLUX_DATADIR");
-			// Set this if you do not wish to be tied to working within
-			// the neutrinoflux directory.
-			if(!dataDirPtr){
-#ifdef NEWNUFLUX_DATADIR
-				// if a path was baked into the library, use it
-				return NEWNUFLUX_DATADIR "/resources/data/";
-#else
-				// Otherwise assume you are already in neutrinoflux directory
-				return "resources/data/";
-#endif
-			}
-			
-			return dataDirPtr;
-		}
-#endif
+
 	}
 	
 	boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName){

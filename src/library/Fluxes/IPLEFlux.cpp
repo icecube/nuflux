@@ -27,12 +27,12 @@ FluxFunction(fluxName)
 IntegralPreservingFlux::~IntegralPreservingFlux(){}
 	
 void IntegralPreservingFlux::loadTables(const std::string& fluxName, particleType type){
-	std::string basename = detail::getDataDir() + fluxName;
 	const double enBinWidth=.05;
 	{
-		std::ifstream fluxFile3D((basename+"3D.dat").c_str());
+          std::string fname = detail::getDataPath(fluxName+"3D.dat");
+		std::ifstream fluxFile3D((fname).c_str());
 		if(!fluxFile3D)
-			log_fatal_stream("Failed to open " << basename << "3D.dat");
+			log_fatal_stream("Failed to open " << fname );
 		double energy, cosZenith, azimuth, fluxpe;
 		double lastAzimuth=-1;
 		std::map<std::pair<double,double>,dumbHistogram> p3DFluxMap;
@@ -56,9 +56,10 @@ void IntegralPreservingFlux::loadTables(const std::string& fluxName, particleTyp
 	}
 	
 	{
-		std::ifstream fluxFile2D((basename+"2D.dat").c_str());
+          std::string fname = detail::getDataPath(fluxName+"2D.dat");
+		std::ifstream fluxFile2D((fname).c_str());
 		if(!fluxFile2D)
-			log_fatal_stream("Failed to open " << basename << "2D.dat");
+			log_fatal_stream("Failed to open " << name );
 		double energy, cosZenith, fluxpe;
 		double lastCosZenith=-2;
 		std::map<double,dumbHistogram> p2DFluxMap;

@@ -76,7 +76,6 @@ namespace NewNuFlux{
 			}
 		};
 		std::string getDataPath(std::string fname);
-		std::string getDataDir();
 
 	} //namespace detail
 
