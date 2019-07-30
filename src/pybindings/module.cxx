@@ -158,29 +158,7 @@ namespace NewNuFlux{
 }
 
 BOOST_PYTHON_MODULE(_NuFlux)
-{
-
-
-  boost::python::object pkg_resources = boost::python::import("pkg_resources");
-
-  std::string asdf = boost::python::extract<std::string>(pkg_resources.attr("__repr__")()) ;
-  std::cout << asdf << std::endl;
-
-  //std::string file = boost::python::extract<std::string>(bp::scope().attr("__file__"));
-  //std::cout << file << std::endl;  
-
-
-  boost::python::object resource_string = pkg_resources.attr("resource_filename");
-  
-  std::string file = boost::python::extract<std::string>(resource_string("nuflux","data/honda2006_nue.dat"));
-  std::cout << file << std::endl;  
-  
-    
-  
-
-  
-  
-  
+{  
 #ifdef ICETRAY
 	load_project("NewNuFlux", false);
 #endif
