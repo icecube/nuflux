@@ -1,4 +1,5 @@
 from setuptools import setup, Extension , find_packages
+import numpy
 
 extension = Extension(
     'nuflux._NuFlux',
@@ -13,9 +14,9 @@ extension = Extension(
      'src/library/Fluxes/IPLEFlux.cpp',
      'src/library/FluxFunction.cpp',
     ],
-    include_dirs=['src/include'],
+    include_dirs=['src/include',numpy.get_include()],
     libraries=['hdf5','boost_python27','photospline'],
-    extra_compile_args=['-std=c++11'],
+    extra_compile_args=['-std=c++11','-DUSE_NUMPY'],
     )
 
 setup(
