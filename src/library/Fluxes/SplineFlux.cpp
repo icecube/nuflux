@@ -12,10 +12,10 @@ namespace NewNuFlux{
 	SimpleSplineFlux::SimpleSplineFlux(const std::string& fluxName):
 	FluxFunction(fluxName){
 
-          components[I3Particle::NuMu]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath(fluxName+"_numu.fits"));
-          components[I3Particle::NuMuBar]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath(fluxName+"_numubar.fits"));
-          components[I3Particle::NuE]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath(fluxName+"_nue.fits"));
-          components[I3Particle::NuEBar]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath(fluxName+"_nuebar.fits"));
+          components[I3Particle::NuMu]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_numu.fits"));
+          components[I3Particle::NuMuBar]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_numubar.fits"));
+          components[I3Particle::NuE]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_nue.fits"));
+          components[I3Particle::NuEBar]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_nuebar.fits"));
 	}
 	
 	boost::shared_ptr<FluxFunction> SimpleSplineFlux::makeFlux(const std::string& fluxName){

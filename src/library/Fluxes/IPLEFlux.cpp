@@ -29,7 +29,7 @@ IntegralPreservingFlux::~IntegralPreservingFlux(){}
 void IntegralPreservingFlux::loadTables(const std::string& fluxName, particleType type){
 	const double enBinWidth=.05;
 	{
-          std::string fname = detail::getDataPath(fluxName+"3D.dat");
+          std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"3D.dat");
 		std::ifstream fluxFile3D((fname).c_str());
 		if(!fluxFile3D)
 			log_fatal_stream("Failed to open " << fname );
@@ -56,7 +56,7 @@ void IntegralPreservingFlux::loadTables(const std::string& fluxName, particleTyp
 	}
 	
 	{
-          std::string fname = detail::getDataPath(fluxName+"2D.dat");
+          std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"2D.dat");
 		std::ifstream fluxFile2D((fname).c_str());
 		if(!fluxFile2D)
 			log_fatal_stream("Failed to open " << name );

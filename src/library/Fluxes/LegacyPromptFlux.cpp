@@ -19,10 +19,10 @@ namespace NewNuFlux{
 	LegacyPromptFlux::LegacyPromptFlux(const std::string& fluxName):
 	FluxFunction(fluxName),
 	KneeReweightable("none"){
-          components[I3Particle::NuMu]=readPromptComponent(detail::getDataPath(fluxName+"_numupro.dat"));
-          components[I3Particle::NuMuBar]=readPromptComponent(detail::getDataPath(fluxName+"_numubarpro.dat"));
-          components[I3Particle::NuE]=readPromptComponent(detail::getDataPath(fluxName+"_nuepro.dat"));
-          components[I3Particle::NuEBar]=readPromptComponent(detail::getDataPath(fluxName+"_nuebarpro.dat"));
+          components[I3Particle::NuMu]   =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numupro.dat"));
+          components[I3Particle::NuMuBar]=readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numubarpro.dat"));
+          components[I3Particle::NuE]    =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuepro.dat"));
+          components[I3Particle::NuEBar] =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuebarpro.dat"));
 	}
 	
 	boost::shared_ptr<FluxFunction> LegacyPromptFlux::makeFlux(const std::string& fluxName){
@@ -83,7 +83,7 @@ namespace NewNuFlux{
 			kneeCorrection=kneeFunction();
 			return;
 		}
-		std::string correctionFilePath=detail::getDataPath(name+"_"+reweightModel+".dat");
+		std::string correctionFilePath=detail::getDataPath("LegacyPromptFlux/"+name+"_"+reweightModel+".dat");
 		std::ifstream infile(correctionFilePath.c_str());
 		if(!infile)
 			throw std::runtime_error("Unable to read "+correctionFilePath+"; are you sure that "

@@ -8,7 +8,7 @@
 namespace NewNuFlux{
 	LegacyConventionalFlux::component readConvComponent(const std::string& fname){
 
-          std::string path = detail::getDataPath(fname);
+          std::string path = detail::getDataPath("LegacyConventionalFlux/"+fname);
           
           
 		std::ifstream infile(path.c_str());
@@ -244,7 +244,7 @@ namespace NewNuFlux{
 			kneeCorrection=kneeSpline();
 			return;
 		}
-                std::string correctionFilePath=detail::getDataPath(name+"_"+reweightModel+".dat");
+                std::string correctionFilePath=detail::getDataPath("LegacyConventionalFlux/"+name+"_"+reweightModel+".dat");
 		std::ifstream infile(correctionFilePath.c_str());
 		if(!infile)
 			throw std::runtime_error("Unable to read "+correctionFilePath+"; are you sure that "

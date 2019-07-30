@@ -10,9 +10,6 @@
 
 namespace bp = boost::python;
 
-
-
-
 #if defined(__has_include)
 	#if __has_include(<numpy/ndarrayobject.h>)
 		#define USE_NUMPY
