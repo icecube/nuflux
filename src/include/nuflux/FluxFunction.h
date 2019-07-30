@@ -11,8 +11,8 @@
 #ifdef ICETRAY
 	#include <dataclasses/physics/I3Particle.h>
 #else
-	#include <NewNuFlux/logging.h>
-	#include <NewNuFlux/particleType.h>
+	#include <nuflux/logging.h>
+	#include <nuflux/particleType.h>
 #endif
 
 namespace NewNuFlux{

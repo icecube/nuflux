@@ -1,5 +1,4 @@
-#include <NewNuFlux/Fluxes/IPLEFlux.h>
-
+#include <iostream>
 #include <cmath>
 #include <fstream>
 #include <vector>
@@ -7,7 +6,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/math/constants/constants.hpp>
 
-#include <iostream>
+#include <nuflux/IPLEFlux.h>
 
 namespace NewNuFlux{
 	

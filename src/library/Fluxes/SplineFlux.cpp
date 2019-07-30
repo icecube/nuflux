@@ -1,11 +1,8 @@
-#include <NewNuFlux/Fluxes/SplineFlux.h>
-
 #include <fstream>
-
 #include <iostream>
-
 #include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
+#include <nuflux/SplineFlux.h>
 
 namespace NewNuFlux{
 	

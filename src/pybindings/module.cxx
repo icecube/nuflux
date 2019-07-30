@@ -6,7 +6,7 @@
 #include <boost/python.hpp>
 #include <boost/python/to_python_converter.hpp>
 #endif
-#include <NewNuFlux/NewNuFlux.h>
+#include <nuflux/NewNuFlux.h>
 
 namespace bp = boost::python;
 

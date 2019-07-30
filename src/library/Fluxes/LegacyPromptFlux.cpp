@@ -1,9 +1,9 @@
-#include <NewNuFlux/Fluxes/LegacyPromptFlux.h>
-
 #include <fstream>
 
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+
+#include <nuflux/LegacyPromptFlux.h>
 
 namespace NewNuFlux{
 	

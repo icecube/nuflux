@@ -1,6 +1,5 @@
-
-#include "NewNuFlux/Fluxes/ANFlux.h"
 #include <boost/make_shared.hpp>
+#include "nuflux/ANFlux.h"
 
 namespace NewNuFlux {
 

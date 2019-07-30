@@ -1,7 +1,7 @@
-
-#include "NewNuFlux/Fluxes/LEFlux.h"
 #include <boost/make_shared.hpp>
 #include <boost/math/constants/constants.hpp>
+
+#include "nuflux/LEFlux.h"
 
 namespace NewNuFlux {
 

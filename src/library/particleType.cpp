@@ -1,8 +1,8 @@
-#include <NewNuFlux/particleType.h>
-
 #include <boost/preprocessor/seq.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/preprocessor/stringize.hpp>
+
+#include <nuflux/particleType.h>
 
 #ifndef NO_HDF5
 namespace NewNuFlux{

@@ -1,6 +1,6 @@
-#include <NewNuFlux/logging.h>
 #include <cstdarg>
 #include <iostream>
+#include <nuflux/logging.h>
 
 I3LogLevel SimpleLogger::defaultLogLevel=I3DefaultLogLevel;
 std::map<std::string,I3LogLevel> SimpleLogger::unitLevels;

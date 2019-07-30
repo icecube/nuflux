@@ -1,8 +1,8 @@
 #ifndef ANFLUX_H
 #define ANFLUX_H
 
-#include <NewNuFlux/NewNuFlux.h>
 #include <photospline/splinetable.h>
+#include <nuflux/NewNuFlux.h>
 
 namespace NewNuFlux{
 

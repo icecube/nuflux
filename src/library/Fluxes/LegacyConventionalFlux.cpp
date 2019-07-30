@@ -1,9 +1,7 @@
-#include "NewNuFlux/Fluxes/LegacyConventionalFlux.h"
-
 #include <fstream>
-
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include "nuflux/LegacyConventionalFlux.h"
 
 namespace NewNuFlux{
 	LegacyConventionalFlux::component readConvComponent(const std::string& fname){

@@ -2,7 +2,7 @@
 #define NEWNUFLUX_H
 
 #include <vector>
-#include <NewNuFlux/FluxFunction.h>
+#include <nuflux/FluxFunction.h>
 
 namespace NewNuFlux{
 	
@@ -28,7 +28,7 @@ namespace NewNuFlux{
 
 std::string getDataPath(std::string fname);
 
-#include <NewNuFlux/Interfaces.h>
-#include <NewNuFlux/Fluxes/Fluxes.h>
+#include <nuflux/Interfaces.h>
+#include <nuflux/Fluxes.h>
 
 #endif //NEWNUFLUX_H
