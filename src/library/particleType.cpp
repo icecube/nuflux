@@ -1,4 +1,4 @@
-#include <NewNuFlux/particleType.h>
+#include <nuflux/particleType.h>
 
 #include <boost/preprocessor/seq.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
