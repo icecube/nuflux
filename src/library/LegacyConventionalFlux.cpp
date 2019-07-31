@@ -3,7 +3,7 @@
 #include <boost/make_shared.hpp>
 #include "nuflux/LegacyConventionalFlux.h"
 
-namespace NewNuFlux{
+namespace nuflux{
   LegacyConventionalFlux::component readConvComponent(const std::string& fname){
     
     std::string path = detail::getDataPath("LegacyConventionalFlux/"+fname);
@@ -251,8 +251,8 @@ namespace NewNuFlux{
   }
 }
 
-NNF_REGISTER_FLUX("honda2006",&NewNuFlux::LegacyConventionalFlux::makeFlux);
-NNF_REGISTER_FLUX("bartol",&NewNuFlux::LegacyConventionalFlux::makeFlux);
+NNF_REGISTER_FLUX("honda2006",&nuflux::LegacyConventionalFlux::makeFlux);
+NNF_REGISTER_FLUX("bartol",&nuflux::LegacyConventionalFlux::makeFlux);
 
 NNF_REGISTER_KNEE("honda2006","gaisserH3a_elbert");
 NNF_REGISTER_KNEE("honda2006","gaisserH4a_elbert");

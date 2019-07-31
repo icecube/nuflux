@@ -3,7 +3,7 @@
 
 #include <nuflux/nuflux.h>
 
-namespace NewNuFlux{
+namespace nuflux{
 
   class IntegralPreservingFlux : public FluxFunction{
   public:
@@ -175,6 +175,6 @@ namespace NewNuFlux{
     std::map<I3Particle::ParticleType, std::map<std::pair<double,double>,CubicSpline> > energySplines3D;
   };
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 #endif //NEWNUFLUX_LEFLUX_H

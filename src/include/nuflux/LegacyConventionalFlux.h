@@ -5,7 +5,7 @@
 #include <iosfwd>
 #include <map>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   class LegacyConventionalFlux : public FluxFunction, public KneeReweightable, public PionKaonAdjustable{
   public:
@@ -97,6 +97,6 @@ namespace NewNuFlux{
     virtual void setKneeReweightingModel(std::string reweightModel);
   };
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 #endif //LEGACYCONVENTIONALFLUX_H

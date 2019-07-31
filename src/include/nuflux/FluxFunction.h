@@ -12,7 +12,7 @@
 #include <nuflux/particleType.h>
 
 
-namespace NewNuFlux{
+namespace nuflux{
   
   typedef I3Particle::ParticleType particleType;
   
@@ -63,11 +63,11 @@ namespace NewNuFlux{
     
   } //namespace detail
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 #define NNF_REGISTER_FLUX(name,factory)\
-  namespace{ NewNuFlux::detail::FluxRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (name,factory); }
+  namespace{ nuflux::detail::FluxRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (name,factory); }
 #define NNF_REGISTER_DEPRECATED_FLUX(name,factory,reason)\
-  namespace{ NewNuFlux::detail::FluxRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (name,factory,reason); }
+  namespace{ nuflux::detail::FluxRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (name,factory,reason); }
 
 #endif

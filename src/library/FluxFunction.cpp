@@ -1,7 +1,7 @@
 #include <nuflux/nuflux.h>
 #include <iostream>
 
-namespace NewNuFlux{
+namespace nuflux{
   namespace detail{
     struct FluxFactory{
       boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&);

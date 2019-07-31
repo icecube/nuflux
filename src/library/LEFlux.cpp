@@ -3,7 +3,7 @@
 
 #include "nuflux/LEFlux.h"
 
-namespace NewNuFlux {
+namespace nuflux {
 
   LEFlux::LEFlux(const std::string& fluxName) : FluxFunction(fluxName)
   {
@@ -130,6 +130,6 @@ namespace NewNuFlux {
     return(0.0);
   }
 
-} //namespace NewNuFlux
+} //namespace nuflux
 
-NNF_REGISTER_FLUX("honda2012_spl_solmin",&NewNuFlux::LEFlux::makeFlux);
+NNF_REGISTER_FLUX("honda2012_spl_solmin",&nuflux::LEFlux::makeFlux);

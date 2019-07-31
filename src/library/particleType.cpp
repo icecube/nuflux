@@ -5,7 +5,7 @@
 #include <boost/preprocessor/stringize.hpp>
 
 #ifndef NO_HDF5
-namespace NewNuFlux{
+namespace nuflux{
   hid_t getHDF5TypeForParticleType(){
     //blar, not thread safe; don't care right now
     static bool initialized=false;
@@ -24,5 +24,5 @@ namespace NewNuFlux{
     initialized=true;
     return(type);
   }
-} //namesapce NewNuFlux
+} //namesapce nuflux
 #endif

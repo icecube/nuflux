@@ -5,7 +5,7 @@
 #include <iosfwd>
 #include <map>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   class LegacyPromptFlux : public FluxFunction, public KneeReweightable{
   private:
@@ -45,6 +45,6 @@ namespace NewNuFlux{
     virtual void setKneeReweightingModel(std::string reweightModel);
   };
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 #endif //LEGACYPROMPTFLUX_H

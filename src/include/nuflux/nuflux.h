@@ -4,7 +4,7 @@
 #include <vector>
 #include <nuflux/FluxFunction.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   ///Constructs a FluxFunction object for the named flux
   /// \fluxName the name of the flux being requested
@@ -23,7 +23,7 @@ namespace NewNuFlux{
   ///Print an listing of all supported models
   void printModels();
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 
 std::string getDataPath(std::string fname);

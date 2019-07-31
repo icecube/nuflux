@@ -1,7 +1,7 @@
 #include <boost/make_shared.hpp>
 #include "nuflux/ANFlux.h"
 
-namespace NewNuFlux {
+namespace nuflux {
 
 ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
 {
@@ -64,8 +64,8 @@ ANFlux::Evaluator::operator()(double energy, double cosZenith) const
   return(0.0);
 }
 
-} //namespace NewNuFlux
+} //namespace nuflux
 
-NNF_REGISTER_FLUX("CORSIKA_GaisserH3a_QGSJET-II",&NewNuFlux::ANFlux::makeFlux);
-NNF_REGISTER_FLUX("CORSIKA_GaisserH3a_SIBYLL-2.1",&NewNuFlux::ANFlux::makeFlux);
-NNF_REGISTER_FLUX("CORSIKA_GaisserH3a_average",&NewNuFlux::ANFlux::makeFlux);
+NNF_REGISTER_FLUX("CORSIKA_GaisserH3a_QGSJET-II",&nuflux::ANFlux::makeFlux);
+NNF_REGISTER_FLUX("CORSIKA_GaisserH3a_SIBYLL-2.1",&nuflux::ANFlux::makeFlux);
+NNF_REGISTER_FLUX("CORSIKA_GaisserH3a_average",&nuflux::ANFlux::makeFlux);

@@ -4,7 +4,7 @@
 #include <boost/lexical_cast.hpp>
 #include <nuflux/SplineFlux.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   SimpleSplineFlux::SimpleSplineFlux(const std::string& fluxName):
     FluxFunction(fluxName){
@@ -32,9 +32,9 @@ namespace NewNuFlux{
     return(pow(10,lf));
   }
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
-NNF_REGISTER_FLUX("BERSS_H3a_central",&NewNuFlux::SimpleSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("BERSS_H3p_lower",&NewNuFlux::SimpleSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("BERSS_H3p_central",&NewNuFlux::SimpleSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("BERSS_H3p_upper",&NewNuFlux::SimpleSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("BERSS_H3a_central",&nuflux::SimpleSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("BERSS_H3p_lower",&nuflux::SimpleSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("BERSS_H3p_central",&nuflux::SimpleSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("BERSS_H3p_upper",&nuflux::SimpleSplineFlux::makeFlux);

@@ -8,7 +8,7 @@
 
 #include <nuflux/IPLEFlux.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   boost::shared_ptr<FluxFunction> IntegralPreservingFlux::makeFlux(const std::string& fluxName){
     return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<IntegralPreservingFlux>(fluxName)));
   }
@@ -160,7 +160,7 @@ namespace NewNuFlux{
     return(integratedSpline.derivative(cosZenith));
   }
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
-NNF_REGISTER_FLUX("IPhonda2014_spl_solmin",&NewNuFlux::IntegralPreservingFlux::makeFlux);
-NNF_REGISTER_FLUX("IPhonda2006_sno_solmin",&NewNuFlux::IntegralPreservingFlux::makeFlux);
+NNF_REGISTER_FLUX("IPhonda2014_spl_solmin",&nuflux::IntegralPreservingFlux::makeFlux);
+NNF_REGISTER_FLUX("IPhonda2006_sno_solmin",&nuflux::IntegralPreservingFlux::makeFlux);

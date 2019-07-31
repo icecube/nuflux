@@ -44,7 +44,7 @@ public:
 #define SET_LOGGER(X) \
   static inline const char *__icetray_logger_id(void) { return X; }
 
-SET_LOGGER("NewNuFlux"); //project-wide logger
+SET_LOGGER("nuflux"); //project-wide logger
 
 #define I3_LOGGER(level, id, file, line, func, format, ...)     \
   SimpleLogger::Log(level, id, file, line, func,                \

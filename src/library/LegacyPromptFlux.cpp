@@ -5,7 +5,7 @@
 
 #include <nuflux/LegacyPromptFlux.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   LegacyPromptFlux::component readPromptComponent(const std::string& path){
     std::ifstream infile(path.c_str());
@@ -91,11 +91,11 @@ namespace NewNuFlux{
     infile >> kneeCorrection;
   }
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
-NNF_REGISTER_FLUX("sarcevic_min",&NewNuFlux::LegacyPromptFlux::makeFlux);
-NNF_REGISTER_FLUX("sarcevic_std",&NewNuFlux::LegacyPromptFlux::makeFlux);
-NNF_REGISTER_FLUX("sarcevic_max",&NewNuFlux::LegacyPromptFlux::makeFlux);
+NNF_REGISTER_FLUX("sarcevic_min",&nuflux::LegacyPromptFlux::makeFlux);
+NNF_REGISTER_FLUX("sarcevic_std",&nuflux::LegacyPromptFlux::makeFlux);
+NNF_REGISTER_FLUX("sarcevic_max",&nuflux::LegacyPromptFlux::makeFlux);
 
 NNF_REGISTER_KNEE("sarcevic_min","gaisserH3a_elbert");
 NNF_REGISTER_KNEE("sarcevic_min","gaisserH4a_elbert");

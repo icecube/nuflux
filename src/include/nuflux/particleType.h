@@ -201,7 +201,7 @@ enum ParticleType {
 #ifndef NO_HDF5
 #include <hdf5.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   ///Gets an HDF5 description of the particleType enum.
   ///This can be used when reading HDF5 files to ensure
   ///consistent particle numbering. Conversion will be applied
@@ -210,6 +210,6 @@ namespace NewNuFlux{
   ///manually using H5TConvert if the Table interface is used.
   ///\returns An HDF5 datatype handle, which should not be closed by the caller
   hid_t getHDF5TypeForParticleType();
-}; //namespace NewNuFlux
+}; //namespace nuflux
 #endif
 #endif

@@ -4,7 +4,7 @@
 #include <photospline/splinetable.h>
 #include <nuflux/nuflux.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   class SimpleSplineFlux : public FluxFunction{
   private:
@@ -16,6 +16,6 @@ namespace NewNuFlux{
     virtual double getFlux(particleType type, double energy, double cosZenith) const;
   };
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 #endif //SPLINEFLUX_H

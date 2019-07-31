@@ -4,7 +4,7 @@
 #include <photospline/splinetable.h>
 #include <nuflux/nuflux.h>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   class ANFlux : public FluxFunction {
   public:

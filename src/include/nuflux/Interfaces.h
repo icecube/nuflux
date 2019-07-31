@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace NewNuFlux{
+namespace nuflux{
   
   class KneeReweightable{
   protected:
@@ -46,9 +46,9 @@ namespace NewNuFlux{
     
   } //namespace detail
   
-} //namespace NewNuFlux
+} //namespace nuflux
 
 #define NNF_REGISTER_KNEE(baseModel,name)                               \
-  namespace{ NewNuFlux::detail::KneeRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (baseModel,name); }
+  namespace{ nuflux::detail::KneeRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (baseModel,name); }
 
 #endif //NNF_INTERFACES_H

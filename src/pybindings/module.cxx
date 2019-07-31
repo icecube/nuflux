@@ -24,7 +24,7 @@ make_array(bp::object obj, int typenum)
 }
 
 bp::object
-getFlux(const NewNuFlux::FluxFunction &self, bp::object ptype_obj, bp::object energy_obj, bp::object cos_theta_obj)
+getFlux(const nuflux::FluxFunction &self, bp::object ptype_obj, bp::object energy_obj, bp::object cos_theta_obj)
 {
   // Cast inputs to ndarray. These are wrapped in boost::python::object so
   // they can be properly destroyed if exceptions are raised.
@@ -68,7 +68,7 @@ bool isStandAlone=true;
 void
 register_FluxFunction()
 {
-  using namespace NewNuFlux;
+  using namespace nuflux;
   
   bp::def("makeFlux", &makeFlux, "Instantiate and return a flux model");
   bp::def("availableFluxes", &availableFluxes, "Get a list of valid flux model names");
@@ -129,7 +129,7 @@ register_FluxFunction()
   bp::scope().attr("stand_alone") = isStandAlone;
 }
 
-namespace NewNuFlux{
+namespace nuflux{
   namespace detail{
     std::string getDataPath(std::string fname){
       bp::object pkg_resources = bp::import("pkg_resources");
