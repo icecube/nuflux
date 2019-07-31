@@ -6,5 +6,4 @@
 #ifndef NO_PHOTOSPLINE
 #include <nuflux/SplineFlux.h>
 #endif
-
 #endif

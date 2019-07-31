@@ -46,7 +46,6 @@ namespace NewNuFlux {
   }
 
   LEFlux::Evaluator::Evaluator(const std::string& fname):data(fname){}
-	
   LEFlux::Evaluator::~Evaluator(){}
 
   std::pair<double, double>

@@ -164,52 +164,52 @@ enum ParticleType {
     SMPPlus = -2000009500,
     SMPMinus = -2000009501,
 
-	//This is necessary for compatibility with transitional data when PDG codes were 
-	//available but Corsika codes were still used
-	UnknownWithPdgEncoding = 2147483647
+    //This is necessary for compatibility with transitional data when PDG codes were 
+    //available but Corsika codes were still used
+    UnknownWithPdgEncoding = 2147483647
 };
-	
+  
 #define I3PARTICLE_H_I3Particle_ParticleType                                      \
-	(unknown)(Gamma)(EPlus)(EMinus)(MuPlus)(MuMinus)(Pi0) \
-	(PiPlus)(PiMinus)(K0_Long)(KPlus)(KMinus)(Neutron)(PPlus)(PMinus)(K0_Short)   \
-	(Eta)(Lambda)(SigmaPlus)(Sigma0)(SigmaMinus)(Xi0)(XiMinus)(OmegaMinus)        \
-	(NeutronBar)(LambdaBar)(SigmaMinusBar)(Sigma0Bar)(SigmaPlusBar)(Xi0Bar)       \
-	(XiPlusBar)(OmegaPlusBar)(DPlus)(DMinus)(D0)(D0Bar)(DsPlus)(DsMinusBar)       \
-	(LambdacPlus)(WPlus)(WMinus)(Z0)(NuE)(NuEBar)                                 \
-	(NuMu)(NuMuBar)(TauPlus)(TauMinus)(NuTau)(NuTauBar)                           \
-	(He3Nucleus)(He4Nucleus)(Li6Nucleus)(Li7Nucleus)(Be9Nucleus)(B10Nucleus)      \
-	(B11Nucleus)(C12Nucleus)(C13Nucleus)(N14Nucleus)(N15Nucleus)(O16Nucleus)      \
-	(O17Nucleus)(O18Nucleus)(F19Nucleus)(Ne20Nucleus)(Ne21Nucleus)(Ne22Nucleus)   \
-	(Na23Nucleus)(Mg24Nucleus)(Mg25Nucleus)(Mg26Nucleus)(Al26Nucleus)(Al27Nucleus)\
-	(Si28Nucleus)(Si29Nucleus)(Si30Nucleus)(Si31Nucleus)(Si32Nucleus)(P31Nucleus) \
-	(P32Nucleus)(P33Nucleus)(S32Nucleus)(S33Nucleus)(S34Nucleus)(S35Nucleus)      \
-	(S36Nucleus)(Cl35Nucleus)(Cl36Nucleus)(Cl37Nucleus)(Ar36Nucleus)(Ar37Nucleus) \
-	(Ar38Nucleus)(Ar39Nucleus)(Ar40Nucleus)(Ar41Nucleus)(Ar42Nucleus)(K39Nucleus) \
-	(K40Nucleus)(K41Nucleus)(Ca40Nucleus)(Ca41Nucleus)(Ca42Nucleus)(Ca43Nucleus)  \
-	(Ca44Nucleus)(Ca45Nucleus)(Ca46Nucleus)(Ca47Nucleus)(Ca48Nucleus)(Sc44Nucleus)\
-	(Sc45Nucleus)(Sc46Nucleus)(Sc47Nucleus)(Sc48Nucleus)(Ti44Nucleus)(Ti45Nucleus)\
-	(Ti46Nucleus)(Ti47Nucleus)(Ti48Nucleus)(Ti49Nucleus)(Ti50Nucleus)(V48Nucleus) \
-	(V49Nucleus)(V50Nucleus)(V51Nucleus)(Cr50Nucleus)(Cr51Nucleus)(Cr52Nucleus)   \
-	(Cr53Nucleus)(Cr54Nucleus)(Mn52Nucleus)(Mn53Nucleus)(Mn54Nucleus)(Mn55Nucleus)\
-	(Fe54Nucleus)(Fe55Nucleus)(Fe56Nucleus)(Fe57Nucleus)(Fe58Nucleus)             \
-	(CherenkovPhoton)(Nu)(Monopole)(Brems)(DeltaE)(PairProd)(NuclInt)(MuPair)     \
-	(Hadrons)(ContinuousEnergyLoss)(FiberLaser)(N2Laser)(YAGLaser)                \
-	(STauPlus)(STauMinus)(SMPPlus)(SMPMinus)
-	
+  (unknown)(Gamma)(EPlus)(EMinus)(MuPlus)(MuMinus)(Pi0)                 \
+  (PiPlus)(PiMinus)(K0_Long)(KPlus)(KMinus)(Neutron)(PPlus)(PMinus)(K0_Short) \
+  (Eta)(Lambda)(SigmaPlus)(Sigma0)(SigmaMinus)(Xi0)(XiMinus)(OmegaMinus) \
+  (NeutronBar)(LambdaBar)(SigmaMinusBar)(Sigma0Bar)(SigmaPlusBar)(Xi0Bar) \
+  (XiPlusBar)(OmegaPlusBar)(DPlus)(DMinus)(D0)(D0Bar)(DsPlus)(DsMinusBar) \
+  (LambdacPlus)(WPlus)(WMinus)(Z0)(NuE)(NuEBar)                         \
+  (NuMu)(NuMuBar)(TauPlus)(TauMinus)(NuTau)(NuTauBar)                   \
+  (He3Nucleus)(He4Nucleus)(Li6Nucleus)(Li7Nucleus)(Be9Nucleus)(B10Nucleus) \
+  (B11Nucleus)(C12Nucleus)(C13Nucleus)(N14Nucleus)(N15Nucleus)(O16Nucleus) \
+  (O17Nucleus)(O18Nucleus)(F19Nucleus)(Ne20Nucleus)(Ne21Nucleus)(Ne22Nucleus) \
+  (Na23Nucleus)(Mg24Nucleus)(Mg25Nucleus)(Mg26Nucleus)(Al26Nucleus)(Al27Nucleus) \
+  (Si28Nucleus)(Si29Nucleus)(Si30Nucleus)(Si31Nucleus)(Si32Nucleus)(P31Nucleus)  \
+  (P32Nucleus)(P33Nucleus)(S32Nucleus)(S33Nucleus)(S34Nucleus)(S35Nucleus)       \
+  (S36Nucleus)(Cl35Nucleus)(Cl36Nucleus)(Cl37Nucleus)(Ar36Nucleus)(Ar37Nucleus) \
+  (Ar38Nucleus)(Ar39Nucleus)(Ar40Nucleus)(Ar41Nucleus)(Ar42Nucleus)(K39Nucleus) \
+  (K40Nucleus)(K41Nucleus)(Ca40Nucleus)(Ca41Nucleus)(Ca42Nucleus)(Ca43Nucleus) \
+  (Ca44Nucleus)(Ca45Nucleus)(Ca46Nucleus)(Ca47Nucleus)(Ca48Nucleus)(Sc44Nucleus) \
+  (Sc45Nucleus)(Sc46Nucleus)(Sc47Nucleus)(Sc48Nucleus)(Ti44Nucleus)(Ti45Nucleus) \
+  (Ti46Nucleus)(Ti47Nucleus)(Ti48Nucleus)(Ti49Nucleus)(Ti50Nucleus)(V48Nucleus) \
+  (V49Nucleus)(V50Nucleus)(V51Nucleus)(Cr50Nucleus)(Cr51Nucleus)(Cr52Nucleus) \
+  (Cr53Nucleus)(Cr54Nucleus)(Mn52Nucleus)(Mn53Nucleus)(Mn54Nucleus)(Mn55Nucleus) \
+  (Fe54Nucleus)(Fe55Nucleus)(Fe56Nucleus)(Fe57Nucleus)(Fe58Nucleus)     \
+  (CherenkovPhoton)(Nu)(Monopole)(Brems)(DeltaE)(PairProd)(NuclInt)(MuPair) \
+  (Hadrons)(ContinuousEnergyLoss)(FiberLaser)(N2Laser)(YAGLaser)        \
+  (STauPlus)(STauMinus)(SMPPlus)(SMPMinus)
+  
 } //namespace I3Particle
 
 #ifndef NO_HDF5
 #include <hdf5.h>
 
 namespace NewNuFlux{
-	///Gets an HDF5 description of the particleType enum.
-	///This can be used when reading HDF5 files to ensure
-	///consistent particle numbering. Conversion will be applied
-	///automatically if this type is specified as the in-memory
-	///type when using the Dataset interface, but must be applied
-	///manually using H5TConvert if the Table interface is used.
-	///\returns An HDF5 datatype handle, which should not be closed by the caller
-	hid_t getHDF5TypeForParticleType();
+  ///Gets an HDF5 description of the particleType enum.
+  ///This can be used when reading HDF5 files to ensure
+  ///consistent particle numbering. Conversion will be applied
+  ///automatically if this type is specified as the in-memory
+  ///type when using the Dataset interface, but must be applied
+  ///manually using H5TConvert if the Table interface is used.
+  ///\returns An HDF5 datatype handle, which should not be closed by the caller
+  hid_t getHDF5TypeForParticleType();
 }; //namespace NewNuFlux
 #endif
 #endif
