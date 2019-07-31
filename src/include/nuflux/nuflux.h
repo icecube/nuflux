@@ -5,7 +5,7 @@
 #include <nuflux/FluxFunction.h>
 
 namespace nuflux{
-  
+
   ///Constructs a FluxFunction object for the named flux
   /// \fluxName the name of the flux being requested
   /// \throws std::invalid_argument if fluxName does not correspond to a known flux

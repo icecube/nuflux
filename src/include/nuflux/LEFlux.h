@@ -11,10 +11,10 @@ namespace nuflux{
     LEFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
 
-    virtual double getFlux(particleType type, double energy, double cosZenith) const;
+    virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     
     // Computes the expected flux for neutrinos of the given type, energy, zenith angle and azimuth angle
-    double getFlux(particleType type, double energy, double azimuth, double cosZenith) const;
+    double getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const;
     
   private:
     class Evaluator{
@@ -31,7 +31,7 @@ namespace nuflux{
       double operator()(double energy, double azimuth, double cosZenith) const;
     };
     
-    std::map<particleType, boost::shared_ptr<Evaluator> > fluxes_;
+    std::map<ParticleType, boost::shared_ptr<Evaluator> > fluxes_;
   };
 
 }

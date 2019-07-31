@@ -16,15 +16,15 @@ namespace nuflux{
   IntegralPreservingFlux::IntegralPreservingFlux(const std::string& fluxName):
     FluxFunction(fluxName)
   {
-    loadTables(fluxName+"_nue",I3Particle::NuE);
-    loadTables(fluxName+"_nbe",I3Particle::NuEBar);
-    loadTables(fluxName+"_num",I3Particle::NuMu);
-    loadTables(fluxName+"_nbm",I3Particle::NuMuBar);
+    loadTables(fluxName+"_nue",NuE);
+    loadTables(fluxName+"_nbe",NuEBar);
+    loadTables(fluxName+"_num",NuMu);
+    loadTables(fluxName+"_nbm",NuMuBar);
   }
   
   IntegralPreservingFlux::~IntegralPreservingFlux(){}
   
-  void IntegralPreservingFlux::loadTables(const std::string& fluxName, particleType type){
+  void IntegralPreservingFlux::loadTables(const std::string& fluxName, ParticleType type){
     const double enBinWidth=.05;
     {
       std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"3D.dat");
@@ -80,7 +80,7 @@ namespace nuflux{
     }
   }
   
-  double IntegralPreservingFlux::getFlux(particleType type, double energy, double cosZenith) const{
+  double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     if(cosZenith<-1 || cosZenith>1)
       log_fatal_stream("Out of range cosine of zenith angle " << cosZenith);
     if(energy<0 || energy>1e4)
@@ -88,7 +88,7 @@ namespace nuflux{
     return(evaluate2D(type, energy, cosZenith));
   }
   
-  double IntegralPreservingFlux::getFlux(particleType type, double energy, double azimuth, double cosZenith) const{
+  double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
     //if(azimuth<0 || azimuth>2*boost::math::constants::pi<double>())
     //log_fatal_stream("Out of range azimuth angle " << azimuth);
     if(azimuth<0 || azimuth>360)
@@ -105,10 +105,10 @@ namespace nuflux{
     return(InterpolateAzimuth(type, energy, azimuth, cosZenith));
   }
   
-  double IntegralPreservingFlux::evaluate2D(particleType type, double energy, double cosZenith) const{
+  double IntegralPreservingFlux::evaluate2D(ParticleType type, double energy, double cosZenith) const{
     double logEnergy=log10(energy);
     dumbHistogram hFluxVCosZenith(-1);
-    std::map<I3Particle::ParticleType, std::map<double,CubicSpline> >::const_iterator typeIt=energySplines2D.find(type);
+    std::map<ParticleType, std::map<double,CubicSpline> >::const_iterator typeIt=energySplines2D.find(type);
     if(typeIt==energySplines2D.end())
       log_fatal_stream("Particle type not found: " << type);
     for(int cz=0; cz<20; cz++){
@@ -126,7 +126,7 @@ namespace nuflux{
     return(integratedSpline.derivative(cosZenith)*UnitFactor/energy);
   }
 
-  double IntegralPreservingFlux::InterpolateAzimuth(particleType type, double energy, double azimuth, double cosZenith) const{
+  double IntegralPreservingFlux::InterpolateAzimuth(ParticleType type, double energy, double azimuth, double cosZenith) const{
     dumbHistogram hFluxVAzimuth(0);
     double AzBinWidth = 30.0;
     for(unsigned int i=0; i<12; i++){
@@ -139,10 +139,10 @@ namespace nuflux{
     return(integratedSpline.derivative(azimuth)*UnitFactor/energy);
   }
   
-  double IntegralPreservingFlux::InterpolateCZFlux(particleType type, double energy, double azimuth, double cosZenith) const{
+  double IntegralPreservingFlux::InterpolateCZFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
     double logEnergy=log10(energy);
     dumbHistogram hFluxVCosZenith(-1);
-    std::map<I3Particle::ParticleType, std::map<std::pair<double,double>,CubicSpline> >::const_iterator typeIt=energySplines3D.find(type);
+    std::map<ParticleType, std::map<std::pair<double,double>,CubicSpline> >::const_iterator typeIt=energySplines3D.find(type);
     if(typeIt==energySplines3D.end())
       log_fatal_stream("Particle type not found: " << type);
     for(int cz=0; cz<20; cz++){

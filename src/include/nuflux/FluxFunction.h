@@ -8,14 +8,22 @@
 #include <boost/preprocessor/cat.hpp>
 #include <boost/shared_ptr.hpp>
 
+#include <nuflux/nuflux.h>
 #include <nuflux/logging.h>
-#include <nuflux/particleType.h>
 
+#define NUFLUX_ParticleType  (NuE)(NuEBar)(NuMu)(NuMuBar)(NuTau)(NuTauBar)
 
 namespace nuflux{
-  
-  typedef I3Particle::ParticleType particleType;
-  
+
+  enum ParticleType {
+    NuE = 12,
+    NuEBar = -12,
+    NuMu = 14,
+    NuMuBar = -14,
+    NuTau = 16,
+    NuTauBar = -16,
+  };
+    
   ///The interface for all neutrino fluxes
   class FluxFunction{
   public:
@@ -25,12 +33,12 @@ namespace nuflux{
     std::string getName() const{ return(name); }
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
-    virtual double getFlux(particleType type, double energy, double cosZenith) const=0;
+    virtual double getFlux(ParticleType type, double energy, double cosZenith) const=0;
     
     ///Computes the expected flux for neutrinos of the given type, energy, azimuth, and zenith angle
     ///If the derived classes do not have a specific azimuth dependence then just use the normal
     ///flux call.
-    virtual double getFlux(particleType type, double energy, double azimuth, double cosZenith) const{
+    virtual double getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
       return (getFlux( type, energy, cosZenith));
     }
     

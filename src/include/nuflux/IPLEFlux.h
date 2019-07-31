@@ -13,8 +13,8 @@ namespace nuflux{
     
     virtual ~IntegralPreservingFlux();
     
-    virtual double getFlux(particleType type, double energy, double cosZenith) const;
-    virtual double getFlux(particleType type, double energy, double azimuth, double cosZenith) const;
+    virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
+    virtual double getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const;
     
   private:
     ///A really simple histogram.
@@ -165,14 +165,14 @@ namespace nuflux{
       }
     };
     
-    void loadTables(const std::string& fluxName, particleType type);
+    void loadTables(const std::string& fluxName, ParticleType type);
     
-    double evaluate2D(particleType type, double energy, double cosZenith) const;
-    double InterpolateAzimuth(particleType type, double energy, double azimuth, double cosZenith) const;
-    double InterpolateCZFlux(particleType type, double energy, double azimuth, double cosZenith) const;
+    double evaluate2D(ParticleType type, double energy, double cosZenith) const;
+    double InterpolateAzimuth(ParticleType type, double energy, double azimuth, double cosZenith) const;
+    double InterpolateCZFlux(ParticleType type, double energy, double azimuth, double cosZenith) const;
     
-    std::map<I3Particle::ParticleType, std::map<double, CubicSpline> > energySplines2D;
-    std::map<I3Particle::ParticleType, std::map<std::pair<double,double>,CubicSpline> > energySplines3D;
+    std::map<ParticleType, std::map<double, CubicSpline> > energySplines2D;
+    std::map<ParticleType, std::map<std::pair<double,double>,CubicSpline> > energySplines3D;
   };
   
 } //namespace nuflux

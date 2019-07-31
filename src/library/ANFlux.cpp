@@ -7,12 +7,12 @@ ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
 {
   std::string nuefile = detail::getDataPath("/ANFlux/" + fluxName + "_nue.fits");
   boost::shared_ptr<Evaluator> evaluator = boost::make_shared<Evaluator>(nuefile);
-  fluxes_[I3Particle::NuE] = evaluator;
-  fluxes_[I3Particle::NuEBar] = evaluator;
+  fluxes_[NuE] = evaluator;
+  fluxes_[NuEBar] = evaluator;
   std::string numufile = detail::getDataPath("/ANFlux/" + fluxName + "_numu.fits");  
   evaluator = boost::make_shared<Evaluator>(numufile);
-  fluxes_[I3Particle::NuMu] = evaluator;
-  fluxes_[I3Particle::NuMuBar] = evaluator;
+  fluxes_[NuMu] = evaluator;
+  fluxes_[NuMuBar] = evaluator;
 }
 
 boost::shared_ptr<FluxFunction>
@@ -22,9 +22,9 @@ ANFlux::makeFlux(const std::string& fluxName)
 }
 
 double
-ANFlux::getFlux(particleType type, double energy, double cosZenith) const
+ANFlux::getFlux(ParticleType type, double energy, double cosZenith) const
 {
-  std::map<particleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
+  std::map<ParticleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
   if (f == fluxes_.end())
     return 0.0;
   else

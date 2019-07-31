@@ -19,21 +19,21 @@ namespace nuflux{
   LegacyPromptFlux::LegacyPromptFlux(const std::string& fluxName):
     FluxFunction(fluxName),
     KneeReweightable("none"){
-    components[I3Particle::NuMu]   =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numupro.dat"));
-          components[I3Particle::NuMuBar]=readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numubarpro.dat"));
-          components[I3Particle::NuE]    =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuepro.dat"));
-          components[I3Particle::NuEBar] =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuebarpro.dat"));
+    components[NuMu]   =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numupro.dat"));
+    components[NuMuBar]=readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numubarpro.dat"));
+    components[NuE]    =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuepro.dat"));
+    components[NuEBar] =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuebarpro.dat"));
   }
   
   boost::shared_ptr<FluxFunction> LegacyPromptFlux::makeFlux(const std::string& fluxName){
     return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<LegacyPromptFlux>(fluxName)));
   }
   
-  double LegacyPromptFlux::getFlux(particleType type, double energy, double cosZenith) const{
+  double LegacyPromptFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     //as a special case, allow tau neutrinos, but always return zero flux for them
-    if(type==I3Particle::NuTau || type==I3Particle::NuTauBar)
+    if(type==NuTau || type==NuTauBar)
       return(0);
-    std::map<particleType,component>::const_iterator it=components.find(type);
+    std::map<ParticleType,component>::const_iterator it=components.find(type);
     if(it==components.end())
       throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
     return(it->second.getFlux(energy,cosZenith)*kneeCorrection(energy));

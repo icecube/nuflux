@@ -81,7 +81,7 @@ namespace nuflux{
       double operator()(double energy) const;
     };
   private:
-    std::map<particleType,component> components;
+    std::map<ParticleType,component> components;
     
     kneeSpline kneeCorrection;
   public:
@@ -89,7 +89,7 @@ namespace nuflux{
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
-    virtual double getFlux(particleType type, double energy, double cosZenith) const;
+    virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     
     virtual void setRelativePionContribution(double adjust);
     virtual void setRelativeKaonContribution(double adjust);

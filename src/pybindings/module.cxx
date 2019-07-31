@@ -50,7 +50,7 @@ getFlux(const nuflux::FluxFunction &self, bp::object ptype_obj, bp::object energ
     throw bp::error_already_set();
   
   while (PyArray_MultiIter_NOTDONE(iter.ptr())) {
-    I3Particle::ParticleType *ptype = reinterpret_cast<I3Particle::ParticleType*>(PyArray_MultiIter_DATA(iter.ptr(), 0));
+    nuflux::ParticleType *ptype = reinterpret_cast<nuflux::ParticleType*>(PyArray_MultiIter_DATA(iter.ptr(), 0));
     double *energy = reinterpret_cast<double*>(PyArray_MultiIter_DATA(iter.ptr(), 1));
     double *cos_theta = reinterpret_cast<double*>(PyArray_MultiIter_DATA(iter.ptr(), 2));
     double *out = reinterpret_cast<double*>(PyArray_MultiIter_DATA(iter.ptr(), 3));
@@ -80,7 +80,7 @@ register_FluxFunction()
 #ifdef USE_NUMPY
          &getFlux,
 #else
-         (double (FluxFunction::*)(I3Particle::ParticleType type,double,double) const)&FluxFunction::getFlux,
+         (double (FluxFunction::*)(ParticleType type,double,double) const)&FluxFunction::getFlux,
 #endif
          "Get the flux of neutrinos predicted by this model. \n\n"
          ":param particle_type: type of neutrino\n"
@@ -108,17 +108,14 @@ register_FluxFunction()
              bp::bases<FluxFunction, KneeReweightable> >("LegacyPromptFlux", bp::no_init)
     ;
   
-
   {
-    using namespace I3Particle;
 #define ENUM_DEF(r,data,T) .value(BOOST_PP_STRINGIZE(T), data::T)
     bp::enum_<ParticleType>("ParticleType")
-      BOOST_PP_SEQ_FOR_EACH(ENUM_DEF,I3Particle,I3PARTICLE_H_I3Particle_ParticleType)
+      BOOST_PP_SEQ_FOR_EACH(ENUM_DEF,nuflux,NUFLUX_ParticleType)
       .export_values()
       ;
 #undef ENUM_DEF
   }
-  
   
 #ifndef NO_PHOTOSPLINE
   bp::class_<SimpleSplineFlux, boost::shared_ptr<SimpleSplineFlux>,

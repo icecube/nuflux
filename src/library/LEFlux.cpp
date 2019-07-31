@@ -7,11 +7,11 @@ namespace nuflux {
 
   LEFlux::LEFlux(const std::string& fluxName) : FluxFunction(fluxName)
   {
-    fluxes_[I3Particle::NuMu]    = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_numu.fits"));
-    fluxes_[I3Particle::NuMuBar] = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_numubar.fits"));
+    fluxes_[NuMu]    = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_numu.fits"));
+    fluxes_[NuMuBar] = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_numubar.fits"));
 
-    fluxes_[I3Particle::NuE]    = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_nue.fits"));
-    fluxes_[I3Particle::NuEBar] = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_nuebar.fits"));
+    fluxes_[NuE]    = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_nue.fits"));
+    fluxes_[NuEBar] = boost::make_shared<Evaluator>(detail::getDataPath("LEFlux/"+fluxName+"_nuebar.fits"));
   }
 
   boost::shared_ptr<FluxFunction>
@@ -21,9 +21,9 @@ namespace nuflux {
   }
 
   double
-  LEFlux::getFlux(particleType type, double energy, double cosZenith) const
+  LEFlux::getFlux(ParticleType type, double energy, double cosZenith) const
   {
-    std::map<particleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
+    std::map<ParticleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
     if (f == fluxes_.end()){
       return 0.0;
     }
@@ -33,10 +33,10 @@ namespace nuflux {
   }
 
   double
-  LEFlux::getFlux(particleType type, double energy, double azimuth, double cosZenith) const
+  LEFlux::getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const
   {
 
-    std::map<particleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
+    std::map<ParticleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
 
     if (f == fluxes_.end()){
       return 0.0;

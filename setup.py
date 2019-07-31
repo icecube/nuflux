@@ -3,8 +3,7 @@ import numpy
 
 extension = Extension(
     'nuflux._nuflux',
-    ['src/library/particleType.cpp',
-     'src/library/logging.cpp',
+    ['src/library/logging.cpp',
      'src/library/SplineFlux.cpp',
      'src/library/LegacyPromptFlux.cpp',
      'src/library/LegacyConventionalFlux.cpp',
@@ -15,7 +14,7 @@ extension = Extension(
      'src/pybindings/module.cxx',
     ],
     include_dirs=['src/include',numpy.get_include()],
-    libraries=['hdf5','boost_python27','photospline'],
+    libraries=['boost_python27','photospline'],
     extra_compile_args=['-std=c++11','-DUSE_NUMPY'],
     )
 

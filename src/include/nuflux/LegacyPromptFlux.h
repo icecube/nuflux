@@ -33,14 +33,14 @@ namespace nuflux{
     };
     friend std::istream& operator>>(std::istream&, kneeFunction&);
     
-    std::map<particleType,component> components;
+    std::map<ParticleType,component> components;
     kneeFunction kneeCorrection;
   public:
     LegacyPromptFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
-    virtual double getFlux(particleType type, double energy, double cosZenith) const;
+    virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     
     virtual void setKneeReweightingModel(std::string reweightModel);
   };

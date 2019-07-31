@@ -21,10 +21,10 @@ namespace nuflux{
     FluxFunction(fluxName),
     KneeReweightable("none"),
     PionKaonAdjustable(1.0,1.0){
-    components[I3Particle::NuMu]=readConvComponent(fluxName+"_numu.dat");
-    components[I3Particle::NuMuBar]=readConvComponent(fluxName+"_numubar.dat");
-    components[I3Particle::NuE]=readConvComponent(fluxName+"_nue.dat");
-    components[I3Particle::NuEBar]=readConvComponent(fluxName+"_nuebar.dat");
+    components[NuMu]   =readConvComponent(fluxName+"_numu.dat");
+    components[NuMuBar]=readConvComponent(fluxName+"_numubar.dat");
+    components[NuE]    =readConvComponent(fluxName+"_nue.dat");
+    components[NuEBar] =readConvComponent(fluxName+"_nuebar.dat");
     //this looks dumb but is actually necessary to enforce the continuity constraint
     setRelativePionContribution(getRelativePionContribution());
     setRelativeKaonContribution(getRelativeKaonContribution());
@@ -34,11 +34,11 @@ namespace nuflux{
     return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<LegacyConventionalFlux>(fluxName)));
   }
   
-  double LegacyConventionalFlux::getFlux(particleType type, double energy, double cosZenith) const{
+  double LegacyConventionalFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     //as a special case, allow tau neutrinos, but always return zero flux for them
-    if(type==I3Particle::NuTau || type==I3Particle::NuTauBar)
+    if(type==NuTau || type==NuTauBar)
       return(0);
-    std::map<particleType,component>::const_iterator it=components.find(type);
+    std::map<ParticleType,component>::const_iterator it=components.find(type);
     if(it==components.end())
       throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
     return(it->second.getFlux(energy,cosZenith)*kneeCorrection(energy));
@@ -192,14 +192,14 @@ namespace nuflux{
   
   void LegacyConventionalFlux::setRelativePionContribution(double adjust){
     pionAdjust=adjust;
-    for(std::map<particleType,component>::iterator it=components.begin(), end=components.end();
+    for(std::map<ParticleType,component>::iterator it=components.begin(), end=components.end();
         it!=end; it++)
       it->second.adjustPionKaonRatio(pionAdjust,kaonAdjust);
   }
   
   void LegacyConventionalFlux::setRelativeKaonContribution(double adjust){
     kaonAdjust=adjust;
-    for(std::map<particleType,component>::iterator it=components.begin(), end=components.end();
+    for(std::map<ParticleType,component>::iterator it=components.begin(), end=components.end();
         it!=end; it++)
       it->second.adjustPionKaonRatio(pionAdjust,kaonAdjust);
   }
