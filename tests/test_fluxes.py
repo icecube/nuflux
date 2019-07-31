@@ -1,3 +1,6 @@
+
+# These values were taken from the output of http://code.icecube.wisc.edu/svn/sandbox/cweaver/NuFlux r174894
+
 data = {
 'CORSIKA_GaisserH3a_QGSJET-II': {
     'none': {
