@@ -22,9 +22,10 @@ extension = Extension(
 setup(
     name="NuFlux",
     version = "0.0.1",
-    package_data={"nuflux":["data/*/*.fits",'data/*/*.dat']},
     packages=find_packages(),
-    ext_modules=[extension],
+    ext_modules=[extension],    
+    package_data={"nuflux":["data/*/*.fits",'data/*/*.dat']},
+    test_suite="tests.test_fluxes",
     zip_safe=False
     )
     
