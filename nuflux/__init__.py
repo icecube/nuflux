@@ -1,7 +1,7 @@
 import sys
 import importlib
 
-cmodule = importlib.import_module("._NuFlux","nuflux")
+cmodule = importlib.import_module("._nuflux","nuflux")
 thismod = sys.modules[__name__]
 for key,value in cmodule.__dict__.items():
     if not key.startswith("_"):

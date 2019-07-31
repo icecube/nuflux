@@ -1,7 +1,7 @@
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/python.hpp>
 #include <boost/python/to_python_converter.hpp>
-#include <nuflux/NewNuFlux.h>
+#include <nuflux/nuflux.h>
 
 namespace bp = boost::python;
 
@@ -140,7 +140,7 @@ namespace NewNuFlux{
   }
 }
 
-BOOST_PYTHON_MODULE(_NuFlux)
+BOOST_PYTHON_MODULE(_nuflux)
 {  
 #ifdef USE_NUMPY
   import_array();

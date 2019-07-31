@@ -2,7 +2,7 @@ from setuptools import setup, Extension ,find_packages
 import numpy
 
 extension = Extension(
-    'nuflux._NuFlux',
+    'nuflux._nuflux',
     ['src/library/particleType.cpp',
      'src/library/logging.cpp',
      'src/library/SplineFlux.cpp',
@@ -20,7 +20,7 @@ extension = Extension(
     )
 
 setup(
-    name="NuFlux",
+    name="nuflux",
     version = "0.0.1",
     packages=find_packages(),
     ext_modules=[extension],    

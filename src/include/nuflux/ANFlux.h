@@ -2,7 +2,7 @@
 #define ANFLUX_H
 
 #include <photospline/splinetable.h>
-#include <nuflux/NewNuFlux.h>
+#include <nuflux/nuflux.h>
 
 namespace NewNuFlux{
   

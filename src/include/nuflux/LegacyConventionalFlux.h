@@ -1,7 +1,7 @@
 #ifndef LEGACYCONVENTIONALFLUX_H
 #define LEGACYCONVENTIONALFLUX_H
 
-#include <nuflux/NewNuFlux.h>
+#include <nuflux/nuflux.h>
 #include <iosfwd>
 #include <map>
 

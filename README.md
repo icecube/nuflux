@@ -1,2 +1,2 @@
-# nuFlux
+# nuflux
 Repository of neutrino fluxes.

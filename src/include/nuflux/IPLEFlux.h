@@ -1,7 +1,7 @@
 #ifndef NEWNUFLUX_LEFLUX_H
 #define NEWNUFLUX_LEFLUX_H
 
-#include <nuflux/NewNuFlux.h>
+#include <nuflux/nuflux.h>
 
 namespace NewNuFlux{
 

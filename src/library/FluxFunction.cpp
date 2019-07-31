@@ -1,4 +1,4 @@
-#include <nuflux/NewNuFlux.h>
+#include <nuflux/nuflux.h>
 #include <iostream>
 
 namespace NewNuFlux{
