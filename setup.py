@@ -11,6 +11,7 @@ extension = Extension(
      'src/library/LEFlux.cpp',
      'src/library/IPLEFlux.cpp',
      'src/library/FluxFunction.cpp',
+     'src/pybindings/detail.cxx',     
      'src/pybindings/module.cxx',
     ],
     include_dirs=['src/include',numpy.get_include()],
