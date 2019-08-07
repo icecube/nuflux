@@ -1,3 +1,4 @@
+#include <boost/foreach.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/python.hpp>
 #include <boost/python/to_python_converter.hpp>
@@ -63,6 +64,26 @@ getFlux(const nuflux::FluxFunction &self, bp::object ptype_obj, bp::object energ
 }
 #endif
 
+bp::list available_fluxes_list()
+{
+  std::vector<std::string> ss  = nuflux::availableFluxes();
+  bp::list ret;
+  BOOST_FOREACH(const std::string& s, ss) {
+    ret.append(s);
+  }
+  return ret;
+}
+
+bp::list knees_for_flux_list(std::string model)
+{
+  std::vector<std::string> ss  = nuflux::kneesForFlux(model);
+  bp::list ret;
+  BOOST_FOREACH(const std::string& s, ss) {
+    ret.append(s);
+  }
+  return ret;
+}
+
 bool isStandAlone=true;
 
 void
@@ -71,8 +92,8 @@ register_FluxFunction()
   using namespace nuflux;
   
   bp::def("makeFlux", &makeFlux, "Instantiate and return a flux model");
-  bp::def("availableFluxes", &availableFluxes, "Get a list of valid flux model names");
-  bp::def("kneesForFlux", &kneesForFlux, "Get a list of valid knee-reweighting scheme names for the given model");
+  bp::def("availableFluxes", &available_fluxes_list, "Get a list of valid flux model names");
+  bp::def("kneesForFlux", &knees_for_flux_list, "Get a list of valid knee-reweighting scheme names for the given model");
   bp::def("printModels", &printModels, "Print a list of models to stdout");
   
   bp::class_<FluxFunction, boost::shared_ptr<FluxFunction>, boost::noncopyable>("FluxFunction", bp::no_init)
