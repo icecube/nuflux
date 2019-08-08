@@ -63,7 +63,7 @@ foreach v : ['2','3']
     '_nuflux',
     ['src/pybindings/module.cxx'],
     include_directories :inc,
-    dependencies : [pydep, boost_python],
+    dependencies : [photospline,pydep, boost_python],
     link_with : libnuflux,
     install_dir : python.get_install_dir(),
     install:true,
