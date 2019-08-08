@@ -2,11 +2,8 @@ project('nuflux', 'cpp',
         version : '0.0.1',
         default_options : ['cpp_std=c++11'])
 
-cppcomp = meson.get_compiler('cpp')
-photospline  = cppcomp.find_library('photospline')
-boost_python = cppcomp.find_library('boost_python27-mt')
-cfitsio = dependency('cfitsio', method : 'pkg-config')
-python = import('python').find_installation('python2')
+cfitsio = dependency('cfitsio')
+photospline = dependency('photospline', method : 'cmake')
 
 datadir = get_option('prefix') / get_option('datadir') / meson.project_name()
 conf_data = configuration_data()
@@ -36,21 +33,40 @@ libnuflux = library(
   dependencies : [photospline,cfitsio],
   install : true)
 
-python.extension_module(
-  '_nuflux',
-  ['src/pybindings/module.cxx'],
-  include_directories :inc,
-  dependencies : [python.dependency(),
-                  boost_python],
-  link_with : libnuflux,
-  install_dir : python.get_install_dir(),
-  install:true,
-)
-
 pkg_mod = import('pkgconfig')
-pkg_mod.generate(libraries : libnuflux,
-                 version : meson.project_version(),
-                 name : meson.project_name(),
-                 filebase :  meson.project_name(),
-                 url : 'https://github.com/IceCubeOpenSource/nuflux',
-                 description : 'A collection of routines for caluclating atmospheric neutrino fluxes')
+pkg_mod.generate(
+  libraries : libnuflux,
+  version : meson.project_version(),
+  name : meson.project_name(),
+  filebase :  meson.project_name(),
+  url : 'https://github.com/IceCubeOpenSource/nuflux',
+  description : 'A library for calculating atmospheric neutrino fluxes')
+
+cppcomp = meson.get_compiler('cpp')
+pymod = import('python')
+
+foreach v : ['2','3']
+  python = pymod.find_installation('python'+v,disabler:true,required:false)
+  pydep = python.dependency()
+  boost_python = cppcomp.find_library(
+    'boost_python'+''.join(python.language_version().split('.')),
+    disabler:true,required:false )
+
+  if python.found() and boost_python.found()
+    message( 'Building package for python version '+python.language_version())
+  else
+    warning( 'Can\'t find dependencies for python '+v+
+             ', Skipping python package')
+  endif
+  
+  python.extension_module(
+    '_nuflux',
+    ['src/pybindings/module.cxx'],
+    include_directories :inc,
+    dependencies : [pydep, boost_python],
+    link_with : libnuflux,
+    install_dir : python.get_install_dir(),
+    install:true,
+  )
+endforeach
+  
