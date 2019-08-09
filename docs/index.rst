@@ -6,7 +6,7 @@
 nuflux
 ======
 
-A library for calculating atmospheric neutrino fluxes
+Nuflux is a library for calculating atmospheric neutrino fluxes.
 
 .. toctree::
    :maxdepth: 2
