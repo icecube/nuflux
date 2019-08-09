@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 # These values were taken from the output of http://code.icecube.wisc.edu/svn/sandbox/cweaver/NuFlux r174894
 low_energy_data = {
     'IPhonda2006_sno_solmin': {
