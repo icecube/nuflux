@@ -8,7 +8,6 @@ extension = Extension(
      'src/library/LegacyPromptFlux.cpp',
      'src/library/LegacyConventionalFlux.cpp',
      'src/library/ANFlux.cpp',
-     'src/library/LEFlux.cpp',
      'src/library/IPLEFlux.cpp',
      'src/library/FluxFunction.cpp',
      'src/pybindings/detail.cxx',     

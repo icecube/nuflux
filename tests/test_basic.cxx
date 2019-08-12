@@ -17,7 +17,6 @@ map<string, double> values = {
   {"IPhonda2014_spl_solmin",        5.04902e-11},
   {"bartol",                        5.48218e-11},
   {"honda2006",                     4.64762e-11},
-  {"honda2012_spl_solmin",                    0},
   {"sarcevic_max",                  3.85434e-14},
   {"sarcevic_min",                  1.67841e-14},
   {"sarcevic_std",                   3.1054e-14},
@@ -29,9 +28,6 @@ int main(){
   vector<string> fluxes = nuflux::availableFluxes();
 
   for (vector<string>::iterator it = fluxes.begin() ; it != fluxes.end(); ++it){
-    if (*it=="honda2012_spl_solmin") {
-        continue;
-      }
     boost::shared_ptr<nuflux::FluxFunction> flux(nuflux::makeFlux(*it));
     double f=flux->getFlux(nuflux::NuMu,1e3,0);
     bool pass = abs(f - values[*it])/f < 1e-5 ;

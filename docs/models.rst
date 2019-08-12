@@ -51,9 +51,6 @@ Alternative Knee Models: ``gaisserH3a_elbert``, ``gaisserH4a_elbert``, ``gst13_e
 Honda *et al.*, Phys. Rev. D **75**, 043006 (2007).
 `astro-ph/0611418 <http://arxiv.org/abs/astro-ph/0611418>`_.
 
-honda2012_spl_solmin
---------------------
-
 sarcevic
 --------
 |  Variants: ``sarcevic_max``, ``sarcevic_min``, ``sarcevic_std``

@@ -23,7 +23,6 @@ libnuflux = library(
   'src/library/LegacyConventionalFlux.cpp',
   'src/library/SplineFlux.cpp',
   'src/library/FluxFunction.cpp',
-  'src/library/LEFlux.cpp',
   'src/library/LegacyPromptFlux.cpp',
   'src/library/logging.cpp',
   'src/library/detail.cpp',
