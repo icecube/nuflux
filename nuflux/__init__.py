@@ -1,13 +1,9 @@
-import sys
-import importlib
+__all__ = ['FluxFunction', 'KneeReweightable', 'LegacyConventionalFlux', 'LegacyPromptFlux',
+           'NuE', 'NuEBar', 'NuMu', 'NuMuBar', 'NuTau', 'NuTauBar', 'ParticleType',
+           'PionKaonAdjustable', 'SplineFlux', 'availableFluxes', 'kneesForFlux',
+           'makeFlux', 'printModels', 'stand_alone']
 
-cmodule = importlib.import_module("._nuflux","nuflux")
-thismod = sys.modules[__name__]
-for key,value in cmodule.__dict__.items():
-    if not key.startswith("_"):
-        thismod.__dict__[key] = value
-
-del sys,importlib,cmodule,thismod,key,value
-
-
-
+from ._nuflux import FluxFunction, KneeReweightable, LegacyConventionalFlux, LegacyPromptFlux
+from ._nuflux import NuE, NuEBar, NuMu, NuMuBar, NuTau, NuTauBar, ParticleType
+from ._nuflux import PionKaonAdjustable, SplineFlux, availableFluxes, kneesForFlux
+from ._nuflux import makeFlux, printModels, stand_alone
