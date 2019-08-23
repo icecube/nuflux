@@ -5,7 +5,7 @@ Nuflux is a library for calculating atmospheric neutrino fluxes.
 ## Prerequisites
 
 * cfitsio
-* phosospline
+* photospline
 * boost_python
 
 ## Installation
