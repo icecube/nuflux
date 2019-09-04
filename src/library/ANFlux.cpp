@@ -13,7 +13,19 @@ ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
   evaluator = boost::make_shared<Evaluator>(numufile);
   fluxes_[NuMu] = evaluator;
   fluxes_[NuMuBar] = evaluator;
+
+  emin_ = pow(10,std::nextafter(evaluator->GetExtents(0).first,std::numeric_limits<double>::infinity())) ;
+  emax_ = pow(10,evaluator->GetExtents(0).second) ;  
 }
+
+  double ANFlux::getMinEnergy() const{
+    return emin_;
+  }
+  double ANFlux::getMaxEnergy() const{
+    return emax_;
+  }
+
+
 
 boost::shared_ptr<FluxFunction>
 ANFlux::makeFlux(const std::string& fluxName)

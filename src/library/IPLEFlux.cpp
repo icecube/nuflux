@@ -81,7 +81,7 @@ namespace nuflux{
   }
 
   double IntegralPreservingFlux::getMinEnergy() const{
-    return 0;
+    return 1;
   }
 
   double IntegralPreservingFlux::getMaxEnergy() const{

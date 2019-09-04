@@ -51,6 +51,19 @@ namespace nuflux{
     
     return(is);
   }
+
+
+  double LegacyPromptFlux::getMinEnergy() const{
+    double emin= std::numeric_limits<double>::min();
+    for (auto comp=components.begin(); comp!=components.end(); comp++){
+      emin = std::max(emin,comp->second.eMin);
+    }        
+    return emin;
+  }
+  
+  double LegacyPromptFlux::getMaxEnergy() const{
+    return 1e9;//just a guess here
+  }
   
   double LegacyPromptFlux::component::getFlux(double energy, double cosZenith) const{
     if(energy<eMin) //never compute fluxes below the minimum energy

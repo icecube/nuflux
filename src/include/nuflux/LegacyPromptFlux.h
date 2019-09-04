@@ -11,12 +11,13 @@ namespace nuflux{
   private:
     class component{
     private:
-      //The minimum energy for which this parameterization is considered valid
-      double eMin;
       ///These are the coefficients for the degree 5 polynomial in cos(zenith) and log10(energy)
       double coeffs[15];
       friend std::istream& operator>>(std::istream&,component&);
     public:
+      //The minimum energy for which this parameterization is considered valid
+      double eMin;
+      
       //energy should be in GeV
       double getFlux(double energy, double cosZenith) const;
     };
@@ -36,6 +37,10 @@ namespace nuflux{
     std::map<ParticleType,component> components;
     kneeFunction kneeCorrection;
   public:
+    
+    double getMinEnergy() const;
+    double getMaxEnergy() const;
+
     LegacyPromptFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     

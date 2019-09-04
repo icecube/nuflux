@@ -13,6 +13,8 @@ namespace nuflux{
     
     virtual void setKneeReweightingModel(std::string reweightModel)=0;
     std::string getKneeReweightingModel() const{ return(kneeCorrectionName); }
+
+    virtual ~KneeReweightable() {}
   };
   
   class PionKaonAdjustable{
@@ -32,6 +34,8 @@ namespace nuflux{
     ///\param adjust the factor by which to increase the kaon contribution
     virtual void setRelativeKaonContribution(double adjust)=0;
     double getRelativeKaonContribution() const{ return(kaonAdjust); }
+
+    virtual ~PionKaonAdjustable(){}
   };
   
   namespace detail{

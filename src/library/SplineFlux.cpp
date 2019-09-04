@@ -5,6 +5,14 @@
 #include <nuflux/SplineFlux.h>
 
 namespace nuflux{
+
+  double SimpleSplineFlux::getMinEnergy()const{
+    return 1e2;
+  }
+
+  double SimpleSplineFlux::getMaxEnergy()const{
+    return 1e9;
+  }      
   
   SimpleSplineFlux::SimpleSplineFlux(const std::string& fluxName):
     FluxFunction(fluxName){

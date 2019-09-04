@@ -13,6 +13,8 @@ namespace nuflux{
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
+    double getMinEnergy() const;
+    double getMaxEnergy() const;
     
   private:
     class Evaluator{
@@ -27,7 +29,8 @@ namespace nuflux{
       std::pair<double, double> GetExtents(size_t dim) const;
       double operator()(double energy, double cosZenith) const;
     };
-    
+
+    double emin_,emax_;    
     std::map<ParticleType, boost::shared_ptr<Evaluator> > fluxes_;
   };
   
