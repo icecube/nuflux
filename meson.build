@@ -48,21 +48,30 @@ pkg_mod.generate(
 cppcomp = meson.get_compiler('cpp')
 pymod = import('python')
 
-foreach v : ['2','3']
-  python = pymod.find_installation('python'+v,disabler:true,required:false)
+foreach v : ['2']
+  python = pymod.find_installation('python'+v,modules : ['numpy'],disabler:true,required:false)
+  numpy = run_command(python,'-c','import numpy;print(numpy.get_include())')
+  if numpy.returncode()==0
+    message ('Numpy found: '+ numpy.stdout())
+    pybind_inc = include_directories(numpy.stdout().strip())
+  else
+    message ('Numpy not found: building without arrays')
+    pybind_inc = include_directories()
+  endif
+  
   pydep = python.dependency()
   boost_python = cppcomp.find_library(
     'boost_python'+''.join(python.language_version().split('.')),
     disabler:true,required:false )
   if python.found() and boost_python.found()
     message( 'Building package for python version '+python.language_version() + ': ' + python.get_install_dir())
-
+    
     python.install_sources('nuflux/__init__.py',subdir:'nuflux')
     
     python.extension_module(
       '_nuflux',
       ['src/pybindings/module.cxx'],
-      include_directories :inc,
+      include_directories : [inc,pybind_inc],
       dependencies : [photospline,pydep, boost_python],
       link_with : libnuflux,
       install_dir : python.get_install_dir() / 'nuflux',
