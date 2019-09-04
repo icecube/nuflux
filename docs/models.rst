@@ -3,6 +3,9 @@
 Neutrino Flux Models
 ====================
 
+
+.. image:: nuflux_models.svg
+
 The following is a list of models supported by nuflux.
 
 
@@ -38,7 +41,7 @@ IPhonda2014_spl_solmin
 bartol
 ------
 
-The interaction model is published in Barr *et al.* and tables are available from `Here <http://www-pnp.physics.ox.ac.uk/%7Ebarr/fluxfiles/0408i/index.html>`_.
+The interaction model is published in Barr *et al.* and tables are available from `Barr's web page <http://www-pnp.physics.ox.ac.uk/%7Ebarr/fluxfiles/0408i/index.html>`_.
 
 |  Barr *et al.*, Phys. Rev. D **70**, 023006 (2004). `astro-ph/0403630 <https://arxiv.org/abs/astro-ph/0403630>`_.
 |  Barr *et al.*, 28th International Cosmic Ray Conferenece (ICRC2003) 1411. `PDF <http://www-rccn.icrr.u-tokyo.ac.jp/icrc2003/PROCEEDINGS/PDF/351.pdf>`_.
