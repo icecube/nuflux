@@ -26,5 +26,19 @@ setup(
     package_data={"nuflux":["data/*/*.fits",'data/*/*.dat']},
     test_suite="tests.test_fluxes",
     zip_safe=False
-    )
+    keywords = [
+        'neutrino', 'cosmic rays','atmospheric neutrinos',
+    ],
+    classifiers = [
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Intended Audience :: Science/Research',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: C++',
+        'Programming Language :: Python',
+        'Topic :: Scientific/Engineering :: Astronomy',
+        'Topic :: Scientific/Engineering :: Physics',
+    ],   
+)
     
