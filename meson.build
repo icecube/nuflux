@@ -49,17 +49,18 @@ cppcomp = meson.get_compiler('cpp')
 pymod = import('python')
 
 foreach v : ['2']
-  python = pymod.find_installation('python'+v,modules : ['numpy'],disabler:true,required:false)
+  python = pymod.find_installation('python'+v,disabler:true,required:false)
+  pydep = python.dependency()
+  
   numpy = run_command(python,'-c','import numpy;print(numpy.get_include())')
   if numpy.returncode()==0
-    message ('Numpy found: '+ numpy.stdout())
     pybind_inc = include_directories(numpy.stdout().strip())
+    message ('Numpy found: '+ numpy.stdout().strip())    
   else
-    message ('Numpy not found: building without arrays')
+    warning ('Numpy not found: building without arrays')
     pybind_inc = include_directories()
   endif
   
-  pydep = python.dependency()
   boost_python = cppcomp.find_library(
     'boost_python'+''.join(python.language_version().split('.')),
     disabler:true,required:false )
