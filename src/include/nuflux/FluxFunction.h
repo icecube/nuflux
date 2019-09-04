@@ -41,6 +41,10 @@ namespace nuflux{
     virtual double getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
       return (getFlux( type, energy, cosZenith));
     }
+
+    virtual double getMinEnergy() const{ return NAN;}
+    virtual double getMaxEnergy() const{ return NAN;}
+    
     
   protected:
     std::string name;

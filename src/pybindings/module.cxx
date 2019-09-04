@@ -84,6 +84,13 @@ bp::list knees_for_flux_list(std::string model)
   return ret;
 }
 
+
+bp::tuple energy_range(const nuflux::FluxFunction& flux){
+  return bp::make_tuple(flux.getMinEnergy(),flux.getMaxEnergy());
+}
+  
+
+
 bool isStandAlone=true;
 
 void
@@ -110,6 +117,8 @@ register_FluxFunction()
          ":returns: a differential flux in units of 1/GeV cm^2 sr s",
          (bp::args("particle_type"), "energy", "cos_zen"))
     .add_property("name", &FluxFunction::getName)
+    .add_property("energy_range",&energy_range)    
+    
     ;
   
   bp::class_<KneeReweightable, boost::shared_ptr<KneeReweightable>, boost::noncopyable>("KneeReweightable", bp::no_init)

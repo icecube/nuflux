@@ -3,6 +3,12 @@
 #include <boost/make_shared.hpp>
 #include "nuflux/LegacyConventionalFlux.h"
 
+
+namespace {
+  const double MIN_ENERGY = 10;
+  const double MAX_ENERGY = 1e9;
+}
+ 
 namespace nuflux{
   LegacyConventionalFlux::component readConvComponent(const std::string& fname){
     
@@ -32,6 +38,13 @@ namespace nuflux{
   
   boost::shared_ptr<FluxFunction> LegacyConventionalFlux::makeFlux(const std::string& fluxName){
     return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<LegacyConventionalFlux>(fluxName)));
+  }
+
+  double LegacyConventionalFlux::getMinEnergy() const{
+    return MIN_ENERGY;
+  }    
+  double LegacyConventionalFlux::getMaxEnergy() const{
+    return MAX_ENERGY;
   }
   
   double LegacyConventionalFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
@@ -123,10 +136,10 @@ namespace nuflux{
     else
       return(lowECutoffs[3]);
   }
-  
+
   double LegacyConventionalFlux::component::getFlux(double energy, double cosZenith) const{
     //never compute fluxes outside this energy range
-    if(energy<10 || energy>1e9){
+    if(energy<MIN_ENERGY || energy>MAX_ENERGY){
       log_warn("The flux value is outside the valid energy range");
       return(0.0);
     }

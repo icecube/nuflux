@@ -12,6 +12,9 @@ namespace nuflux{
     IntegralPreservingFlux(const std::string& fluxName);
     
     virtual ~IntegralPreservingFlux();
+
+    virtual double getMinEnergy() const;
+    virtual double getMaxEnergy() const;
     
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     virtual double getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const;

@@ -90,6 +90,8 @@ namespace nuflux{
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
+    virtual double getMinEnergy() const;    
+    virtual double getMaxEnergy() const;
     
     virtual void setRelativePionContribution(double adjust);
     virtual void setRelativeKaonContribution(double adjust);
