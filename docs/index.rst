@@ -1,18 +1,14 @@
-.. nuflux documentation master file, created by
-   sphinx-quickstart on Thu Aug  8 11:38:06 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 nuflux
 ======
 
-Nuflux is a library for calculating atmospheric neutrino fluxes.
+Nuflux is a library for evaluating atmospheric neutrino flux models. 
 
 .. toctree::
    :maxdepth: 1
    :caption: Contents:
 
 
+   usage
    models
    pythonapi
    about   
