@@ -12,9 +12,10 @@ Nuflux is a library for calculating atmospheric neutrino fluxes.
    :maxdepth: 1
    :caption: Contents:
 
-   about
+
    models
    pythonapi
+   about   
 
 
 Indices and tables
