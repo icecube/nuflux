@@ -1,5 +1,6 @@
 
 
+
 Neutrino Flux Models
 ====================
 
@@ -8,6 +9,7 @@ Neutrino Flux Models
 
 The following is a list of models supported by nuflux.
 
+.. _BERSS_H3a:
 
 BERSS_H3a
 ---------
@@ -16,8 +18,10 @@ Variants: ``BERSS_H3a_central``
 
 The prompt atmospheric calculation from  Bhattacharya *et al.* assuming the Gaisser H3a cosmic ray spectrum as input. The version included in this library was obtained by fitting a spline to data supplied by the authors of that paper to Joanna Kiryluk on or about 2015-02-09 with the following assumptions: 1) The flux is independent of zenith angle 2) The flux is the same for all flavors of neutrinos (and antineutrinos) except nu_tau, for which it is zero.
 
-Bhattacharya *et al.* J., High Energ. Phys. **2015**, 110 (2015).
+Bhattacharya *et al.*, J. High Energ. Phys. **2015**, 110 (2015).
 `arXiv:1502.01076 <https://arxiv.org/abs/1502.01076>`_.
+
+.. _BERSS_H3p:
 
 BERSS_H3p
 ---------
@@ -26,17 +30,25 @@ Variants: ``BERSS_H3p_central``, ``BERSS_H3p_lower``, ``BERSS_H3p_upper``
 
 The family of prompt atmospheric calculation from Bhattacharya *et al.* assuming the 'Gaisser H3p' (all proton) cosmic ray spectrum as input. These fluxes represent the lower, central and upper points on the error band due to QCD uncertainties (cosmic ray flux uncertainties are not included) obtained in that paper. The version given here is constructed in the same manner as for BERSS_H3a_central (with the same assumptions about the angular distribution and neutrino flavors).
 
+.. _CORSIKA_GaisserH3a:
+
 CORSIKA_GaisserH3a
 ------------------
 
 Variants: ``CORSIKA_GaisserH3a_QGSJET-II``, ``CORSIKA_GaisserH3a_SIBYLL-2.1``, ``CORSIKA_GaisserH3a_average``
 
 
+.. _IPhonda2006_sno_solmin:
+
 IPhonda2006_sno_solmin
 ----------------------
 
+.. _IPhonda2014_spl_solmin:
+
 IPhonda2014_spl_solmin
 ----------------------
+
+.. _bartol:
 
 bartol
 ------
@@ -45,7 +57,8 @@ The interaction model is published in Barr *et al.* and tables are available fro
 
 |  Barr *et al.*, Phys. Rev. D **70**, 023006 (2004). `astro-ph/0403630 <https://arxiv.org/abs/astro-ph/0403630>`_.
 |  Barr *et al.*, 28th International Cosmic Ray Conferenece (ICRC2003) 1411. `PDF <http://www-rccn.icrr.u-tokyo.ac.jp/icrc2003/PROCEEDINGS/PDF/351.pdf>`_.
-   
+
+.. _honda2006:
 
 honda2006
 ---------
@@ -55,6 +68,8 @@ Original tables from `Honda's web page <http://www.icrr.u-tokyo.ac.jp/~mhonda/>`
 
 Honda *et al.*, Phys. Rev. D **75**, 043006 (2007).
 `astro-ph/0611418 <http://arxiv.org/abs/astro-ph/0611418>`_.
+
+.. _sarcevic:
 
 sarcevic
 --------

@@ -1,5 +1,5 @@
-Usage
-=====
+Overview
+========
 
 Nuflux is a library for evaluating various atmospheric neutrino flux models.
 Models for atmospheric neutrinos are often released as tables binned in neutrino energy, :math:`E_\nu` and zenith angle :math:`\theta_\nu`.
@@ -19,19 +19,6 @@ Several things to note before beginning:
 * All fluxes are assumed to be symmetrical between down-going and up-going.
 * Time dependent effects like solar modulation or seasonal variations on cosmic ray air showers are not included. Solar modulation is only relevant below 10 GeV
 * For prompt neutrino models :math:`\nu_\mu`, :math:`\bar{\nu}_\mu`, :math:`\nu_e`, and :math:`\bar{\nu}_e` are all assumed to be equal to eachother, :math:`\nu_\tau` and :math:`\bar{\nu}_\tau` are different from the other flavors bur are equal to each other, only a single model for charm and beauty decays is considered.
-
-
-
-Interpolation Methods
----------------------
-
-For atmospheric conventional neutrinos a 15 parameter fit of the provided table up to about 700 GeV.
-The provided models only provide values up to 1 TeV, to extend the model to higher energy the tables
-are fit to the analytic model of T. Gaisser.
-
-|  Gaisser and Honda, *Ann. Rev. Nucl. Part. Sci.* **52**, 153 (2002). `hep-ph/0203272 <https://arxiv.org/abs/hep-ph/0203272>`_.
-|  Gaisser, *Cosmic Rays and Particle Physics*, Cambrige University Press, 1990, p. 88.
-
 
 Particle Encoding
 -----------------
