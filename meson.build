@@ -33,6 +33,7 @@ libnuflux = library(
 test('test_basic',
      executable('test_basic',
                 'tests/test_basic.cxx',
+                dependencies : [photospline,cfitsio],   
                 include_directories : inc,
                 link_with:libnuflux))
 
@@ -70,13 +71,6 @@ else
     'boost_python'+''.join(python.language_version().split('.')),
     required:false,
     dirs:get_option('boost_python_dirs'))
-
-  if not boost_python.found()
-    boost_python = cppcomp.find_library(
-      'boost_python',
-      required:false,
-      dirs:get_option('boost_python_dirs'))
-   endif
   
   if not boost_python.found()
     warning( 'Can\'t find boost python, Skipping python build')
@@ -84,14 +78,17 @@ else
     
     py_install_dir=get_option('python_install_dir')
     if py_install_dir==''
-      py_install_dir = python.get_install_dir() / 'nuflux'
+      py_install_dir = python.get_install_dir()
     endif
+    py_install_dir = py_install_dir / 'nuflux'
+
     
     message( 'Building package for python version ' +
              python.language_version() + ': ' + py_install_dir)   
     
     python.install_sources('nuflux/__init__.py',
-                           subdir: py_install_dir / 'nuflux')
+                           subdir: py_install_dir,
+                           )
     
     python.extension_module(
       '_nuflux',
@@ -99,7 +96,7 @@ else
       include_directories : [inc,pybind_inc],
       dependencies : [photospline,pydep, boost_python],
       link_with : libnuflux,
-      install_dir : py_install_dir / 'nuflux',
+      install_dir : py_install_dir,
       install:true)
 
     test('test_fluxes',find_program('tests/test_fluxes.py'))
