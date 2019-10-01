@@ -47,11 +47,15 @@ pkg_mod.generate(
 
 cppcomp = meson.get_compiler('cpp')
 pymod = import('python')
+python = pymod.find_installation(get_option('python_name'),
+                                 required:false)
 
-foreach v : ['2']
-  python = pymod.find_installation('python'+v,disabler:true,required:false)
+if not python.found()
+  warning('Can\'t find python: "'+get_option('python_name')+'", skipping python build')
+else 
   pydep = python.dependency()
-  
+
+  # Find numpy
   numpy = run_command(python,'-c','import numpy;print(numpy.get_include())')
   if numpy.returncode()==0
     pybind_inc = include_directories(numpy.stdout().strip())
@@ -60,14 +64,34 @@ foreach v : ['2']
     warning ('Numpy not found: building without arrays')
     pybind_inc = include_directories()
   endif
-  
+
+  #find boost python
   boost_python = cppcomp.find_library(
     'boost_python'+''.join(python.language_version().split('.')),
-    disabler:true,required:false )
-  if python.found() and boost_python.found()
-    message( 'Building package for python version '+python.language_version() + ': ' + python.get_install_dir())
+    required:false,
+    dirs:get_option('boost_python_dirs'))
+
+  if not boost_python.found()
+    boost_python = cppcomp.find_library(
+      'boost_python',
+      required:false,
+      dirs:get_option('boost_python_dirs'))
+   endif
+  
+  if not boost_python.found()
+    warning( 'Can\'t find boost python, Skipping python build')
+  else
     
-    python.install_sources('nuflux/__init__.py',subdir:'nuflux')
+    py_install_dir=get_option('python_install_dir')
+    if py_install_dir==''
+      py_install_dir = python.get_install_dir() / 'nuflux'
+    endif
+    
+    message( 'Building package for python version ' +
+             python.language_version() + ': ' + py_install_dir)   
+    
+    python.install_sources('nuflux/__init__.py',
+                           subdir: py_install_dir / 'nuflux')
     
     python.extension_module(
       '_nuflux',
@@ -75,14 +99,11 @@ foreach v : ['2']
       include_directories : [inc,pybind_inc],
       dependencies : [photospline,pydep, boost_python],
       link_with : libnuflux,
-      install_dir : python.get_install_dir() / 'nuflux',
+      install_dir : py_install_dir / 'nuflux',
       install:true)
 
     test('test_fluxes',find_program('tests/test_fluxes.py'))
     
-  else
-    warning( 'Can\'t find dependencies for python '+v+
-             ', Skipping python package')
   endif
-endforeach
-  
+
+endif  

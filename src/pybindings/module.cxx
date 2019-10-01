@@ -159,7 +159,7 @@ register_FluxFunction()
 BOOST_PYTHON_MODULE(_nuflux)
 {  
 #ifdef USE_NUMPY
-  import_array();
+  import_array1();
 #endif  
   register_FluxFunction();
 }
