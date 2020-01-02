@@ -37,16 +37,60 @@ CORSIKA_GaisserH3a
 
 Variants: ``CORSIKA_GaisserH3a_QGSJET-II``, ``CORSIKA_GaisserH3a_SIBYLL-2.1``, ``CORSIKA_GaisserH3a_average``
 
+This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculation. A large Monte Carlo set of a modified verison of CORSIKA (v. 7.4003), to allow for the shower output to be serialized into ROOT files, was run for different hadronic interaction models. The neutrino flux at various directions was histogramed and then weighted to the Gaisser H3a cosmic-ray flux. Then these histogram were splined using photospline.
+
+For details see `PDF <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/deliver/index/docId/5268/file/diss.pdf>`_.
+
+When using these fluxes please cite
+
+@phdthesis{Shoneberg:2016,
+      author         = “Sch{\"o}neberg, Sebastian”,
+      title          = “{The spectrum of atmospheric neutrinos above GeV energies}“,
+      school         = “Ruhr Universit{\"a}t Bochum”,
+      year           = “2016",
+}
 
 .. _IPhonda2006_sno_solmin:
 
 IPhonda2006_sno_solmin
 ----------------------
 
+Despite being continuous across energy, azimuth angle, and zenith angle, the fluxes commonly used for atmospheric neutrino estimates are provided from models at discrete points in (energy, azimuth, zenith). For models where the data is generated not at specific points but over suitably small ranges of (energy, azimuth, zenith)—such as the Monte Carlo simulation methods from M. Honda—it is important to preserve the integral of the flux over the 3-dimensional voxel as part of the smoothing process. For the Honda fluxes the integral preserving (IP) fluxes were developed by Steven Wren, where “the basic premise is to calculate splines of the integral of the data rather than the data itself. Then, to calculate the interpolated value of the original data at the desired point in the parameter space, one just evaluates the first derivative of these splines.
+
+The tables presented here are based on Honda 2006 location at SNO during the solar minium.
+
+For more details see `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_.
+
+When using these flux please cite
+
+@phdthesis{Wren:2018uoi,
+      author         = “Wren, Steven”,
+      title          = “{Neutrino Mass Ordering Studies with IceCube-DeepCore}“,
+      school         = “University of Manchester”,
+      year           = “2018",
+      SLACcitation   = “%%CITATION = INSPIRE-1765927;%%“,
+}
+
 .. _IPhonda2014_spl_solmin:
 
 IPhonda2014_spl_solmin
 ----------------------
+
+Despite being continuous across energy, azimuth angle, and zenith angle, the fluxes commonly used for atmospheric neutrino estimates are provided from models at discrete points in (energy, azimuth, zenith). For models where the data is generated not at specific points but over suitably small ranges of (energy, azimuth, zenith)—such as the Monte Carlo simulation methods from M. Honda—it is important to preserve the integral of the flux over the 3-dimensional voxel as part of the smoothing process. For the Honda fluxes the integral preserving (IP) fluxes were developed by Steven Wren, where “the basic premise is to calculate splines of the integral of the data rather than the data itself. Then, to calculate the interpolated value of the original data at the desired point in the parameter space, one just evaluates the first derivative of these splines.
+
+The tables presented here are based on Honda 2014 location at south pole during the solar minium.
+
+For more details see `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_.
+
+When using these flux please cite
+
+@phdthesis{Wren:2018uoi,
+      author         = “Wren, Steven”,
+      title          = “{Neutrino Mass Ordering Studies with IceCube-DeepCore}“,
+      school         = “University of Manchester”,
+      year           = “2018",
+      SLACcitation   = “%%CITATION = INSPIRE-1765927;%%“,
+}
 
 .. _bartol:
 
