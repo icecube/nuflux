@@ -1,9 +1,5 @@
-
-
-
 Neutrino Flux Models
 ====================
-
 
 .. image:: nuflux_models.svg
 
@@ -39,16 +35,7 @@ Variants: ``CORSIKA_GaisserH3a_QGSJET-II``, ``CORSIKA_GaisserH3a_SIBYLL-2.1``, `
 
 This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculation. A large Monte Carlo set of a modified verison of CORSIKA (v. 7.4003), to allow for the shower output to be serialized into ROOT files, was run for different hadronic interaction models. The neutrino flux at various directions was histogramed and then weighted to the Gaisser H3a cosmic-ray flux. Then these histogram were splined using photospline.
 
-For details see `PDF <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/deliver/index/docId/5268/file/diss.pdf>`_.
-
-When using these fluxes please cite
-
-@phdthesis{Shoneberg:2016,
-      author         = “Sch{\"o}neberg, Sebastian”,
-      title          = “{The spectrum of atmospheric neutrinos above GeV energies}“,
-      school         = “Ruhr Universit{\"a}t Bochum”,
-      year           = “2016",
-}
+Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, PhD Thesis, Ruhr Universität Bochum, 2016. `PDF <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/deliver/index/docId/5268/file/diss.pdf>`_
 
 .. _IPhonda2006_sno_solmin:
 
@@ -59,17 +46,7 @@ Despite being continuous across energy, azimuth angle, and zenith angle, the flu
 
 The tables presented here are based on Honda 2006 location at SNO during the solar minium.
 
-For more details see `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_.
-
-When using these flux please cite
-
-@phdthesis{Wren:2018uoi,
-      author         = “Wren, Steven”,
-      title          = “{Neutrino Mass Ordering Studies with IceCube-DeepCore}“,
-      school         = “University of Manchester”,
-      year           = “2018",
-      SLACcitation   = “%%CITATION = INSPIRE-1765927;%%“,
-}
+Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", PhD Thesis, University of Manchester, 2018. `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_
 
 .. _IPhonda2014_spl_solmin:
 
@@ -80,17 +57,7 @@ Despite being continuous across energy, azimuth angle, and zenith angle, the flu
 
 The tables presented here are based on Honda 2014 location at south pole during the solar minium.
 
-For more details see `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_.
-
-When using these flux please cite
-
-@phdthesis{Wren:2018uoi,
-      author         = “Wren, Steven”,
-      title          = “{Neutrino Mass Ordering Studies with IceCube-DeepCore}“,
-      school         = “University of Manchester”,
-      year           = “2018",
-      SLACcitation   = “%%CITATION = INSPIRE-1765927;%%“,
-}
+Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", PhD Thesis, University of Manchester, 2018. `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_
 
 .. _bartol:
 
