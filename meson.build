@@ -48,11 +48,10 @@ pkg_mod.generate(
 
 cppcomp = meson.get_compiler('cpp')
 pymod = import('python')
-python = pymod.find_installation(get_option('python_name'),
-                                 required:false)
+python = pymod.find_installation(get_option('python'),required: false)
 
 if not python.found()
-  warning('Can\'t find python: "'+get_option('python_name')+'", skipping python build')
+  warning('Can\'t find python: "'+get_option('python')+'", skipping python build')
 else 
   pydep = python.dependency()
 
@@ -66,23 +65,13 @@ else
     pybind_inc = include_directories()
   endif
 
-  #find boost python
-  boost_python = cppcomp.find_library(
-    'boost_python'+''.join(python.language_version().split('.')),
-    required:false,
-    dirs:get_option('boost_python_dirs'))
+  python_name = 'python'+''.join(python.language_version().split('.'))
+  boost = dependency('boost'      , modules : [python_name])
   
-  if not boost_python.found()
+  if not boost.found()
     warning( 'Can\'t find boost python, Skipping python build')
   else
-    
-    py_install_dir=get_option('python_install_dir')
-    if py_install_dir==''
-      py_install_dir = python.get_install_dir()
-    endif
-    py_install_dir = py_install_dir / 'nuflux'
-
-    
+    py_install_dir = python.get_install_dir() / 'nuflux'   
     message( 'Building package for python version ' +
              python.language_version() + ': ' + py_install_dir)   
     
@@ -94,7 +83,7 @@ else
       '_nuflux',
       ['src/pybindings/module.cxx'],
       include_directories : [inc,pybind_inc],
-      dependencies : [photospline,pydep, boost_python],
+      dependencies : [photospline,pydep, boost],
       link_with : libnuflux,
       install_dir : py_install_dir,
       install:true)
@@ -103,4 +92,4 @@ else
     
   endif
 
-endif  
+endif

@@ -1,3 +1,1 @@
-option('python_name',        type : 'string', value : 'python', description : 'description of which python to use can be "python2" or path to binary')
-option('python_install_dir', type : 'string', value : '',)
-option('boost_python_dirs',   type : 'array', value : [], description : 'list of directories to search for boost python library')
+option('python', type : 'string', value : 'python', description : 'python path to compile against')

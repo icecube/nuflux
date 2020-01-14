@@ -573,7 +573,10 @@ import nuflux
 
 class TestNuFlux(unittest.TestCase):
     def compare(self,a,b):
-        assert a==b
+        if a != 0:
+            assert ((a-b)/a) < 1e-14
+        else:
+            assert a==b
         self.N+=1
 
     def compare_fluxes(self,data,energies):    
