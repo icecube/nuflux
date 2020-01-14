@@ -1,5 +1,8 @@
+import sys
 from setuptools import setup, Extension ,find_packages
 import numpy
+
+boost_python = 'boost_python'+str(sys.version_info.major)+str(sys.version_info.minor)
 
 extension = Extension(
     'nuflux._nuflux',
@@ -14,7 +17,7 @@ extension = Extension(
      'src/pybindings/module.cxx',
     ],
     include_dirs=['src/include',numpy.get_include()],
-    libraries=['boost_python27','photospline'],
+    libraries=[boost_python,'photospline'],
     extra_compile_args=['-std=c++11','-DUSE_NUMPY'],
     )
 
@@ -25,7 +28,7 @@ setup(
     ext_modules=[extension],    
     package_data={"nuflux":["data/*/*.fits",'data/*/*.dat']},
     test_suite="tests.test_fluxes",
-    zip_safe=False
+    zip_safe=False,
     keywords = [
         'neutrino', 'cosmic rays','atmospheric neutrinos',
     ],
