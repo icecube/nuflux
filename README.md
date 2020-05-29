@@ -14,6 +14,10 @@ If you only need to use python you can install it directly through pip:
 
     pip install --user git+https://github.com/IceCubeOpenSource/nuflux
 
+Note that this may fail if photospline and boost_python are installed in nonstandard locations, e.g. headers in /opt/toolsets/mystuff/include, libraries in /opt/toolsets/mystuff/lib. In this case, set the `PREFIX` environment variable to the root of your toolset installation:
+
+    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/IceCubeOpenSource/nuflux
+
 If you want to use nuflux from a c++ program you need to install it with meson
 
     git clone https://github.com/IceCubeOpenSource/nuflux
