@@ -1,8 +1,10 @@
 import sys
+import os
 from setuptools import setup, Extension ,find_packages
 import numpy
 
 boost_python = 'boost_python'+str(sys.version_info.major)+str(sys.version_info.minor)
+prefix = os.environ.get('PREFIX', '/usr/local')
 
 extension = Extension(
     'nuflux._nuflux',
@@ -16,7 +18,8 @@ extension = Extension(
      'src/pybindings/detail.cxx',     
      'src/pybindings/module.cxx',
     ],
-    include_dirs=['src/include',numpy.get_include()],
+    include_dirs=['src/include',numpy.get_include(),os.path.join(prefix,'include')],
+    library_dirs=[os.path.join(prefix,'lib'),os.path.join(prefix,'lib64')]
     libraries=[boost_python,'photospline'],
     extra_compile_args=['-std=c++11','-DUSE_NUMPY'],
     )
