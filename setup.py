@@ -19,8 +19,8 @@ extension = Extension(
      'src/pybindings/module.cxx',
     ],
     include_dirs=['src/include',numpy.get_include(),os.path.join(prefix,'include')],
-    library_dirs=[os.path.join(prefix,'lib'),os.path.join(prefix,'lib64')]
-    libraries=[boost_python,'photospline'],
+    library_dirs=[os.path.join(prefix,'lib'),os.path.join(prefix,'lib64')],
+    libraries=['boost_python','photospline'],
     extra_compile_args=['-std=c++11','-DUSE_NUMPY'],
     )
 
