@@ -22,7 +22,7 @@ libnuflux = library(
   'src/library/IPLEFlux.cpp',
   'src/library/LegacyConventionalFlux.cpp',
   'src/library/SplineFlux.cpp',
-  'src/library/NewSplineFlux.cpp',
+  'src/library/SplineFlux2.cpp',
   'src/library/FluxFunction.cpp',
   'src/library/LegacyPromptFlux.cpp',
   'src/library/logging.cpp',

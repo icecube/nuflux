@@ -1,16 +1,16 @@
-#ifndef NEWSPLINEFLUX_H
-#define NEWSPLINEFLUX_H
+#ifndef SPLINEFLUX2_H
+#define SPLINEFLUX2_H
 
 #include <photospline/splinetable.h>
 #include <nuflux/nuflux.h>
 
 namespace nuflux{
 
-  class NewSplineFlux : public FluxFunction{
+  class SplineFlux2 : public FluxFunction{
   private:
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> > components;
   public:
-    NewSplineFlux(const std::string& fluxName);
+    SplineFlux2(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
@@ -22,4 +22,4 @@ namespace nuflux{
 
 } //namespace nuflux
 
-#endif //NEWSPLINEFLUX_H
+#endif //SPLINEFLUX2_H
