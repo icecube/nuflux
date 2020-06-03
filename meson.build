@@ -17,11 +17,12 @@ install_subdir('nuflux/data/',
 
 inc = include_directories('src/include')
 libnuflux = library(
-  'nuflux',  
+  'nuflux',
   'src/library/ANFlux.cpp',
   'src/library/IPLEFlux.cpp',
   'src/library/LegacyConventionalFlux.cpp',
   'src/library/SplineFlux.cpp',
+  'src/library/NewSplineFlux.cpp',
   'src/library/FluxFunction.cpp',
   'src/library/LegacyPromptFlux.cpp',
   'src/library/logging.cpp',
@@ -30,10 +31,17 @@ libnuflux = library(
   dependencies : [photospline,cfitsio],
   install : true)
 
-test('test_basic',
-     executable('test_basic',
-                'tests/test_basic.cxx',
-                dependencies : [photospline,cfitsio],   
+# test('test_basic',
+#      executable('test_basic',
+#                 'tests/test_basic.cxx',
+#                 dependencies : [photospline,cfitsio],
+#                 include_directories : inc,
+#                 link_with:libnuflux))
+
+test('newfluxes',
+     executable('newfluxes',
+                'newfluxes/newfluxes.cpp',
+                dependencies : [photospline,cfitsio],
                 include_directories : inc,
                 link_with:libnuflux))
 
@@ -52,14 +60,14 @@ python = pymod.find_installation(get_option('python'),required: false)
 
 if not python.found()
   warning('Can\'t find python: "'+get_option('python')+'", skipping python build')
-else 
+else
   pydep = python.dependency()
 
   # Find numpy
   numpy = run_command(python,'-c','import numpy;print(numpy.get_include())')
   if numpy.returncode()==0
     pybind_inc = include_directories(numpy.stdout().strip())
-    message ('Numpy found: '+ numpy.stdout().strip())    
+    message ('Numpy found: '+ numpy.stdout().strip())
   else
     warning ('Numpy not found: building without arrays')
     pybind_inc = include_directories()
@@ -67,18 +75,18 @@ else
 
   python_name = 'python'+''.join(python.language_version().split('.'))
   boost = dependency('boost'      , modules : [python_name])
-  
+
   if not boost.found()
     warning( 'Can\'t find boost python, Skipping python build')
   else
-    py_install_dir = python.get_install_dir() / 'nuflux'   
+    py_install_dir = python.get_install_dir() / 'nuflux'
     message( 'Building package for python version ' +
-             python.language_version() + ': ' + py_install_dir)   
-    
+             python.language_version() + ': ' + py_install_dir)
+
     python.install_sources('nuflux/__init__.py',
                            subdir: py_install_dir,
                            )
-    
+
     python.extension_module(
       '_nuflux',
       ['src/pybindings/module.cxx'],
@@ -89,7 +97,8 @@ else
       install:true)
 
     test('test_fluxes',find_program('tests/test_fluxes.py'))
-    
+    # newfluxes('newfluxes',find_program('newfluxes/newfluxes.py'))
+
   endif
 
 endif
