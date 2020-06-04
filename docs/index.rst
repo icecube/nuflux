@@ -11,7 +11,7 @@ Nuflux is a library for evaluating atmospheric neutrino flux models.
    overview
    installation
    usage
-   interpolation
+   evaluation
    fluxes
    development
    pythonapi

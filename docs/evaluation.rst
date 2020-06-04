@@ -1,19 +1,21 @@
-.. _Interpolation:
+.. _Evaluation:
 
-Interpolation
-#############
+Evaluation methods
+##################
 
-Nuflux contains several different methods for interpolating flux tables. Over the years, as better methods were deveopled, the older methods were kept to maintain reproducability with older analyses. This page contains a description of each interpolation method which is available.
+Nuflux contains several different methods for evaluating flux tables. Over the years, as better methods were deveopled, the older methods were kept to maintain reproducability with older analyses. This page contains a description of each evaluation method which is available.
 
-New interpolation methods
+New evaluation methods
 =========================
-.. _New_interpolation_methods:
+.. _New_evaluation_methods:
 
 
-NewSplineFlux
+SplineFlux2
 -------------
 
 The fluxes in this class were calculated with MCEq for several different zenith angles. The 2D array of flux values (one dimension for energy, the other for zenith angles) was interpolated with photospline into a 2D spline surface, stored in a FITS file. Evaluation of the spline surface with nuflux again requires photospline.
+
+So far, this class is pretty similar to the ``SplineFlux`` class, but has some additional features (e.g. tau flavor support), with the potential of being extended with further features in the future. ``SplineFlux`` was kept as it is for backwards compatability.
 
 Available fluxes in this class:
 
@@ -22,11 +24,11 @@ Available fluxes in this class:
 
 
 
-Older interpolation methods
+Older evaluation methods
 ===========================
-.. _Older_interpolation_methods:
+.. _Older_evaluation_methods:
 
-Unfortunately, the documentation for the older interpolation methods is quite incomplete. We are currently trying to find someone to fix this. If you are familiar with any of the below methods, feel free to contribute to the documentation!
+Unfortunately, the documentation for the older evaluation methods is quite incomplete. We are currently trying to find someone to fix this. If you are familiar with any of the below methods, feel free to contribute to the documentation!
 
 ANFlux
 ------

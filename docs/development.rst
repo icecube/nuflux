@@ -14,7 +14,23 @@ Project structure
 
 The nuflux module is structured pretty intuitively. Anyway, here's a short description of the intrastructure:
 
-You find some basic files in the root of the working directory, like the README and main Meson build file. ``/build`` contains the Ninja build file and build logs as well as the binaries of compiled programs. ``/docs`` holds the documentation sources (view the README file to find out how to build the docs for yourself). All flux data is located in ``/nuflux/data``, where each flux class has its own folder. ``/tests`` and ``/scripts`` hold some example and test programs. All sources, headers, classes and libraries are stored in ``/src``.
+You find some basic files in the root of the working directory, like the README and main Meson build file. ``/build`` contains the Ninja build file and build logs as well as the binaries of compiled programs. ``/docs`` holds the documentation sources (view the README file to find out how to build the docs for yourself). All flux data is located in ``/nuflux/data``, where each flux class has its own folder. ``/scripts`` holds some example programs, and ``/tests`` is the location of the unit test scripts (see section :ref:`Unit tests <Unit_tests>`). All sources, headers, classes and libraries are stored in ``/src``.
+
+
+Unit tests
+----------
+.. _Unit_tests:
+
+When working on nuflux, please make sure that your modifications do not alter the module in an unexpected way, by executing the unit test scripts in ``/tests`` before committing any changes. This is to ensure nuflux' integrity and reproducability, and that the fluxes are backwards-compatible with older analyses. The scripts contain a simple static list of models and corresponding values for a certain energy and zenith angle that are compared against the calculated values for the same parameters. If the calculated value for a specific unit differs from the one in the list, the test for that unit will fail and should be investigated.
+
+In C++::
+
+    ninja -C build
+    build/test_basic.cxx
+
+In Python (note that the Python test script is currently under revision)::
+
+    python3 tests/test_fluxes.py
 
 
 Creating new fluxes
