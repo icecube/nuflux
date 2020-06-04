@@ -31,19 +31,19 @@ libnuflux = library(
   dependencies : [photospline,cfitsio],
   install : true)
 
-# test('test_basic',
-#      executable('test_basic',
-#                 'tests/test_basic.cxx',
-#                 dependencies : [photospline,cfitsio],
-#                 include_directories : inc,
-#                 link_with:libnuflux))
-
-test('newfluxes',
-     executable('newfluxes',
-                'newfluxes/newfluxes.cpp',
+test('test_basic',
+     executable('test_basic',
+                'tests/test_basic.cxx',
                 dependencies : [photospline,cfitsio],
                 include_directories : inc,
                 link_with:libnuflux))
+
+# test('nuflux_test',
+#      executable('nuflux_test',
+#                 'scripts/nuflux_test.cpp',
+#                 dependencies : [photospline,cfitsio],
+#                 include_directories : inc,
+#                 link_with:libnuflux))
 
 pkg_mod = import('pkgconfig')
 pkg_mod.generate(
@@ -97,7 +97,6 @@ else
       install:true)
 
     test('test_fluxes',find_program('tests/test_fluxes.py'))
-    # newfluxes('newfluxes',find_program('newfluxes/newfluxes.py'))
 
   endif
 

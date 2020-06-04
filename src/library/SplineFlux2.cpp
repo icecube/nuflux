@@ -2,42 +2,42 @@
 #include <iostream>
 #include <boost/make_shared.hpp>
 #include <boost/lexical_cast.hpp>
-#include <nuflux/NewSplineFlux.h>
+#include <nuflux/SplineFlux2.h>
 
 namespace nuflux{
 
-  double NewSplineFlux::getMinEnergy()const{
+  double SplineFlux2::getMinEnergy()const{
     return 9.0e-2;
   }
 
-  double NewSplineFlux::getMaxEnergy()const{
+  double SplineFlux2::getMaxEnergy()const{
     return 8.9e10;
   }
 
-  inline bool NewSplineFlux::testExist(const std::string& name){
+  inline bool SplineFlux2::testExist(const std::string& name){
     if (FILE *file = fopen(name.c_str(), "r")) { fclose(file); return true; }
     else { return false; }
   }
 
-  NewSplineFlux::NewSplineFlux(const std::string& fluxName):
+  SplineFlux2::SplineFlux2(const std::string& fluxName):
     FluxFunction(fluxName){
 
         components[NuMu] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("NewSplineFlux/"+fluxName+"_numu.fits"));
+            detail::getDataPath("SplineFlux2/"+fluxName+"_numu.fits"));
         components[NuMuBar] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("NewSplineFlux/"+fluxName+"_numubar.fits"));
+            detail::getDataPath("SplineFlux2/"+fluxName+"_numubar.fits"));
         components[NuE] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("NewSplineFlux/"+fluxName+"_nue.fits"));
+            detail::getDataPath("SplineFlux2/"+fluxName+"_nue.fits"));
         components[NuEBar] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("NewSplineFlux/"+fluxName+"_nuebar.fits"));
+            detail::getDataPath("SplineFlux2/"+fluxName+"_nuebar.fits"));
 
         // Check if tau files are available for the requested flux, and if so, load them.
-        std::string taufile = detail::getDataPath("NewSplineFlux/"+fluxName+"_nutau.fits");
+        std::string taufile = detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits");
         if (testExist(taufile)) {
             components[NuTau]    =boost::make_shared<photospline::splinetable<>>(
-                detail::getDataPath("NewSplineFlux/"+fluxName+"_nutau.fits"));
+                detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits"));
             components[NuTauBar] =boost::make_shared<photospline::splinetable<>>(
-                detail::getDataPath("NewSplineFlux/"+fluxName+"_nutaubar.fits"));
+                detail::getDataPath("SplineFlux2/"+fluxName+"_nutaubar.fits"));
             taufail = false;
         }
         else {
@@ -45,12 +45,12 @@ namespace nuflux{
         }
     }
 
-  boost::shared_ptr<FluxFunction> NewSplineFlux::makeFlux(const std::string& fluxName){
+  boost::shared_ptr<FluxFunction> SplineFlux2::makeFlux(const std::string& fluxName){
       return(boost::dynamic_pointer_cast<FluxFunction>(
-          boost::make_shared<NewSplineFlux>(fluxName)));
+          boost::make_shared<SplineFlux2>(fluxName)));
   }
 
-  double NewSplineFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
+  double SplineFlux2::getFlux(ParticleType type, double energy, double cosZenith) const{
     // If tau flavor is not supported (e.g. for conventional fluxes), return 0.
     if ((type == NuTau || type == NuTauBar) && taufail){ return(0); }
 
@@ -70,18 +70,18 @@ namespace nuflux{
 
 } //namespace nuflux
 
-NNF_REGISTER_FLUX("H3a_SIBYLL21",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL21_total",&nuflux::NewSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_total",&nuflux::SplineFlux2::makeFlux);
 // Note that H3a_SIBYLL21 and H3a_SIBYLL21_total are identical.
-NNF_REGISTER_FLUX("H3a_SIBYLL21_prompt",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL21_conv",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL21_k",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL21_pi",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL23C",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL23C_total",&nuflux::NewSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_prompt",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_conv",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_k",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_pi",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_total",&nuflux::SplineFlux2::makeFlux);
 // Note that H3a_SIBYLL23C and H3a_SIBYLL23C_total are identical.
-NNF_REGISTER_FLUX("H3a_SIBYLL23C_prompt",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL23C_conv",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL23C_k",&nuflux::NewSplineFlux::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL23C_pi",&nuflux::NewSplineFlux::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_prompt",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_conv",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_k",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_pi",&nuflux::SplineFlux2::makeFlux);
 //
