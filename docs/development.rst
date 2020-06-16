@@ -41,6 +41,7 @@ Since the main purpose of nuflux is to provide atmospheric fluxes to analysers i
 
 1) **Choose your weapon**: To make a new flux, there are three ingredients you need to get started: A primary cosmic ray (CR) model, a hadronic interaction (HI) model, and the type of particle (i.e. atmospheric lepton) you want to make the flux for. In this example, we choose ``HillasGaisser2012 (H3a)``, ``SIBYLL23C``, and ``NuMu``.
 
+
 2) **Calculate a tabulated spectrum with MCEq**: Together with a zenith angle of our choice (note that this is zenith and *not* cosine zenith), we feed our three ingredients to MCEq:
 
   ::
@@ -57,7 +58,11 @@ Since the main purpose of nuflux is to provide atmospheric fluxes to analysers i
 
   And obtain an array ``solutions``; one value for each value in the ``energy`` array. And that's basically it! We can now repeat this for several zenith angles, to have a 2D solution array (one dimension being energy, the other being zenith angle).
 
-3) **Interpolate the solutions with photospline**: The photospline software is using B-splining as interpolation method. It can turn our 2D solution array into a spline surface that can be evaluated at any desired point on the surface. The splining process is something to get used to (more information to follow). The spline surface is stored in a FITS file, that, if correctly formatted, can be integrated into nuflux.
+3) **Interpolate the solutions with photospline**: The photospline software is using B-splining as interpolation method. It can turn our 2D solution array into a spline surface that can be evaluated at any desired point on the surface. The splining process is pretty neat but may require some practice. The spline surface is stored in a FITS file, that, if correctly formatted, can be integrated into nuflux.
+
+**Create fluxes using the script**
+
+Because the flux creation process can get rather complex, nuflux comes with a handy little tool that can do the above steps for you (and more): ``scripts/create_fluxes``. The script runs with Python3, and is extensively commented to guide you through it as swiftly as possible. To better understand what the script does, you can run it with the provided example data (that resembles an MCEq-created data file) first, before using it for steps 1 and 2.
 
 
 Storing new fluxes
@@ -66,14 +71,14 @@ Storing new fluxes
 
 In contrast to the previous section, this one should be applicable to all kinds of new fluxes. Whether you created new fluxes according to the above instructions, or in any other way: They have to be integrated into nuflux. Here is an example of how that can be accomplished.
 
-1) **Create a new flux class**: You can either choose one of the existing classes, e.g. ``ANFlux``, ``IPLEFlux``, or ``SplineFlux`` if you think your new flux fits the class, or, as we do in this example, create a new one (in this case, our flux is a spline flux, but has some new features that are not incorporated in the existing ``SplineFlux``). We call it ``NewSplineFlux``:
+1) **Create a new flux class**: You can either choose one of the existing classes, e.g. ``ANFlux``, ``IPLEFlux``, or ``SplineFlux`` if you think your new flux fits the class, or, as we do in this example, create a new one (in this case, our flux is a spline flux, but has some new features that are not incorporated in the existing ``SplineFlux``). We call it ``SplineFlux3``:
 
   ::
 
-    src/include/nuflux/NewSplineFlux.h
-    src/library/NewSplineFlux.cpp
+    src/include/nuflux/SplineFlux3.h
+    src/library/SplineFlux3.cpp
 
-  It's easiest to copy-paste an existing class and adjust it. In this case, we copied the content of ``SplineFlux.cpp`` and added a few lines of code to support tau flavor. Don't forget to add your class to the meson build file:
+  It's easiest to copy-paste an existing class and adjust it. In this case, we copied the content of ``SplineFlux.cpp`` and added a few lines of code. Don't forget to add your class to the meson build file:
 
   ::
 
@@ -85,7 +90,7 @@ In contrast to the previous section, this one should be applicable to all kinds 
       'src/library/IPLEFlux.cpp',
       'src/library/LegacyConventionalFlux.cpp',
       'src/library/SplineFlux.cpp',
-      'src/library/NewSplineFlux.cpp',
+      'src/library/SplineFlux3.cpp',
       'src/library/FluxFunction.cpp',
       'src/library/LegacyPromptFlux.cpp',
       'src/library/logging.cpp',
@@ -97,7 +102,7 @@ In contrast to the previous section, this one should be applicable to all kinds 
 
 2) **Add the spline surfaces to nuflux**: For each flux class there's a folder with data files in the nuflux working directory. The FITS files that we created earlier go here. In our case::
 
-    nuflux/data/NewSplineFlux/
+    nuflux/data/SplineFlux3/
 
   To integrate these files to nuflux' installation directory, run::
 
@@ -105,12 +110,12 @@ In contrast to the previous section, this one should be applicable to all kinds 
 
   **Note**: You should provide one flux file for each flux and particle type, e.g. ``H3a_SIBYLL23C_conv_numu.fits``, ``H3a_SIBYLL23C_conv_nutaubar.fits``, etc. If a certain particle type is not supported in your flux, you should implement that accordingly in your flux class.
 
-3) **Register the fluxes**: The last step is to tell the nuflux module about the new fluxes. This is done by adding them to the registry. Add the respective lines to the end of your class file ``NewSplineFlux.cpp``, e.g.::
+3) **Register the fluxes**: The last step is to tell the nuflux module about the new fluxes. This is done by adding them to the registry. Add the respective lines to the end of your class file ``SplineFlux3.cpp``, e.g.::
 
-    NNF_REGISTER_FLUX("H3a_SIBYLL23C",&nuflux::NewSplineFlux::makeFlux);
-    NNF_REGISTER_FLUX("H3a_SIBYLL23C_pr",&nuflux::NewSplineFlux::makeFlux);
-    NNF_REGISTER_FLUX("H3a_SIBYLL23C_conv",&nuflux::NewSplineFlux::makeFlux);
-    NNF_REGISTER_FLUX("H3a_SIBYLL23C_k",&nuflux::NewSplineFlux::makeFlux);
-    NNF_REGISTER_FLUX("H3a_SIBYLL23C_pi",&nuflux::NewSplineFlux::makeFlux);
+    NNF_REGISTER_FLUX("H3a_SIBYLL23C",&nuflux::SplineFlux3::makeFlux);
+    NNF_REGISTER_FLUX("H3a_SIBYLL23C_pr",&nuflux::SplineFlux3::makeFlux);
+    NNF_REGISTER_FLUX("H3a_SIBYLL23C_conv",&nuflux::SplineFlux3::makeFlux);
+    NNF_REGISTER_FLUX("H3a_SIBYLL23C_k",&nuflux::SplineFlux3::makeFlux);
+    NNF_REGISTER_FLUX("H3a_SIBYLL23C_pi",&nuflux::SplineFlux3::makeFlux);
 
   You need one of these lines for each new flux, but *not* for each particle type. Just omit the particle names at the end. nuflux will call the right file for each particle automatically.
