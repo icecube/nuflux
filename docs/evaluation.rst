@@ -13,14 +13,15 @@ New evaluation methods
 SplineFlux2
 -------------
 
-The fluxes in this class were calculated with MCEq for several different zenith angles. The 2D array of flux values (one dimension for energy, the other for zenith angles) was interpolated with photospline into a 2D spline surface, stored in a FITS file. Evaluation of the spline surface with nuflux again requires photospline.
+The data for the fluxes in this class was either calculated with MCEq, or (in some cases) taken from other sources in form of data tables. The 2D array of flux values (one dimension for energy, the other for zenith angles) was interpolated with photospline into a 2D spline surface and stored in a FITS file. Evaluation of the spline surface with nuflux again requires photospline.
 
-So far, this class is pretty similar to the ``SplineFlux`` class, but has some additional features (e.g. tau flavor support), with the potential of being extended with further features in the future. ``SplineFlux`` was kept as it is for backwards compatability.
+So far, this class is pretty similar to the ``SplineFlux`` class, but has some additional features (e.g. tau flavor support), with the potential of being extended with further features in the future. ``SplineFlux`` was kept as it is for backwards compatibility.
 
 Available fluxes in this class:
 
 * :ref:`H3a_SIBYLL21 <H3a_SIBYLL21>`
 * :ref:`H3a_SIBYLL23C <H3a_SIBYLL23C>`
+* :ref:`honda2014_spl_solmin <honda2014_spl_solmin>`
 
 
 
@@ -81,3 +82,13 @@ Evaluation of the fluxes requires photospline.
 Available fluxes in this class:
 
 * :ref:`BERSS_H3p <BERSS_H3p>`
+
+
+.. Reweighting Methods
+.. ===================
+..
+.. Pion to Kaon Ratio
+.. ------------------
+..
+.. Knee Reweighting
+.. ----------------

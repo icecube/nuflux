@@ -18,9 +18,8 @@ Several things to note before beginning:
 
 * The returned flux represents the flux incident on the surface of the earth, no attempt is made to include oscillations or interaction losses while traveling through the Earth.
 * All fluxes are assumed to be symmetrical between down-going and up-going.
-* Time dependent effects like solar modulation or seasonal variations on cosmic ray air showers are not included. Solar modulation is only relevant below 10 GeV
-
-.. * For prompt neutrino models :math:`\nu_\mu`, :math:`\bar{\nu}_\mu`, :math:`\nu_e`, and :math:`\bar{\nu}_e` are all assumed to be equal to eachother, :math:`\nu_\tau` and :math:`\bar{\nu}_\tau` are different from the other flavors but are equal to each other, only a single model for charm and beauty decays is considered.
+* Time dependent effects like solar modulation or seasonal variations on cosmic ray air showers are not included. Solar modulation is only relevant below 10 GeV.
+* For older prompt neutrino models :math:`\nu_\mu`, :math:`\bar{\nu}_\mu`, :math:`\nu_e`, and :math:`\bar{\nu}_e` are all assumed to be equal to eachother, :math:`\nu_\tau` and :math:`\bar{\nu}_\tau` are different from the other flavors but are equal to each other, only a single model for charm and beauty decays is considered.
 
 
 Physics introduction

@@ -18,5 +18,5 @@ Nuflux is a written by the IceCube Collaboration. If you have access to **IceCub
 
 Nuflux is currently maintained by:
 
-| Raffaela Busse, rbusse@icecube.wisc.edu
-| Kevin Meagher, kmeagher@icecube.wisc.edu
+| Raffaela Busse (WWU Münster), rbusse@icecube.wisc.edu
+| Kevin Meagher (UW Madison), kmeagher@icecube.wisc.edu
