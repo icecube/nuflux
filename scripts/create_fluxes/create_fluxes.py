@@ -28,8 +28,8 @@ import numpy as np
 # Please provide a name for your new fluxes, and define the path to the
 # working directory. All necessary folders are being set up for you automatically.
 working_path = './'
-# name     = 'H3a_SIBYLL23C'
-name     = 'exampleflux'
+name     = 'H3a_SIBYLL23C'
+# name     = 'exampleflux'
 dirname  = name
 os.chdir(working_path)
 if not os.path.exists(dirname):
@@ -48,24 +48,31 @@ particles = [
     ('total_nuebar',   r'total $\bar{\nu}_{e}$',                 'solid'),
     ('total_numu',     r'total $\nu_{\mu}$',                     'solid'),
     ('total_numubar',  r'total $\bar{\nu}_{\mu}$',               'solid'),
-    ('total_nutau',    r'total $\nu_{\tau}$',                    'solid'),
-    ('total_nutaubar', r'total $\bar{\nu}_{\tau}$',              'solid'),   # 5
+    ('total_nutau',     r'total $\nu_{\tau}$',                   'solid'),
+    ('total_nutaubar',  r'total $\bar{\nu}_{\tau}$',             'solid'),   # 5
     ### Total conventional flux:
     ('conv_nue',       r'conv. $\nu_{e}$',                       '--'),
     ('conv_nuebar',    r'conv. $\bar{\nu}_{e}$',                 '--'),
     ('conv_numu',      r'conv. $\nu_{\mu}$',                     '--'),
     ('conv_numubar',   r'conv. $\bar{\nu}_{\mu}$',               '--'),      # 9
-    # ('conv_nutau',     r'conv. $\nu_{\tau}$',                    '--'),
-    # ('conv_nutaubar',  r'conv. $\bar{\nu}_{\tau}$',              '--'),
     ### Conventional flux from pions/kaons:
-    ('pi_nue',         r'conv. $\nu_{e,\pi}$',                   ':'),
-    ('k_nue',          r'conv. $\nu_{e,K}$',                     ':'),
-    ('pi_nuebar',      r'conv. $\bar{\nu}_{e,\pi}$',             ':'),
-    ('k_nuebar',       r'conv. $\bar{\nu}_{e,K}$',               ':'),
-    ('pi_numu',        r'conv. $\nu_{\mu,\pi}$',                 ':'),
-    ('k_numu',         r'conv. $\nu_{\mu,K}$',                   ':'),
-    ('pi_numubar',     r'conv. $\bar{\nu}_{\mu,\pi}$',           ':'),
-    ('k_numubar',      r'conv. $\bar{\nu}_{\mu,K}$',             ':'),      # 17
+    ('pi_nue',         r'(from $\pi$) $\nu_{e}$',                   ':'),
+    ('k_nue',          r'(from $K^{\pm}$) $\nu_{e}$',                     ':'),
+    ('K0_nue',         r'(from $K^{0}$) $\nu_{e}$',                 '-.'),
+    ('pi_nuebar',      r'(from $\pi$) $\bar{\nu}_{e}$',             ':'),
+    ('k_nuebar',       r'(from $K^{\pm}$) $\bar{\nu}_{e}$',               ':'),
+    ('K0_nuebar',      r'(from $K^{0}$) $\bar{\nu}_{e}$',           '-.'),
+    ('pi_numu',        r'(from $\pi$) $\nu_{\mu}$',                 ':'),
+    ('k_numu',         r'(from $K^{\pm}$) $\nu_{\mu}$',                   ':'),
+    ('K0_numu',        r'(from $K^{0}$) $\nu_{\mu}$',               '-.'),
+    ('pi_numubar',     r'(from $\pi$) $\bar{\nu}_{\mu}$',           ':'),
+    ('k_numubar',      r'(from $K^{\pm}$) $\bar{\nu}_{\mu}$',             ':'),
+    ('K0_numubar',     r'(from $K^{0}$) $\bar{\nu}_{\mu}$',         '-.'),  # 21
+    ### From muons:
+    ('mu_nue',           r'(from $\mu$) $\nu_{e}$',                  '-'),
+    ('mu_nuebar',        r'(from $\mu$) $\bar{\nu}_{e}$',            '-'),
+    ('mu_numu',          r'(from $\mu$) $\nu_{\mu}$',                '-'),
+    ('mu_numubar',       r'(from $\mu$) $\bar{\nu}_{\mu}$',          '-'),  # 26
     ### Conventional flux from all other:
     ### (According to the plots, these seem to be equal to the total fluxes
     ### for some reason)
@@ -74,16 +81,16 @@ particles = [
     # ('numu',           r'conv. (other srcs) $\nu_{\mu}$',        '-.'),
     # ('numubar',        r'conv. (other srcs) $\bar{\nu}_{\mu}$',  '-.'),
     # ('nutau',          r'conv. (other srcs) $\nu_{\tau}$',       '-.'),
-    # ('nutaubar',       r'conv. (other srcs) $\bar{\nu}_{\tau}$', '-.'),     # 23
+    # ('nutaubar',       r'conv. (other srcs) $\bar{\nu}_{\tau}$', '-.'),
     ### Total prompt flux:
     ('prompt_nue',         r'prompt $\nu_{e}$',                      '--'),
     ('prompt_nuebar',      r'prompt $\bar{\nu}_{e}$',                '--'),
     ('prompt_numu',        r'prompt $\nu_{\mu}$',                    '--'),
     ('prompt_numubar',     r'prompt $\bar{\nu}_{\mu}$',              '--'),
     ('prompt_nutau',       r'prompt $\nu_{\tau}$',                   '--'),
-    ('prompt_nutaubar',    r'prompt $\bar{\nu}_{\tau}$',             '--'),     # 29
+    ('prompt_nutaubar',    r'prompt $\bar{\nu}_{\tau}$',             '--'), # 32
 ]
-particles = particles[0:1]
+# particles = particles[0:1]
 # particles = particles[0:4]
 # particles = particles[:18] + particles[24:]
 
@@ -116,7 +123,7 @@ def Solve_mceqs(particle):
     zenith_deg = np.append(np.arange(0., 90., 10), 89)
     # By setting mag != 0, the fluxes are multiplied by that factor of E [GeV]
     # in MCEq to stress steaper parts of the spectrum:
-    mag = mag
+    # mag = mag
 
     headr = (
     savename.replace('_', '\t') + '\n'
@@ -321,26 +328,33 @@ def Plot_splines():
         )
         return title, title_flavor
 
-    def Create_labels():
+    def Create_axlabels():
         ### Create title and axis labels.
         xlabel = r'kinetic energy $E$ [GeV]'
         # The unit of the flux is 1/(GeV s cm^2 sr). However keep in mind to account
         # for the magnification factor (mag) which may introduce several more GeV's.
         if mag == 0:
-            ylabel = r'flux $\Phi$ [GeV cm$^{-2}$s$^{-1}$sr$^{-1}$]'
+            ylabel = r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
         elif mag == 1:
-            ylabel = r'flux $\Phi$ [GeV cm$^{-2}$s$^{-1}$sr$^{-1}$] $\times$ E [GeV]'
+            ylabel = r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$] $\times$ E [GeV]'
         else:
             ylabel = (
-                  r'flux $\Phi$ [GeV cm$^{-2}$s$^{-1}$sr$^{-1}$]'
+                  r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
                 + r' $\times$ E$^{' + str(mag) + r'}$'
                 + r' [GeV$^{' + str(mag) + r'}$] '
             )
         return xlabel, ylabel
 
+    def Create_label(particle):
+        label = (
+            particle[1].split(')')[0].replace('(', '') if 'from' in particle[1]
+            else particle[1].split(' ')[0]
+        )
+        return label
+
     sb.set_context(context='notebook', font_scale=1.2, rc={"lines.linewidth": 2.0})
     sb.set_style('whitegrid')
-    xlabel, ylabel = Create_labels()
+    xlabel, ylabel = Create_axlabels()
     custom_legend = [Line2D([0], [0], color='gray', lw=0, marker='+',
                             label=r'data for $\cos(\theta)=1$')]
     short_legend = [Line2D([0], [0], color='gray', lw=0, marker='+', label=r'data')]
@@ -354,7 +368,7 @@ def Plot_splines():
         ('nutau',    r'$\nu_{\tau}$'),
         ('nutaubar', r'$\bar{\nu}_{\tau}$')
     ]
-    flavor_colors  = plt.cm.jet(np.linspace(0,1,5))
+    flavor_colors  = plt.cm.jet(np.linspace(0,1,7))
 
     for f, flavor in enumerate(flavors):
         pdf_flavor = pdf(dirname + '/plots/perflavor_mag' + str(mag) + '_' + flavor[0] + '.pdf')
@@ -411,7 +425,7 @@ def Plot_splines():
                 ax1.add_artist(leg11)
 
                 ax3.loglog(xe, datapoints[-1], lw=0, marker='+', color='gray', alpha=0.4)
-                ax3.loglog(xe, splines[-1], label=particle[1], ls=particle[2],
+                ax3.loglog(xe, splines[-1], label=Create_label(particle), ls=particle[2],
                            color=flavor_colors[p], alpha=0.8)
                 # if 'pi' in particle[0]:
                 #     pi_values = splines[-1]
@@ -451,12 +465,8 @@ def Plot_splines():
                     ax4.yaxis.offsetText.set_fontsize(10)
                     ax4.set_title(r'at $E\approx$%.0e' % label + ' GeV', fontsize=12, loc='right')
                     ax4.plot(xc, dataset, lw=0, marker='+', color='gray', alpha=0.4)
-                    kind = (
-                        'from ' + particle[0].split('_')[0] if any(i in particle[0] for i in ('pi', 'k'))
-                         else particle[1].split(' ')[0]
-                    )
                     ax4.plot(xc, spline, color=flavor_colors[p], alpha=0.9,
-                             ls=particle[2], label=kind)
+                             ls=particle[2], label=Create_label(particle))
                     ax4.ticklabel_format(axis='y', style='sci', scilimits=(0,0))
                     handles, labels = ax4.get_legend_handles_labels()
 
@@ -468,7 +478,7 @@ def Plot_splines():
         if p:
             leg41 = fig4.legend(handles=short_legend, loc='upper left', fontsize=12,
                                 bbox_to_anchor=(0.05, 0.45, 0.86, 0.5))
-            leg42 = fig4.legend(handles, labels, loc='upper left', ncol=6,
+            leg42 = fig4.legend(handles, labels, loc='upper left', ncol=7,
                                 mode='expand', bbox_to_anchor=(0.16, 0.45, 0.80, 0.5),
                                 fontsize=12)
         pdf_flavor.savefig(fig3)
@@ -510,9 +520,9 @@ for particle in particles:
     ##--- you can skip this step, too:
     # Solve_mceqs(particle)
     ##--- Spline the fluxes with photospline, and save data in plottable format:
-    Spline_fluxes(particle)
+    # Spline_fluxes(particle)
     ##--- Read the fits to verify they're in the correct format:
-    Read_fits(dirname + '/splines/' + savename + '.fits')
+    # Read_fits(dirname + '/splines/' + savename + '.fits')
 
 ##--- Plot stuff (for all selected particles at once)
 Plot_splines()

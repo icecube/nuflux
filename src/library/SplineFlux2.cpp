@@ -78,12 +78,16 @@ NNF_REGISTER_FLUX("H3a_SIBYLL21_total",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_prompt",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_conv",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_k",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_K0",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_pi",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_mu",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_total",&nuflux::SplineFlux2::makeFlux);
 // Note that H3a_SIBYLL23C and H3a_SIBYLL23C_total are identical.
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_prompt",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_conv",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_k",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_K0",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_pi",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_mu",&nuflux::SplineFlux2::makeFlux);
 //
