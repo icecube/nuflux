@@ -1,10 +1,12 @@
 #include <iostream>
 #include <iomanip>
-
 #include <nuflux/nuflux.h>
+
 
 using namespace std;
 
+// Add values for new fluxes to the list, with the following parameters:
+// ParticleType: NuMu, energy: 1e3, cos(zenith): 0
 map<string, double> values = {
   {"BERSS_H3a_central",             1.52244e-14},
   {"BERSS_H3p_central",             1.56008e-14},
@@ -20,9 +22,25 @@ map<string, double> values = {
   {"sarcevic_max",                  3.85434e-14},
   {"sarcevic_min",                  1.67841e-14},
   {"sarcevic_std",                   3.1054e-14},
+  {"H3a_SIBYLL21",                  6.85051e-11},
+  {"H3a_SIBYLL21_total",            6.85051e-11},
+  {"H3a_SIBYLL21_conv",             6.85051e-11},
+  {"H3a_SIBYLL21_k",                4.57034e-11},
+  {"H3a_SIBYLL21_K0",               7.27295e-13},
+  {"H3a_SIBYLL21_pi",               2.13187e-11},
+  {"H3a_SIBYLL21_mu",               1.62218e-12},
+  {"H3a_SIBYLL21_prompt",           3.72286e-17},
+  {"H3a_SIBYLL23C",                 4.80517e-11},
+  {"H3a_SIBYLL23C_total",           4.80517e-11},
+  {"H3a_SIBYLL23C_conv",            4.80119e-11},
+  {"H3a_SIBYLL23C_k",               2.65559e-11},
+  {"H3a_SIBYLL23C_K0",              8.22353e-13},
+  {"H3a_SIBYLL23C_pi",              1.98839e-11},
+  {"H3a_SIBYLL23C_mu",              1.48019e-12},
+  {"H3a_SIBYLL23C_prompt",          4.14663e-14},
 };
 
-  
+
 int main(){
   bool good=1;
   vector<string> fluxes = nuflux::availableFluxes();
@@ -39,7 +57,7 @@ int main(){
     cout << "All test pass" << endl;
     exit(0);
   }else{
-    cout << "Some tests fail" << endl;    
+    cout << "Some tests fail" << endl;
     exit(-1);
   }
 }

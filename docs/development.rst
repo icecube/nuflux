@@ -21,14 +21,16 @@ Unit tests
 ----------
 .. _Unit_tests:
 
-When working on nuflux, please make sure that your modifications do not alter the module in an unexpected way, by executing the unit test scripts in ``/tests`` before committing any changes. This is to ensure nuflux' integrity and reproducability, and that the fluxes are backwards-compatible with older analyses. The scripts contain a simple static list of models and corresponding values for a certain energy and zenith angle that are compared against the calculated values for the same parameters. If the calculated value for a specific unit differs from the one in the list, the test for that unit will fail and should be investigated.
+When working on nuflux, please make sure that your modifications do not alter the module in an unexpected way, by executing the unit test scripts in ``/tests`` before committing any changes. This is to ensure nuflux' integrity and reproducability, and that the fluxes are backwards-compatible with older analyses. The scripts contain a simple static list of models and corresponding values for a certain range of energy and zenith angle that are compared against the calculated values for the same parameters. If the calculated value for a specific unit differs from the one in the list, the test for that unit will fail and should be investigated.
+
+**Note:** The C++ test is rather basic, with only single values that are compared. If possible, use the more elaborated Python script for your unit test.
 
 In C++::
 
     ninja -C build
     build/test_basic.cxx
 
-In Python (note that the Python test script is currently under revision)::
+In Python::
 
     python3 tests/test_fluxes.py
 
