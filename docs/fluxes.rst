@@ -17,7 +17,7 @@ Variants: ``honda2014_spl_solmin_total``, ``honda2014_spl_solmin`` (same as tota
 | **Physics extents**
 | Available (anti)neutrino flavors: :math:`e, \mu`
 | :math:`10^{-1} < E_{kin} \text{[GeV]} < 10^{4}`
-| :math:`0 < \cos(\theta) < 1`
+| :math:`-1 < \cos(\theta) < 1`
 
 **This flux is currently being discussed.** Please be extra careful when using it for your analysis.
 
@@ -33,7 +33,7 @@ Variants: ``H3a_SIBYLL23C_total``, ``H3a_SIBYLL23C`` (same as total), ``H3a_SIBY
 | **Physics extents**
 | Available (anti)neutrino flavors: :math:`e, \mu, \tau`
 | :math:`10^{-2} < E_{kin} \text{[GeV]} < 10^{10}`
-| :math:`0 < \cos(\theta) < 1`
+| :math:`-1 < \cos(\theta) < 1`
 
 The H3a_SIBYLL23C fluxes are calculated with MCEq 1.1.3 assuming the primary CR model HillasGaisser2012 (H3a), and the hadronic interaction model Sibyll 2.3C. In contrast to the H3a_SIBYLL21, :math:`\tau` flavor is  supported. The resulting 2D tables were interpolated with the B-spline method using photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
 
@@ -47,7 +47,7 @@ Variants: ``H3a_SIBYLL21_total``, ``H3a_SIBYLL21`` (same as total), ``H3a_SIBYLL
 | **Physics extents**
 | Available (anti)neutrino flavors: :math:`e, \mu`
 | :math:`10^{-2} < E_{kin} \text{[GeV]} < 10^{10}`
-| :math:`0 < \cos(\theta) < 1`
+| :math:`-1 < \cos(\theta) < 1`
 
 The H3a_SIBYLL21 fluxes are calculated with MCEq 1.1.3 assuming the primary CR model HillasGaisser2012 (H3a) and the hadronic interaction models Sibyll 2.1. The resulting 2D tables were interpolated with the B-spline method using photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
 
@@ -122,8 +122,8 @@ sarcevic
 --------
 .. _sarcevic:
 
-Variants: ``sarcevic_max``, ``sarcevic_min``, ``sarcevic_std``
-Alternative Knee Models: ``gaisserH3a_elbert``, ``gaisserH4a_elbert``, ``polygonato_mod_elbert``
+| Variants: ``sarcevic_max``, ``sarcevic_min``, ``sarcevic_std``
+| Alternative Knee Models: ``gaisserH3a_elbert``, ``gaisserH4a_elbert``, ``polygonato_mod_elbert``
 
 For prompt neutrinos a new model is available by R. Enberg *et al.* This is a pqcd model where parameters where changed so that the model is provided as a best prediction (std) and a max and min ones that provide the uncertainty. Some of the highest predictions (_opt models can be discarded since they seem really too optimistic!)
 

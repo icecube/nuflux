@@ -61,7 +61,7 @@ namespace nuflux{
         name+" does not support particle type "
         +boost::lexical_cast<std::string>(type)
       );
-    double coords[2]={log10(energy),cosZenith};
+    double coords[2]={log10(energy),std::abs(cosZenith)};
     int centers[2];
     it->second->searchcenters(coords,centers);
     double lf=it->second->ndsplineeval(coords,centers,0);
