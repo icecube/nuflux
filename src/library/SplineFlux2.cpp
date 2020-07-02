@@ -14,10 +14,29 @@ namespace nuflux{
     return 8.9e10;
   }
 
-  inline bool SplineFlux2::testExist(const std::string& name){
+  bool tauexist = false;
+  inline bool SplineFlux2::PathExist(const std::string& name){
+    // Test whether a file at the fiven path exists or not.
     if (FILE *file = fopen(name.c_str(), "r")) { fclose(file); return true; }
     else { return false; }
   }
+
+  double SplineFlux2::readExtents(ParticleType type)const{
+    if ((type == NuTau || type == NuTauBar) && !tauexist){
+        std::cout << "physics extents not available for this particle type" << std::endl;
+        return(0);
+    }
+    std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
+     ::const_iterator it=components.find(type);
+    double lc=it->second->lower_extent(0);
+    double uc=it->second->upper_extent(0);
+    double le=it->second->lower_extent(1);
+    double ue=it->second->upper_extent(1);
+    std::cout << "Extents for dim energy:\t\t" << pow(10,lc) << "\t" << pow(10,uc) << std::endl;
+    std::cout << "Extents for dim cos(zenith):\t" << pow(10,le) << "\t" << pow(10,ue) << std::endl;
+    return 0;
+  }
+
 
   SplineFlux2::SplineFlux2(const std::string& fluxName):
     FluxFunction(fluxName){
@@ -32,16 +51,17 @@ namespace nuflux{
             detail::getDataPath("SplineFlux2/"+fluxName+"_nuebar.fits"));
 
         // Check if tau files are available for the requested flux, and if so, load them.
+        // bool taufail = false;
         std::string taufile = detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits");
-        if (testExist(taufile)) {
+        if (PathExist(taufile)) {
             components[NuTau]    =boost::make_shared<photospline::splinetable<>>(
                 detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits"));
             components[NuTauBar] =boost::make_shared<photospline::splinetable<>>(
                 detail::getDataPath("SplineFlux2/"+fluxName+"_nutaubar.fits"));
-            taufail = false;
+            tauexist = true;
         }
         else {
-            taufail = true;
+            tauexist = false;
         }
     }
 
@@ -52,7 +72,7 @@ namespace nuflux{
 
   double SplineFlux2::getFlux(ParticleType type, double energy, double cosZenith) const{
     // If tau flavor is not supported (e.g. for conventional fluxes), return 0.
-    if ((type == NuTau || type == NuTauBar) && taufail){ return(0); }
+    if ((type == NuTau || type == NuTauBar) && !tauexist){ return(0); }
 
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
         ::const_iterator it=components.find(type);
@@ -67,6 +87,8 @@ namespace nuflux{
     double lf=it->second->ndsplineeval(coords,centers,0);
     return(pow(10,lf));
   }
+
+
 
 } //namespace nuflux
 

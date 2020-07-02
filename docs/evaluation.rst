@@ -17,6 +17,8 @@ The data for the fluxes in this class was either calculated with MCEq, or (in so
 
 So far, this class is pretty similar to the ``SplineFlux`` class, but has some additional features (e.g. tau flavor support), with the potential of being extended with further features in the future. ``SplineFlux`` was kept as it is for backwards compatibility.
 
+You can read the physics extents of a particular flux in this class with the ``readExtent()`` method.
+
 Available fluxes in this class:
 
 * :ref:`H3a_SIBYLL21 <H3a_SIBYLL21>`
