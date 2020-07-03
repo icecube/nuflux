@@ -5,7 +5,7 @@
 #include <nuflux/nuflux.h>
 
 namespace nuflux{
-  
+
   class SimpleSplineFlux : public FluxFunction{
   private:
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> > components;
@@ -16,8 +16,10 @@ namespace nuflux{
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     double getMinEnergy() const;
     double getMaxEnergy() const;
+    double readExtents(ParticleType type) const;
+
   };
-  
+
 } //namespace nuflux
 
 #endif //SPLINEFLUX_H

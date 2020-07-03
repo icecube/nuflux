@@ -46,7 +46,6 @@ namespace nuflux{
     virtual double getMaxEnergy() const{ return NAN;}
     virtual double readExtents(ParticleType type) const{ return NAN;}
 
-
   protected:
     std::string name;
   };

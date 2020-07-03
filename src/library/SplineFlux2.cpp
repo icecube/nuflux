@@ -6,14 +6,6 @@
 
 namespace nuflux{
 
-  double SplineFlux2::getMinEnergy()const{
-    return 9.0e-2;
-  }
-
-  double SplineFlux2::getMaxEnergy()const{
-    return 8.9e10;
-  }
-
   bool tauexist = false;
   inline bool SplineFlux2::PathExist(const std::string& name){
     // Test whether a file at the fiven path exists or not.
@@ -24,16 +16,16 @@ namespace nuflux{
   double SplineFlux2::readExtents(ParticleType type)const{
     if ((type == NuTau || type == NuTauBar) && !tauexist){
         std::cout << "physics extents not available for this particle type" << std::endl;
-        return(0);
+        return 0;
     }
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
      ::const_iterator it=components.find(type);
-    double lc=it->second->lower_extent(0);
-    double uc=it->second->upper_extent(0);
-    double le=it->second->lower_extent(1);
-    double ue=it->second->upper_extent(1);
-    std::cout << "Extents for dim energy:\t\t" << pow(10,lc) << "\t" << pow(10,uc) << std::endl;
-    std::cout << "Extents for dim cos(zenith):\t" << pow(10,le) << "\t" << pow(10,ue) << std::endl;
+    double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
+    double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
+    std::cout << "Extents for dim energy:\t\t" << pow(10,le) << "\t" << pow(10,ue) << std::endl;
+    // Because data is symmetrical around cos(zenith):
+    // std::cout << "Extents for dim cos(zenith):\t" << lc << "\t" << uc << std::endl;
+    std::cout << "Extents for dim cos(zenith):\t" << -uc << "\t" << uc << std::endl;
     return 0;
   }
 
@@ -81,6 +73,17 @@ namespace nuflux{
         name+" does not support particle type "
         +boost::lexical_cast<std::string>(type)
       );
+
+    // Warn the user about coordinates outside of physics extents:
+    double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
+    double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
+    if (!((energy-pow(10, ue)) * (energy-pow(10, le)) <= 0 )){
+        std::cerr << "Warning: Chosen energy not within physics extents" << '\n';
+    }
+    if (!( (-uc <= cosZenith) && (cosZenith <= uc) )){
+        std::cerr << "Warning: Chosen cos(zenith) not within physics extents" << '\n';
+    }
+
     double coords[2]={log10(energy),std::abs(cosZenith)};
     int centers[2];
     it->second->searchcenters(coords,centers);
