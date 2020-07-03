@@ -95,8 +95,6 @@ namespace nuflux{
 
 } //namespace nuflux
 
-NNF_REGISTER_FLUX("honda2014_spl_solmin",&nuflux::SplineFlux2::makeFlux);
-NNF_REGISTER_FLUX("honda2014_spl_solmin_total",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_total",&nuflux::SplineFlux2::makeFlux);
 // Note that H3a_SIBYLL21 and H3a_SIBYLL21_total are identical.
