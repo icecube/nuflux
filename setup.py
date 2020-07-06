@@ -10,12 +10,13 @@ extension = Extension(
     'nuflux._nuflux',
     ['src/library/logging.cpp',
      'src/library/SplineFlux.cpp',
+     'src/library/SplineFlux2.cpp',
      'src/library/LegacyPromptFlux.cpp',
      'src/library/LegacyConventionalFlux.cpp',
      'src/library/ANFlux.cpp',
      'src/library/IPLEFlux.cpp',
      'src/library/FluxFunction.cpp',
-     'src/pybindings/detail.cxx',     
+     'src/pybindings/detail.cxx',
      'src/pybindings/module.cxx',
     ],
     include_dirs=['src/include',numpy.get_include(),os.path.join(prefix,'include')],
@@ -26,9 +27,9 @@ extension = Extension(
 
 setup(
     name="nuflux",
-    version = "0.0.1",
+    version = "2.0.0",
     packages=find_packages(),
-    ext_modules=[extension],    
+    ext_modules=[extension],
     package_data={"nuflux":["data/*/*.fits",'data/*/*.dat']},
     test_suite="tests.test_fluxes",
     zip_safe=False,
@@ -45,6 +46,5 @@ setup(
         'Programming Language :: Python',
         'Topic :: Scientific/Engineering :: Astronomy',
         'Topic :: Scientific/Engineering :: Physics',
-    ],   
+    ],
 )
-    

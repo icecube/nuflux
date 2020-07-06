@@ -1,6 +1,8 @@
 nuflux
 ======
 
+**Version 2.0.0**
+
 Nuflux is a library for evaluating atmospheric neutrino flux models.
 
 .. toctree::
