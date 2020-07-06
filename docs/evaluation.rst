@@ -23,8 +23,6 @@ Available fluxes in this class:
 
 * :ref:`H3a_SIBYLL21 <H3a_SIBYLL21>`
 * :ref:`H3a_SIBYLL23C <H3a_SIBYLL23C>`
-* :ref:`honda2014_spl_solmin <honda2014_spl_solmin>`
-
 
 
 Older evaluation methods
@@ -80,6 +78,8 @@ Simple Spline
 -------------
 
 Evaluation of the fluxes requires photospline.
+
+You can read the physics extents of a particular flux in this class with the ``readExtent()`` method.
 
 Available fluxes in this class:
 

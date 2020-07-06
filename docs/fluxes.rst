@@ -3,25 +3,25 @@
 Fluxes
 ======
 
-This section contains a list of fluxes supported by nuflux. All available fluxes were created with different combinations of primary CR and hadronic interaction models (refer to the :ref:`physics <physics>` section). Not all models are suitable for all neutrino energies. The plot below can give an idea of which model covers a certain energy range; however, note that it is up to the analyser to make sure a chosen flux is valid for their physics requirements.
+This section contains a list of fluxes supported by nuflux. All available fluxes were created with different combinations of primary CR and hadronic interaction models (refer to the :ref:`physics <physics>` section). Not all models are suitable for all neutrino energies. The plot below can give an idea of which model covers which energy range; however, note that it is up to the analyser to make sure a chosen flux is valid for their physics requirements.
 
 .. image:: nuflux_models.svg
 
 
-honda2014_spl_solmin
---------------------
-.. _honda2014_spl_solmin:
-
-Variants: ``honda2014_spl_solmin_total``, ``honda2014_spl_solmin`` (same as total).
-
-| **Physics extents**
-| Available (anti)neutrino flavors: :math:`e, \mu`
-| :math:`10^{-1} < E_{kin} \text{[GeV]} < 10^{4}`
-| :math:`-1 < \cos(\theta) < 1`
-
-**This flux is currently being discussed.** Please be extra careful when using it for your analysis.
-
-The data tables for the honda2014 fluxes were taken from `here <https://code.icecube.wisc.edu/projects/icecube/browser/IceCube/sandbox/cweaver/NuFlux/resources/data>`_. The original data featured tables for up- and down-going neutrinos; however, the fluxes are symmetric in :math:`\cos(\theta)` up to magnetic effects. Therefore, only the tables for down-going fluxes were used and interpolated with photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
+.. honda2014_spl_solmin
+.. --------------------
+.. .. _honda2014_spl_solmin:
+..
+.. Variants: ``honda2014_spl_solmin_total``, ``honda2014_spl_solmin`` (same as total).
+..
+.. | **Physics extents**
+.. | Available (anti)neutrino flavors: :math:`e, \mu`
+.. | :math:`10^{-1} < E_{kin} \text{[GeV]} < 10^{4}`
+.. | :math:`-1 < \cos(\theta) < 1`
+..
+.. **This flux is currently being discussed.** Please be extra careful when using it for your analysis.
+..
+.. The data tables for the honda2014 fluxes were taken from `here <https://code.icecube.wisc.edu/projects/icecube/browser/IceCube/sandbox/cweaver/NuFlux/resources/data>`_. The original data featured tables for up- and down-going neutrinos; however, the fluxes are symmetric in :math:`\cos(\theta)` up to magnetic effects. Therefore, only the tables for down-going fluxes were used and interpolated with photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
 
 
 H3a_SIBYLL23C
