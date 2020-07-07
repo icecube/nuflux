@@ -8,48 +8,31 @@ This section contains a list of fluxes supported by nuflux. All available fluxes
 .. image:: nuflux_models.svg
 
 
-.. honda2014_spl_solmin
-.. --------------------
-.. .. _honda2014_spl_solmin:
-..
-.. Variants: ``honda2014_spl_solmin_total``, ``honda2014_spl_solmin`` (same as total).
-..
-.. | **Physics extents**
-.. | Available (anti)neutrino flavors: :math:`e, \mu`
-.. | :math:`10^{-1} < E_{kin} \text{[GeV]} < 10^{4}`
-.. | :math:`-1 < \cos(\theta) < 1`
-..
-.. **This flux is currently being discussed.** Please be extra careful when using it for your analysis.
-..
-.. The data tables for the honda2014 fluxes were taken from `here <https://code.icecube.wisc.edu/projects/icecube/browser/IceCube/sandbox/cweaver/NuFlux/resources/data>`_. The original data featured tables for up- and down-going neutrinos; however, the fluxes are symmetric in :math:`\cos(\theta)` up to magnetic effects. Therefore, only the tables for down-going fluxes were used and interpolated with photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
-
-
 H3a_SIBYLL23C
 ---------------------------
 .. _H3a_SIBYLL23C:
 
-Variants: ``H3a_SIBYLL23C_total``, ``H3a_SIBYLL23C`` (same as total), ``H3a_SIBYLL23C_prompt``, ``H3a_SIBYLL23C_conv``, ``H3a_SIBYLL23C_k`` (from :math:`K^{\pm}` decay), , ``H3a_SIBYLL23C_K0`` (from :math:`K^{0}` decay), ``H3a_SIBYLL23C_pi`` (from :math:`\pi` decay), ``H3a_SIBYLL23C_mu`` (from :math:`\mu` decay).
+Variants: ``H3a_SIBYLL23C`` (total), ``H3a_SIBYLL23C_pr`` (total prompt), ``H3a_SIBYLL23C_conv`` (total conventional), ``H3a_SIBYLL23C_k`` (from :math:`K^{\pm}` decay), ``H3a_SIBYLL23C_K0`` (from :math:`K^{0}` decay), ``H3a_SIBYLL23C_K0L`` (from :math:`K^{0}_{L}` decay), ``H3a_SIBYLL23C_K0S`` (from :math:`K^{0}_{S}` decay), ``H3a_SIBYLL23C_pi`` (from :math:`\pi` decay), ``H3a_SIBYLL23C_mu`` (from :math:`\mu` decay).
 
 | **Physics extents**
-| Available (anti)neutrino flavors: :math:`e, \mu, \tau`
+| Available (anti)neutrino flavors: :math:`e, \mu, \tau`  (some flux variants might support fewer flavors)
 | :math:`10^{-2} < E_{kin} \text{[GeV]} < 10^{10}`
 | :math:`-1 < \cos(\theta) < 1`
 
-The H3a_SIBYLL23C fluxes are calculated with MCEq 1.1.3 assuming the primary CR model HillasGaisser2012 (H3a), and the hadronic interaction model Sibyll 2.3C. In contrast to the H3a_SIBYLL21, :math:`\tau` flavor is  supported. The resulting 2D tables were interpolated with the B-spline method using photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
-
+| The H3a_SIBYLL23C fluxes are calculated with MCEq 1.2.1 assuming the primary CR model HillasGaisser2012 (H3a), and the hadronic interaction model Sibyll 2.3C. In contrast to the H3a_SIBYLL21, :math:`\tau` flavor is  supported. The resulting 2D tables were interpolated with the B-spline method using photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
 
 H3a_SIBYLL21
 ---------------------------
 .. _H3a_SIBYLL21:
 
-Variants: ``H3a_SIBYLL21_total``, ``H3a_SIBYLL21`` (same as total), ``H3a_SIBYLL21_prompt``, ``H3a_SIBYLL21_conv``, ``H3a_SIBYLL21_k`` (from :math:`K^{\pm}` decay), , ``H3a_SIBYLL21_K0`` (from :math:`K^{0}` decay), ``H3a_SIBYLL21_pi`` (from :math:`\pi` decay), ``H3a_SIBYLL21_mu`` (from :math:`\mu` decay).
+Variants: ``H3a_SIBYLL21`` (total), ``H3a_SIBYLL21_conv`` (total conventional), ``H3a_SIBYLL21_k`` (from :math:`K^{\pm}` decay), ``H3a_SIBYLL21_K0`` (from :math:`K^{0}` decay), ``H3a_SIBYLL23C_K0L`` (from :math:`K^{0}_{L}` decay), ``H3a_SIBYLL23C_K0S`` (from :math:`K^{0}_{S}` decay), ``H3a_SIBYLL21_pi`` (from :math:`\pi` decay), ``H3a_SIBYLL21_mu`` (from :math:`\mu` decay).
 
 | **Physics extents**
-| Available (anti)neutrino flavors: :math:`e, \mu`
+| Available (anti)neutrino flavors: :math:`e, \mu` (some flux variants might support fewer flavors)
 | :math:`10^{-2} < E_{kin} \text{[GeV]} < 10^{10}`
 | :math:`-1 < \cos(\theta) < 1`
 
-The H3a_SIBYLL21 fluxes are calculated with MCEq 1.1.3 assuming the primary CR model HillasGaisser2012 (H3a) and the hadronic interaction models Sibyll 2.1. The resulting 2D tables were interpolated with the B-spline method using photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
+| The H3a_SIBYLL21 fluxes are calculated with MCEq 1.2.1 assuming the primary CR model HillasGaisser2012 (H3a) and the hadronic interaction models Sibyll 2.1. The resulting 2D tables were interpolated with the B-spline method using photospline 2.0.4. They are evaluated using the ``SplineFlux2`` class.
 
 
 BERSS_H3a

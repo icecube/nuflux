@@ -6,7 +6,6 @@
 
 namespace nuflux{
 
-  bool tauexist = false;
   inline bool SplineFlux2::PathExist(const std::string& name){
     // Test whether a file at the fiven path exists or not.
     if (FILE *file = fopen(name.c_str(), "r")) { fclose(file); return true; }
@@ -14,18 +13,13 @@ namespace nuflux{
   }
 
   double SplineFlux2::readExtents(ParticleType type)const{
-    if ((type == NuTau || type == NuTauBar) && !tauexist){
-        std::cout << "physics extents not available for this particle type" << std::endl;
-        return 0;
-    }
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
      ::const_iterator it=components.find(type);
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
     double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
     std::cout << "Extents for dim energy:\t\t" << pow(10,le) << "\t" << pow(10,ue) << std::endl;
-    // Because data is symmetrical around cos(zenith):
-    // std::cout << "Extents for dim cos(zenith):\t" << lc << "\t" << uc << std::endl;
-    std::cout << "Extents for dim cos(zenith):\t" << -uc << "\t" << uc << std::endl;
+    lc = -uc;    // because data is symmetrical around cos(zenith)
+    std::cout << "Extents for dim cos(zenith):\t" << lc << "\t" << uc << std::endl;
     return 0;
   }
 
@@ -33,27 +27,20 @@ namespace nuflux{
   SplineFlux2::SplineFlux2(const std::string& fluxName):
     FluxFunction(fluxName){
 
-        components[NuMu] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("SplineFlux2/"+fluxName+"_numu.fits"));
-        components[NuMuBar] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("SplineFlux2/"+fluxName+"_numubar.fits"));
-        components[NuE] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("SplineFlux2/"+fluxName+"_nue.fits"));
-        components[NuEBar] =boost::make_shared<photospline::splinetable<>>(
-            detail::getDataPath("SplineFlux2/"+fluxName+"_nuebar.fits"));
+        std::vector<ParticleType> particles{ NuE, NuEBar, NuMu, NuMuBar, NuTau, NuTauBar};
+        std::vector<std::string> files {
+            detail::getDataPath("SplineFlux2/"+fluxName+"_nue.fits"),
+            detail::getDataPath("SplineFlux2/"+fluxName+"_nuebar.fits"),
+            detail::getDataPath("SplineFlux2/"+fluxName+"_numu.fits"),
+            detail::getDataPath("SplineFlux2/"+fluxName+"_numubar.fits"),
+            detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits"),
+            detail::getDataPath("SplineFlux2/"+fluxName+"_nutaubar.fits")
+        };
 
-        // Check if tau files are available for the requested flux, and if so, load them.
-        // bool taufail = false;
-        std::string taufile = detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits");
-        if (PathExist(taufile)) {
-            components[NuTau]    =boost::make_shared<photospline::splinetable<>>(
-                detail::getDataPath("SplineFlux2/"+fluxName+"_nutau.fits"));
-            components[NuTauBar] =boost::make_shared<photospline::splinetable<>>(
-                detail::getDataPath("SplineFlux2/"+fluxName+"_nutaubar.fits"));
-            tauexist = true;
-        }
-        else {
-            tauexist = false;
+        for(int f=0; f<files.size(); f++){
+            if (PathExist(files.at(f))){
+                components[particles.at(f)] = boost::make_shared<photospline::splinetable<>>(files.at(f));
+            }
         }
     }
 
@@ -63,9 +50,6 @@ namespace nuflux{
   }
 
   double SplineFlux2::getFlux(ParticleType type, double energy, double cosZenith) const{
-    // If tau flavor is not supported (e.g. for conventional fluxes), return 0.
-    if ((type == NuTau || type == NuTauBar) && !tauexist){ return(0); }
-
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
         ::const_iterator it=components.find(type);
     if(it==components.end())
@@ -77,10 +61,11 @@ namespace nuflux{
     // Warn the user about coordinates outside of physics extents:
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
     double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
+    lc = -uc;    // because data is symmetrical around cos(zenith)
     if (!((energy-pow(10, ue)) * (energy-pow(10, le)) <= 0 )){
         std::cerr << "Warning: Chosen energy not within physics extents" << '\n';
     }
-    if (!( (-uc <= cosZenith) && (cosZenith <= uc) )){
+    if (!( (lc <= cosZenith) && (cosZenith <= uc) )){
         std::cerr << "Warning: Chosen cos(zenith) not within physics extents" << '\n';
     }
 
@@ -96,21 +81,21 @@ namespace nuflux{
 } //namespace nuflux
 
 NNF_REGISTER_FLUX("H3a_SIBYLL21",&nuflux::SplineFlux2::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL21_total",&nuflux::SplineFlux2::makeFlux);
-// Note that H3a_SIBYLL21 and H3a_SIBYLL21_total are identical.
-NNF_REGISTER_FLUX("H3a_SIBYLL21_prompt",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_conv",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_k",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_K0",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_K0L",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL21_K0S",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_pi",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL21_mu",&nuflux::SplineFlux2::makeFlux);
+//
 NNF_REGISTER_FLUX("H3a_SIBYLL23C",&nuflux::SplineFlux2::makeFlux);
-NNF_REGISTER_FLUX("H3a_SIBYLL23C_total",&nuflux::SplineFlux2::makeFlux);
-// Note that H3a_SIBYLL23C and H3a_SIBYLL23C_total are identical.
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_prompt",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_conv",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_k",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_K0",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_K0L",&nuflux::SplineFlux2::makeFlux);
+NNF_REGISTER_FLUX("H3a_SIBYLL23C_K0S",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_pi",&nuflux::SplineFlux2::makeFlux);
 NNF_REGISTER_FLUX("H3a_SIBYLL23C_mu",&nuflux::SplineFlux2::makeFlux);
 //

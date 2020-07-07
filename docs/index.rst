@@ -1,7 +1,8 @@
 nuflux
 ======
 
-**Version 2.0.0**
+| **Release** 2.0.0
+| **Date** 06 July 2020
 
 Nuflux is a library for evaluating atmospheric neutrino flux models.
 
