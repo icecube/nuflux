@@ -44,67 +44,61 @@ if not os.path.exists(dirname):
 particles = [
     # particle name     LaTeX code (for plots)            line style (for plots)
     ### Total total flux:
-    ('total_nue',      r'total $\nu_{e}$',                       'solid'),
-    ('total_nuebar',   r'total $\bar{\nu}_{e}$',                 'solid'),
-    ('total_numu',     r'total $\nu_{\mu}$',                     'solid'),
-    ('total_numubar',  r'total $\bar{\nu}_{\mu}$',               'solid'),
-    ('total_nutau',     r'total $\nu_{\tau}$',                   'solid'),
-    ('total_nutaubar',  r'total $\bar{\nu}_{\tau}$',             'solid'),   # 5
+    ('nue',      r'total $\nu_{e}$',                               ':'),
+    ('nuebar',   r'total $\bar{\nu}_{e}$',                         ':'),
+    ('numu',     r'total $\nu_{\mu}$',                             ':'),
+    ('numubar',  r'total $\bar{\nu}_{\mu}$',                       ':'),
+    ('nutau',     r'total $\nu_{\tau}$',                           ':'),
+    ('nutaubar',  r'total $\bar{\nu}_{\tau}$',                     ':'), # 5
     ### Total conventional flux:
-    ('conv_nue',       r'conv. $\nu_{e}$',                       '--'),
-    ('conv_nuebar',    r'conv. $\bar{\nu}_{e}$',                 '--'),
-    ('conv_numu',      r'conv. $\nu_{\mu}$',                     '--'),
-    ('conv_numubar',   r'conv. $\bar{\nu}_{\mu}$',               '--'),      # 9
+    ('conv_nue',       r'conv. $\nu_{e}$',                        '--'),
+    ('conv_nuebar',    r'conv. $\bar{\nu}_{e}$',                  '--'),
+    ('conv_numu',      r'conv. $\nu_{\mu}$',                      '--'),
+    ('conv_numubar',   r'conv. $\bar{\nu}_{\mu}$',                '--'), # 9
     ### Conventional flux from pions/kaons:
-    ('pi_nue',         r'(from $\pi$) $\nu_{e}$',                   ':'),
-    ('k_nue',          r'(from $K^{\pm}$) $\nu_{e}$',                     ':'),
-    ('K0_nue',         r'(from $K^{0}$) $\nu_{e}$',                 '-.'),
-    ('pi_nuebar',      r'(from $\pi$) $\bar{\nu}_{e}$',             ':'),
-    ('k_nuebar',       r'(from $K^{\pm}$) $\bar{\nu}_{e}$',               ':'),
-    ('K0_nuebar',      r'(from $K^{0}$) $\bar{\nu}_{e}$',           '-.'),
-    ('pi_numu',        r'(from $\pi$) $\nu_{\mu}$',                 ':'),
-    ('k_numu',         r'(from $K^{\pm}$) $\nu_{\mu}$',                   ':'),
-    ('K0_numu',        r'(from $K^{0}$) $\nu_{\mu}$',               '-.'),
-    ('pi_numubar',     r'(from $\pi$) $\bar{\nu}_{\mu}$',           ':'),
-    ('k_numubar',      r'(from $K^{\pm}$) $\bar{\nu}_{\mu}$',             ':'),
-    ('K0_numubar',     r'(from $K^{0}$) $\bar{\nu}_{\mu}$',         '-.'),  # 21
+    ('pi_nue',         r'(from $\pi$) $\nu_{e}$',                  '-'),
+    ('pi_nuebar',      r'(from $\pi$) $\bar{\nu}_{e}$',            '-'),
+    ('pi_numu',        r'(from $\pi$) $\nu_{\mu}$',                '-'),
+    ('pi_numubar',     r'(from $\pi$) $\bar{\nu}_{\mu}$',          '-'), # 13
+    ('k_nue',          r'(from $K^{\pm}$) $\nu_{e}$',             '--'),
+    ('k_nuebar',       r'(from $K^{\pm}$) $\bar{\nu}_{e}$',       '--'),
+    ('k_numu',         r'(from $K^{\pm}$) $\nu_{\mu}$',           '--'),
+    ('k_numubar',      r'(from $K^{\pm}$) $\bar{\nu}_{\mu}$',     '--'), # 17
+    ('K0_nue',         r'(from $K^{0}$) $\nu_{e}$',               '-.'),
+    ('K0_nuebar',      r'(from $K^{0}$) $\bar{\nu}_{e}$',         '-.'),
+    ('K0_numu',        r'(from $K^{0}$) $\nu_{\mu}$',             '-.'),
+    ('K0_numubar',     r'(from $K^{0}$) $\bar{\nu}_{\mu}$',       '-.'), # 21
+    ('K0L_nue',         r'(from $K^{0}_{L}$) $\nu_{e}$',          '--'),
+    ('K0L_nuebar',      r'(from $K^{0}_{L}$) $\bar{\nu}_{e}$',    '--'),
+    ('K0L_numu',        r'(from $K^{0}_{L}$) $\nu_{\mu}$',        '--'),
+    ('K0L_numubar',     r'(from $K^{0}_{L}$) $\bar{\nu}_{\mu}$',  '--'),
+    ('K0S_nue',         r'(from $K^{0}_{S}$) $\nu_{e}$',           ':'),
+    ('K0S_nuebar',      r'(from $K^{0}_{S}$) $\bar{\nu}_{e}$',     ':'), # 27
     ### From muons:
-    ('mu_nue',           r'(from $\mu$) $\nu_{e}$',                  '-'),
-    ('mu_nuebar',        r'(from $\mu$) $\bar{\nu}_{e}$',            '-'),
-    ('mu_numu',          r'(from $\mu$) $\nu_{\mu}$',                '-'),
-    ('mu_numubar',       r'(from $\mu$) $\bar{\nu}_{\mu}$',          '-'),  # 26
-    ### Conventional flux from all other:
-    ### (According to the plots, these seem to be equal to the total fluxes
-    ### for some reason)
-    # ('nue',            r'conv. (other srcs) $\nu_{e}$',          '-.'),
-    # ('nuebar',         r'conv. (other srcs) $\bar{\nu}_{e}$',    '-.'),
-    # ('numu',           r'conv. (other srcs) $\nu_{\mu}$',        '-.'),
-    # ('numubar',        r'conv. (other srcs) $\bar{\nu}_{\mu}$',  '-.'),
-    # ('nutau',          r'conv. (other srcs) $\nu_{\tau}$',       '-.'),
-    # ('nutaubar',       r'conv. (other srcs) $\bar{\nu}_{\tau}$', '-.'),
+    ('mu_nue',           r'(from $\mu$) $\nu_{e}$',                '-'),
+    ('mu_nuebar',        r'(from $\mu$) $\bar{\nu}_{e}$',          '-'),
+    ('mu_numu',          r'(from $\mu$) $\nu_{\mu}$',              '-'),
+    ('mu_numubar',       r'(from $\mu$) $\bar{\nu}_{\mu}$',        '-'), # 31
     ### Total prompt flux:
-    ('prompt_nue',         r'prompt $\nu_{e}$',                      '--'),
-    ('prompt_nuebar',      r'prompt $\bar{\nu}_{e}$',                '--'),
-    ('prompt_numu',        r'prompt $\nu_{\mu}$',                    '--'),
-    ('prompt_numubar',     r'prompt $\bar{\nu}_{\mu}$',              '--'),
-    ('prompt_nutau',       r'prompt $\nu_{\tau}$',                   '--'),
-    ('prompt_nutaubar',    r'prompt $\bar{\nu}_{\tau}$',             '--'), # 32
+    ('pr_nue',         r'prompt $\nu_{e}$',                       '--'),
+    ('pr_nuebar',      r'prompt $\bar{\nu}_{e}$',                 '--'),
+    ('pr_numu',        r'prompt $\nu_{\mu}$',                     '--'),
+    ('pr_numubar',     r'prompt $\bar{\nu}_{\mu}$',               '--'),
+    ('pr_nutau',       r'prompt $\nu_{\tau}$',                    '--'),
+    ('pr_nutaubar',    r'prompt $\bar{\nu}_{\tau}$',              '--'), # 37
 ]
-# particles = particles[0:1]
-# particles = particles[0:4]
+# particles = particles[0:10]
+# particles = particles[32:]
 # particles = particles[:18] + particles[24:]
-
-# The following is a setting necessary for MCEq. Even if we don't use MCEq, it's
-# important for the file handling of the other routines that we set this globally.
-# Leave at mag = 0 if unsure. More information in the solve_mceqs() routine.
-mag = 0
 
 ###-----------------------------------------------------------------------------
 
-def Solve_mceqs(particle):
-    ### Create 2D tabulated spectra with MCEq
+def Solve_mceqs():
+    ### Solving matrix cascade equations.
+
     import crflux.models as crf
     from MCEq.core import config, MCEqRun
+    # from MCEq import mceq_config
 
     def Convert_name(particle):
         # MCEq can't handle "bar"s in particle names. It wants "anti"s instead.
@@ -118,37 +112,49 @@ def Solve_mceqs(particle):
     # Cosmic ray flux at the top of the atmosphere:
     primary_model = (crf.HillasGaisser2012, 'H3a')
     # High-energy hadronic interaction model:
-    interaction_model = 'SIBYLL21'
+    interaction_model = 'SIBYLL23C'
     # Zenith angles:
     zenith_deg = np.append(np.arange(0., 90., 10), 89)
-    # By setting mag != 0, the fluxes are multiplied by that factor of E [GeV]
-    # in MCEq to stress steaper parts of the spectrum:
-    # mag = mag
+    mceq = MCEqRun(interaction_model, primary_model, 0)
+    mceq.pman.track_leptons_from([(130,0)], 'K0L_')
+    mceq.pman.track_leptons_from([(310,0)], 'K0S_')
+    mceq.pman.print_particle_tables(0)
+    mceq._resize_vectors_and_restore()
+    mceq.regenerate_matrices()
+    config.excpt_on_missing_particle = True
+    energy = mceq.e_grid
 
-    headr = (
-    savename.replace('_', '\t') + '\n'
-    'energy [GeV]\t' + ' '.join([str(z) + ' deg\t' for z in zenith_deg])
-    )
-
-    ## Solve the equation system
-    solutions = []
+    ## Solve the equation systems for all zenith angles:
+    solutions = [[] for particle in particles]
     for angle in zenith_deg:
         print(
-            '\n=== Solving MCEq for ' + particle[0] + ' '
-            + primary_model[1] + ' ' + interaction_model
-            + ' mag=' + str(mag) + ' ' + str(angle) + ' deg'
+            '\n=== Solving MCEq for ' + primary_model[1] + ' '
+            + interaction_model + ' ' + str(angle) + ' deg'
         )
-        mceq = MCEqRun(interaction_model, primary_model, angle)
+        mceq.set_theta_deg(angle)
         mceq.solve()
-        energy = mceq.e_grid
-        solutions.append(mceq.get_solution(Convert_name(particle), mag))
 
-    solutions.insert(0, energy)
-    solutions = np.array(solutions)
-    np.savetxt(
-        dirname + '/data/' + savename + '.dat', np.transpose(solutions),
-        fmt='%.8e', header=headr, delimiter='\t'
-    )
+        # Obtain solution for all chosen particles:
+        print('Obtaining solution for:')
+        for p, particle in enumerate(particles):
+            print(particle[0])
+            solutions[p].append(mceq.get_solution(Convert_name(particle), mag=0))
+            # mag is a multiplication factor in order to stress steaper
+            # parts of the spectrum. Don't store magnified fluxes in nuflux!
+
+    # Save solutions to file particle-wise:
+    for p, particle in enumerate(particles):
+        savename = name + '_' + particle[0]
+        headr = (
+            savename.replace('_', '\t') + '\n'
+            'energy [GeV]\t' + ' '.join([str(z) + ' deg\t' for z in zenith_deg])
+        )
+        solutions[p].insert(0, energy)
+        solutions[p] = np.array(solutions[p])
+        np.savetxt(
+            dirname + '/data/' + savename + '.dat', np.transpose(solutions[p]),
+            fmt='%.8e', header=headr, delimiter='\t'
+        )
 
 
 def Spline_fluxes(particle):
@@ -291,7 +297,7 @@ def Spline_fluxes(particle):
     Save_data_for_plots(centers, data, xfine, y)
     spline.write(dirname + '/splines/' + savename + '.fits')
     # Uncomment for debugging:
-    # Check_spline(y)
+    Check_spline(y)
 
 
 def Plot_splines():
@@ -331,18 +337,7 @@ def Plot_splines():
     def Create_axlabels():
         ### Create title and axis labels.
         xlabel = r'kinetic energy $E$ [GeV]'
-        # The unit of the flux is 1/(GeV s cm^2 sr). However keep in mind to account
-        # for the magnification factor (mag) which may introduce several more GeV's.
-        if mag == 0:
-            ylabel = r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
-        elif mag == 1:
-            ylabel = r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$] $\times$ E [GeV]'
-        else:
-            ylabel = (
-                  r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
-                + r' $\times$ E$^{' + str(mag) + r'}$'
-                + r' [GeV$^{' + str(mag) + r'}$] '
-            )
+        ylabel = r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
         return xlabel, ylabel
 
     def Create_label(particle):
@@ -355,9 +350,10 @@ def Plot_splines():
     sb.set_context(context='notebook', font_scale=1.2, rc={"lines.linewidth": 2.0})
     sb.set_style('whitegrid')
     xlabel, ylabel = Create_axlabels()
-    custom_legend = [Line2D([0], [0], color='gray', lw=0, marker='+',
+    markers = '+'
+    custom_legend = [Line2D([0], [0], color='gray', lw=0, marker=markers,
                             label=r'data for $\cos(\theta)=1$')]
-    short_legend = [Line2D([0], [0], color='gray', lw=0, marker='+', label=r'data')]
+    short_legend = [Line2D([0], [0], color='gray', lw=0, marker=markers, label=r'data')]
     numcols = 3
 
     flavors = [
@@ -368,19 +364,19 @@ def Plot_splines():
         ('nutau',    r'$\nu_{\tau}$'),
         ('nutaubar', r'$\bar{\nu}_{\tau}$')
     ]
-    flavor_colors  = plt.cm.jet(np.linspace(0,1,7))
+    # Currently we have 9 different fluxes to display (total, conv, pi,
+    # k, K0, K0L, K0S, prompt, mu). Adjust the length of this linspace
+    # according to changes:
+    flavor_colors  = plt.cm.jet(np.linspace(0,1,9))
 
     for f, flavor in enumerate(flavors):
-        pdf_flavor = pdf(dirname + '/plots/perflavor_mag' + str(mag) + '_' + flavor[0] + '.pdf')
+        pdf_flavor = pdf(dirname + '/plots/perflavor_' + flavor[0] + '.pdf')
         fig3, ax3   = plt.subplots(1, 1, figsize=(9,5))
         fig3.subplots_adjust(bottom=0.14, top=0.91, left=0.12, right=0.95, wspace=0.2)
         fig4, axes4 = plt.subplots(3, numcols, figsize=(9,5), sharex='col')
-        # fig4, axes4 = plt.subplots(3, 2, figsize=(9,5), sharex='col')
-        fig4.subplots_adjust(bottom=0.13, top=0.81, left=0.1, right=0.95, wspace=0.2, hspace=0.3)
+        fig4.subplots_adjust(bottom=0.13, top=0.76, left=0.1, right=0.95, wspace=0.2, hspace=0.3)
         fig4.text(0.5, 0.03, r'cosine of zenith angle $\cos(\theta)$', ha='center')
         fig4.text(0.02, 0.5, ylabel, va='center', rotation='vertical')
-        # ax3.text(0.15, 0.1, r'data for $\cos(\theta)=1$', horizontalalignment='center',
-        #     verticalalignment='center', transform = ax3.transAxes)
 
         p=0
         for particle in particles:
@@ -401,7 +397,6 @@ def Plot_splines():
                 fig1, ax1 = plt.subplots(1, 1, figsize = (9, 5))
                 fig1.subplots_adjust(bottom=0.14, top=0.91, left=0.12, right=0.95, wspace=0.2)
                 fig2, axes2 = plt.subplots(3, numcols, figsize=(9, 5), sharex='col')
-                # fig2, axes2 = plt.subplots(3, 2, figsize=(9, 5), sharex='col')
                 fig2.subplots_adjust(bottom=0.13, top=0.87, left=0.1, right=0.95, wspace=0.2, hspace=0.3)
                 fig2.suptitle(title, fontsize=14)
                 fig2.text(0.5, 0.03, r'cosine of zenith angle $\cos(\theta)$', ha='center')
@@ -416,7 +411,7 @@ def Plot_splines():
                 for spline, label, color in zip(splines[::cit], xc[::cit], colors):
                     ax1.loglog(xe, spline, label='%.2f' % label, color=color)
                 # Plot the data points:
-                ax1.loglog(xe, datapoints[-1], lw=0, marker='+', color='gray', alpha=0.4)
+                ax1.loglog(xe, datapoints[-1], lw=0, marker=markers, color='gray', alpha=0.4)
                 ax1.set_title(title)
                 ax1.set_xlabel(xlabel)
                 ax1.set_ylabel(ylabel)
@@ -424,13 +419,9 @@ def Plot_splines():
                 leg12 = ax1.legend(title=r'$\cos(\theta)$', loc='lower left')
                 ax1.add_artist(leg11)
 
-                ax3.loglog(xe, datapoints[-1], lw=0, marker='+', color='gray', alpha=0.4)
+                ax3.loglog(xe, datapoints[-1], lw=0, marker=markers, color='gray', alpha=0.4)
                 ax3.loglog(xe, splines[-1], label=Create_label(particle), ls=particle[2],
                            color=flavor_colors[p], alpha=0.8)
-                # if 'pi' in particle[0]:
-                #     pi_values = splines[-1]
-                # if 'k' in particle[0]:
-                #     ax3.loglog(xe[:110], pi_values[:110] + splines[-1][:110], label='sum', ls='--', color='black')
                 ax3.set_title(title_flavor)
                 ax3.set_xlabel(xlabel)
                 ax3.set_ylabel(ylabel)
@@ -443,42 +434,35 @@ def Plot_splines():
                 for ax2, ax4, dataset, spline, label, color in zip(
                     axes2.flatten(),
                     axes4.flatten(),
-                    # datapointsT[::eit],
-                    # splinesT[::eit],
-                    # xe[::eit],
                     datapointsT[21::10],
                     splinesT[21::10],
                     xe[21::10],
-                    # datapointsT[0::20],
-                    # splinesT[0::20],
-                    # xe[0::20],
                     colors
                 ):
                     ax2.tick_params(axis='both', which='major', labelsize=10)
                     ax2.yaxis.offsetText.set_fontsize(10)
                     ax2.set_title(r'at $E\approx$%.0e' % label + ' GeV', fontsize=12, loc='right')
-                    ax2.plot(xc, dataset, lw=0, marker='+', color='gray', alpha=0.4)
+                    ax2.plot(xc, dataset, lw=0, marker=markers, color='gray', alpha=0.4)
                     ax2.plot(xc, spline, color=color)
                     ax2.ticklabel_format(axis='y', style='sci', scilimits=(0,0))
 
                     ax4.tick_params(axis='both', which='major', labelsize=10)
                     ax4.yaxis.offsetText.set_fontsize(10)
                     ax4.set_title(r'at $E\approx$%.0e' % label + ' GeV', fontsize=12, loc='right')
-                    ax4.plot(xc, dataset, lw=0, marker='+', color='gray', alpha=0.4)
+                    ax4.plot(xc, dataset, lw=0, marker=markers, color='gray', alpha=0.4)
                     ax4.plot(xc, spline, color=flavor_colors[p], alpha=0.9,
                              ls=particle[2], label=Create_label(particle))
                     ax4.ticklabel_format(axis='y', style='sci', scilimits=(0,0))
                     handles, labels = ax4.get_legend_handles_labels()
 
                 p+=1
-
                 pdf_particle.savefig(fig1)
                 pdf_particle.savefig(fig2)
                 pdf_particle.close()
         if p:
             leg41 = fig4.legend(handles=short_legend, loc='upper left', fontsize=12,
                                 bbox_to_anchor=(0.05, 0.45, 0.86, 0.5))
-            leg42 = fig4.legend(handles, labels, loc='upper left', ncol=7,
+            leg42 = fig4.legend(handles, labels, loc='upper left', ncol=5,
                                 mode='expand', bbox_to_anchor=(0.16, 0.45, 0.80, 0.5),
                                 fontsize=12)
         pdf_flavor.savefig(fig3)
@@ -511,17 +495,17 @@ def Read_fits(filename):
 
 #--- make it so! ---------------------------------------------------------------
 
+# Execute once and then uncomment, afterwards load data from files to
+# considerably reduce computing time (if you are using the example data,
+# you can skip MCEq completely):
+# MCEqs = Solve_mceqs()
+
 for particle in particles:
-    # print('\n' + particle[0])
-    savename = name + '_' + particle[0] + ('_mag' + str(mag) if mag != 0 else '')
-    # savename = name + '_' + particle[0] + '_mag' + str(mag)
-    ##--- Execute once and then uncomment, afterwards load data from files to
-    ##--- considerably reduce computing time. If you are using the example data,
-    ##--- you can skip this step, too:
-    # Solve_mceqs(particle)
-    ##--- Spline the fluxes with photospline, and save data in plottable format:
+    print(particle[0])
+    savename = name + '_' + particle[0]
+    #--- Spline the fluxes with photospline, and save data in plottable format:
     # Spline_fluxes(particle)
-    ##--- Read the fits to verify they're in the correct format:
+    #--- Read the fits to verify they're in the correct format:
     # Read_fits(dirname + '/splines/' + savename + '.fits')
 
 ##--- Plot stuff (for all selected particles at once)
