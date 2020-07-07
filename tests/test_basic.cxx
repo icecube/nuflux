@@ -6,38 +6,39 @@
 using namespace std;
 
 // Add values for new fluxes to the list, with the following parameters:
-// ParticleType: NuMu, energy: 1e3, cos(zenith): 0
+// ParticleType: NuE, energy: 1e3, cos(zenith): 0
 map<string, double> values = {
-  {"BERSS_H3a_central",             1.52244e-14},
-  {"BERSS_H3p_central",             1.56008e-14},
-  {"BERSS_H3p_lower",                1.2502e-14},
-  {"BERSS_H3p_upper",               1.82599e-14},
-  {"CORSIKA_GaisserH3a_QGSJET-II",  3.55230e-11},
-  {"CORSIKA_GaisserH3a_SIBYLL-2.1", 5.01658e-11},
-  {"CORSIKA_GaisserH3a_average",    4.30771e-11},
-  {"IPhonda2006_sno_solmin",        4.79297e-11},
-  {"IPhonda2014_spl_solmin",        5.04902e-11},
-  {"bartol",                        5.48218e-11},
-  {"honda2006",                     4.64762e-11},
-  {"sarcevic_max",                  3.85434e-14},
-  {"sarcevic_min",                  1.67841e-14},
-  {"sarcevic_std",                   3.1054e-14},
-  {"H3a_SIBYLL21",                  6.85051e-11},
-  {"H3a_SIBYLL21_total",            6.85051e-11},
-  {"H3a_SIBYLL21_conv",             6.85051e-11},
-  {"H3a_SIBYLL21_k",                4.57034e-11},
-  {"H3a_SIBYLL21_K0",               7.27295e-13},
-  {"H3a_SIBYLL21_pi",               2.13187e-11},
-  {"H3a_SIBYLL21_mu",               1.62218e-12},
-  {"H3a_SIBYLL21_prompt",           3.72286e-17},
-  {"H3a_SIBYLL23C",                 4.80517e-11},
-  {"H3a_SIBYLL23C_total",           4.80517e-11},
-  {"H3a_SIBYLL23C_conv",            4.80119e-11},
-  {"H3a_SIBYLL23C_k",               2.65559e-11},
-  {"H3a_SIBYLL23C_K0",              8.22353e-13},
-  {"H3a_SIBYLL23C_pi",              1.98839e-11},
-  {"H3a_SIBYLL23C_mu",              1.48019e-12},
-  {"H3a_SIBYLL23C_prompt",          4.14663e-14},
+{"BERSS_H3a_central",			    1.522442e-14},
+{"BERSS_H3p_central",			    1.560076e-14},
+{"BERSS_H3p_lower",			        1.250199e-14},
+{"BERSS_H3p_upper",	        		1.825986e-14},
+{"CORSIKA_GaisserH3a_QGSJET-II",	2.719133e-12},
+{"CORSIKA_GaisserH3a_SIBYLL-2.1",	3.563726e-12},
+{"CORSIKA_GaisserH3a_average",		3.303177e-12},
+{"H3a_SIBYLL21",			        5.020319e-12},
+{"H3a_SIBYLL21_K0",			        1.463468e-12},
+{"H3a_SIBYLL21_K0L",		        1.458896e-12},
+{"H3a_SIBYLL21_K0S",		        5.104548e-15},
+{"H3a_SIBYLL21_conv",		        5.020319e-12},
+{"H3a_SIBYLL21_k",			        1.329195e-12},
+{"H3a_SIBYLL21_mu",			        2.465542e-12},
+{"H3a_SIBYLL21_pi",			        1.959868e-14},
+{"H3a_SIBYLL23C",			        4.383778e-12},
+{"H3a_SIBYLL23C_K0",		        1.638553e-12},
+{"H3a_SIBYLL23C_K0L",		        1.633340e-12},
+{"H3a_SIBYLL23C_K0S",		        5.823607e-15},
+{"H3a_SIBYLL23C_conv",		        4.350807e-12},
+{"H3a_SIBYLL23C_k",			        8.010644e-13},
+{"H3a_SIBYLL23C_mu",		        2.105877e-12},
+{"H3a_SIBYLL23C_pi",		        1.813244e-14},
+{"H3a_SIBYLL23C_pr",		        3.908452e-14},
+{"IPhonda2006_sno_solmin",	        3.719170e-12},
+{"IPhonda2014_spl_solmin",	        3.905058e-12},
+{"bartol",		           	        7.714551e-12},
+{"honda2006",		     	        3.813934e-12},
+{"sarcevic_max",			        3.854341e-14},
+{"sarcevic_min",			        1.678407e-14},
+{"sarcevic_std",			        3.105402e-14},
 };
 
 
@@ -47,7 +48,7 @@ int main(){
 
   for (vector<string>::iterator it = fluxes.begin() ; it != fluxes.end(); ++it){
     boost::shared_ptr<nuflux::FluxFunction> flux(nuflux::makeFlux(*it));
-    double f=flux->getFlux(nuflux::NuMu,1e3,0);
+    double f=flux->getFlux(nuflux::NuE,1e3,0);
     bool pass = abs(f - values[*it])/f < 1e-5 ;
     good *=pass;
     std::cout << std::setw(29) << *it << " " <<f <<" "<< values[*it] << " " << (pass?"PASS":"FAIL") << endl;
