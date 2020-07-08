@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-################################################################################
+########################################################################
 ## This script generates new atmospheric fluxes for the nuflux project.
 ##
 ## It can:
@@ -16,7 +16,7 @@
 ##
 ## Created for the nuflux project as part of an IceCube service task.
 ## Created by: Raffaela Busse (WWU Münster), rbusse@icecube.wisc.edu
-################################################################################
+########################################################################
 
 
 import os
@@ -24,12 +24,12 @@ from shutil import copyfile
 import math
 import numpy as np
 
-###--- Global settings ---------------------------------------------------------
+###--- Global settings -------------------------------------------------
 # Please provide a name for your new fluxes, and define the path to the
 # working directory. All necessary folders are being set up for you automatically.
 working_path = './'
-name     = 'H3a_SIBYLL23C'
-# name     = 'exampleflux'
+# name     = 'H3a_SIBYLL23C'
+name     = 'exampleflux'
 dirname  = name
 os.chdir(working_path)
 if not os.path.exists(dirname):
@@ -44,12 +44,12 @@ if not os.path.exists(dirname):
 particles = [
     # particle name     LaTeX code (for plots)            line style (for plots)
     ### Total total flux:
-    ('nue',      r'total $\nu_{e}$',                               ':'),
-    ('nuebar',   r'total $\bar{\nu}_{e}$',                         ':'),
-    ('numu',     r'total $\nu_{\mu}$',                             ':'),
-    ('numubar',  r'total $\bar{\nu}_{\mu}$',                       ':'),
-    ('nutau',     r'total $\nu_{\tau}$',                           ':'),
-    ('nutaubar',  r'total $\bar{\nu}_{\tau}$',                     ':'), # 5
+    ('nue',            r'total $\nu_{e}$',                         ':'),
+    ('nuebar',         r'total $\bar{\nu}_{e}$',                   ':'),
+    ('numu',           r'total $\nu_{\mu}$',                       ':'),
+    ('numubar',        r'total $\bar{\nu}_{\mu}$',                 ':'),
+    ('nutau',          r'total $\nu_{\tau}$',                      ':'),
+    ('nutaubar',       r'total $\bar{\nu}_{\tau}$',                ':'), # 5
     ### Total conventional flux:
     ('conv_nue',       r'conv. $\nu_{e}$',                        '--'),
     ('conv_nuebar',    r'conv. $\bar{\nu}_{e}$',                  '--'),
@@ -68,17 +68,17 @@ particles = [
     ('K0_nuebar',      r'(from $K^{0}$) $\bar{\nu}_{e}$',         '-.'),
     ('K0_numu',        r'(from $K^{0}$) $\nu_{\mu}$',             '-.'),
     ('K0_numubar',     r'(from $K^{0}$) $\bar{\nu}_{\mu}$',       '-.'), # 21
-    ('K0L_nue',         r'(from $K^{0}_{L}$) $\nu_{e}$',          '--'),
-    ('K0L_nuebar',      r'(from $K^{0}_{L}$) $\bar{\nu}_{e}$',    '--'),
-    ('K0L_numu',        r'(from $K^{0}_{L}$) $\nu_{\mu}$',        '--'),
-    ('K0L_numubar',     r'(from $K^{0}_{L}$) $\bar{\nu}_{\mu}$',  '--'),
-    ('K0S_nue',         r'(from $K^{0}_{S}$) $\nu_{e}$',           ':'),
-    ('K0S_nuebar',      r'(from $K^{0}_{S}$) $\bar{\nu}_{e}$',     ':'), # 27
+    ('K0L_nue',        r'(from $K^{0}_{L}$) $\nu_{e}$',           '--'),
+    ('K0L_nuebar',     r'(from $K^{0}_{L}$) $\bar{\nu}_{e}$',     '--'),
+    ('K0L_numu',       r'(from $K^{0}_{L}$) $\nu_{\mu}$',         '--'),
+    ('K0L_numubar',    r'(from $K^{0}_{L}$) $\bar{\nu}_{\mu}$',   '--'),
+    ('K0S_nue',        r'(from $K^{0}_{S}$) $\nu_{e}$',            ':'),
+    ('K0S_nuebar',     r'(from $K^{0}_{S}$) $\bar{\nu}_{e}$',      ':'), # 27
     ### From muons:
-    ('mu_nue',           r'(from $\mu$) $\nu_{e}$',                '-'),
-    ('mu_nuebar',        r'(from $\mu$) $\bar{\nu}_{e}$',          '-'),
-    ('mu_numu',          r'(from $\mu$) $\nu_{\mu}$',              '-'),
-    ('mu_numubar',       r'(from $\mu$) $\bar{\nu}_{\mu}$',        '-'), # 31
+    ('mu_nue',         r'(from $\mu$) $\nu_{e}$',                  '-'),
+    ('mu_nuebar',      r'(from $\mu$) $\bar{\nu}_{e}$',            '-'),
+    ('mu_numu',        r'(from $\mu$) $\nu_{\mu}$',                '-'),
+    ('mu_numubar',     r'(from $\mu$) $\bar{\nu}_{\mu}$',          '-'), # 31
     ### Total prompt flux:
     ('pr_nue',         r'prompt $\nu_{e}$',                       '--'),
     ('pr_nuebar',      r'prompt $\bar{\nu}_{e}$',                 '--'),
@@ -87,18 +87,20 @@ particles = [
     ('pr_nutau',       r'prompt $\nu_{\tau}$',                    '--'),
     ('pr_nutaubar',    r'prompt $\bar{\nu}_{\tau}$',              '--'), # 37
 ]
-# particles = particles[0:10]
-# particles = particles[32:]
+# For exampleflux data, select "nue" only (particles = particles[0:1]).
+particles = particles[0:1]
 # particles = particles[:18] + particles[24:]
 
-###-----------------------------------------------------------------------------
+###---------------------------------------------------------------------
 
 def Solve_mceqs():
-    ### Solving matrix cascade equations.
+    ### This function solves matrix cascade equations using MCEq. Please
+    ### note that MCEq can do a lot more than what is currently used
+    ### in this script. For more information and options, visit:
+    ### https://github.com/afedynitch/MCEq
 
     import crflux.models as crf
     from MCEq.core import config, MCEqRun
-    # from MCEq import mceq_config
 
     def Convert_name(particle):
         # MCEq can't handle "bar"s in particle names. It wants "anti"s instead.
@@ -118,7 +120,7 @@ def Solve_mceqs():
     mceq = MCEqRun(interaction_model, primary_model, 0)
     mceq.pman.track_leptons_from([(130,0)], 'K0L_')
     mceq.pman.track_leptons_from([(310,0)], 'K0S_')
-    mceq.pman.print_particle_tables(0)
+    # mceq.pman.print_particle_tables(0)
     mceq._resize_vectors_and_restore()
     mceq.regenerate_matrices()
     config.excpt_on_missing_particle = True
@@ -140,7 +142,8 @@ def Solve_mceqs():
             print(particle[0])
             solutions[p].append(mceq.get_solution(Convert_name(particle), mag=0))
             # mag is a multiplication factor in order to stress steaper
-            # parts of the spectrum. Don't store magnified fluxes in nuflux!
+            # parts of the spectrum. Don't store magnified fluxes in nuflux
+            # (keep mag=0)!
 
     # Save solutions to file particle-wise:
     for p, particle in enumerate(particles):
@@ -158,7 +161,9 @@ def Solve_mceqs():
 
 
 def Spline_fluxes(particle):
-    ### Spline the solutions with photospline.
+    ### Spline the solutions with photospline. For more information:
+    ### https://github.com/IceCubeOpenSource/photospline
+
     from photospline import glam_fit, ndsparse, bspline
 
     def Read_data():
@@ -275,7 +280,7 @@ def Spline_fluxes(particle):
     # Load data from file:
     centers, data = Read_data()
 
-    #--- Set the splining parameters -------------------------------------------
+    #--- Set the splining parameters -----------------------------------
     w = 1.
     order = [2, 3]
     penalty_order = order
@@ -297,7 +302,7 @@ def Spline_fluxes(particle):
     Save_data_for_plots(centers, data, xfine, y)
     spline.write(dirname + '/splines/' + savename + '.fits')
     # Uncomment for debugging:
-    Check_spline(y)
+    # Check_spline(y)
 
 
 def Plot_splines():
@@ -493,7 +498,7 @@ def Read_fits(filename):
     image.close()
 
 
-#--- make it so! ---------------------------------------------------------------
+#--- make it so! -------------------------------------------------------
 
 # Execute once and then uncomment, afterwards load data from files to
 # considerably reduce computing time (if you are using the example data,
@@ -503,10 +508,8 @@ def Read_fits(filename):
 for particle in particles:
     print(particle[0])
     savename = name + '_' + particle[0]
-    #--- Spline the fluxes with photospline, and save data in plottable format:
-    # Spline_fluxes(particle)
-    #--- Read the fits to verify they're in the correct format:
-    # Read_fits(dirname + '/splines/' + savename + '.fits')
+    # Spline_fluxes(particle)   # Spline fluxes and store in plottable format
+    # Read_fits(dirname + '/splines/' + savename + '.fits')   # Read FITS files to verify format
 
 ##--- Plot stuff (for all selected particles at once)
-Plot_splines()
+# Plot_splines()
