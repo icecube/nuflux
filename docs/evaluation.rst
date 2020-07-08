@@ -3,7 +3,7 @@
 Evaluation methods
 ##################
 
-Nuflux contains several different methods for evaluating flux tables. Over the years, as better methods were deveopled, the older methods were kept to maintain reproducability with older analyses. This page contains a description of each evaluation method which is available.
+nuflux contains several different methods for evaluating flux tables. Over the years, as better methods were deveopled, the older methods were kept to maintain reproducability with older analyses. This page contains a description of each evaluation method which is available.
 
 New evaluation methods
 =========================

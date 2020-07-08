@@ -1,10 +1,10 @@
 nuflux
 ======
 
-| **Release** 2.0.0
-| **Date** 06 July 2020
+| **Release:**   2.0.0
+| **Date:**      07 July 2020
 
-Nuflux is a library for evaluating atmospheric neutrino flux models.
+nuflux is a library for evaluating atmospheric neutrino flux models.
 
 .. toctree::
    :maxdepth: 1

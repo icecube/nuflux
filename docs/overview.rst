@@ -3,9 +3,9 @@
 Overview
 ========
 
-Nuflux is a library for evaluating various atmospheric neutrino flux models. Its main purpose is to hold these fluxes, based on different combinations of models, and make them easily available to analysers.
+nuflux is a library for evaluating various atmospheric neutrino flux models. Its main purpose is to hold these fluxes, based on different combinations of models, and make them easily available to analysers.
 
-Models for atmospheric neutrinos are often released as tables binned in neutrino energy :math:`E_\nu` and zenith angle :math:`\theta_\nu`. Nuflux contains various interpolation routines for these models so that neutrino fluxes can be represented as a smooth function of energy and zenith.
+Models for atmospheric neutrinos are often released as tables binned in neutrino energy :math:`E_\nu` and zenith angle :math:`\theta_\nu`. nuflux contains various interpolation routines for these models so that neutrino fluxes can be represented as a smooth function of energy and zenith.
 
 All models define the flux, :math:`\Phi_\nu(E_\nu,\theta_\nu)`, as a differential flux, per unit energy, area, solid angle and time:
 
