@@ -32,7 +32,7 @@ getFlux(const nuflux::FluxFunction &self, bp::object ptype_obj, bp::object energ
   bp::object ptype_arr = make_array(ptype_obj, NPY_INT);
   bp::object energy_arr = make_array(energy_obj, NPY_DOUBLE);
   bp::object cos_theta_arr = make_array(cos_theta_obj, NPY_DOUBLE);
-  
+
   // Set up a broadcast iterator to get the shape of the output array
   bp::object iter = bp::object(bp::detail::new_reference(PyArray_MultiIterNew(3,
     ptype_arr.ptr(), energy_arr.ptr(), cos_theta_arr.ptr())));
@@ -49,17 +49,17 @@ getFlux(const nuflux::FluxFunction &self, bp::object ptype_obj, bp::object energ
     ptype_arr.ptr(), energy_arr.ptr(), cos_theta_arr.ptr(), out_arr)));
   if (PyErr_Occurred())
     throw bp::error_already_set();
-  
+
   while (PyArray_MultiIter_NOTDONE(iter.ptr())) {
     nuflux::ParticleType *ptype = reinterpret_cast<nuflux::ParticleType*>(PyArray_MultiIter_DATA(iter.ptr(), 0));
     double *energy = reinterpret_cast<double*>(PyArray_MultiIter_DATA(iter.ptr(), 1));
     double *cos_theta = reinterpret_cast<double*>(PyArray_MultiIter_DATA(iter.ptr(), 2));
     double *out = reinterpret_cast<double*>(PyArray_MultiIter_DATA(iter.ptr(), 3));
-    
+
     *out = self.getFlux(*ptype, *energy, *cos_theta);
     PyArray_MultiIter_NEXT(iter.ptr());
   }
-  
+
   return bp::object(bp::detail::new_reference(PyArray_Return(out_arr)));
 }
 #endif
@@ -88,7 +88,7 @@ bp::list knees_for_flux_list(std::string model)
 bp::tuple energy_range(const nuflux::FluxFunction& flux){
   return bp::make_tuple(flux.getMinEnergy(),flux.getMaxEnergy());
 }
-  
+
 
 
 bool isStandAlone=true;
@@ -97,12 +97,12 @@ void
 register_FluxFunction()
 {
   using namespace nuflux;
-  
+
   bp::def("makeFlux", &makeFlux, "Instantiate and return a flux model");
   bp::def("availableFluxes", &available_fluxes_list, "Get a list of valid flux model names");
   bp::def("kneesForFlux", &knees_for_flux_list, "Get a list of valid knee-reweighting scheme names for the given model");
   bp::def("printModels", &printModels, "Print a list of models to stdout");
-  
+
   bp::class_<FluxFunction, boost::shared_ptr<FluxFunction>, boost::noncopyable>("FluxFunction", bp::no_init)
     .def("getFlux",
 #ifdef USE_NUMPY
@@ -117,27 +117,27 @@ register_FluxFunction()
          ":returns: a differential flux in units of 1/GeV cm^2 sr s",
          (bp::args("particle_type"), "energy", "cos_zen"))
     .add_property("name", &FluxFunction::getName)
-    .add_property("energy_range",&energy_range)    
-    
+    .add_property("energy_range",&energy_range)
+
     ;
-  
+
   bp::class_<KneeReweightable, boost::shared_ptr<KneeReweightable>, boost::noncopyable>("KneeReweightable", bp::no_init)
     .add_property("knee_reweighting_model", &KneeReweightable::getKneeReweightingModel, &KneeReweightable::setKneeReweightingModel)
     ;
-  
+
   bp::class_<PionKaonAdjustable, boost::shared_ptr<PionKaonAdjustable>, boost::noncopyable>("PionKaonAdjustable", bp::no_init)
     .add_property("relative_pion_contribution", &PionKaonAdjustable::getRelativePionContribution, &PionKaonAdjustable::setRelativePionContribution)
     .add_property("relative_kaon_contribution", &PionKaonAdjustable::getRelativeKaonContribution, &PionKaonAdjustable::setRelativeKaonContribution)
     ;
-  
+
   bp::class_<LegacyConventionalFlux, boost::shared_ptr<LegacyConventionalFlux>,
              bp::bases<FluxFunction, PionKaonAdjustable, KneeReweightable> >("LegacyConventionalFlux", bp::no_init)
     ;
-  
+
   bp::class_<LegacyPromptFlux, boost::shared_ptr<LegacyPromptFlux>,
              bp::bases<FluxFunction, KneeReweightable> >("LegacyPromptFlux", bp::no_init)
     ;
-  
+
   {
 #define ENUM_DEF(r,data,T) .value(BOOST_PP_STRINGIZE(T), data::T)
     bp::enum_<ParticleType>("ParticleType")
@@ -146,23 +146,23 @@ register_FluxFunction()
       ;
 #undef ENUM_DEF
   }
-  
+
 #ifndef NO_PHOTOSPLINE
   bp::class_<SimpleSplineFlux, boost::shared_ptr<SimpleSplineFlux>,
              bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux", bp::no_init)
     ;
+  bp::class_<SplineFlux2, boost::shared_ptr<SplineFlux2>,
+             bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux2", bp::no_init)
+    ;
 #endif
-  
+
   bp::scope().attr("stand_alone") = isStandAlone;
 }
 
 BOOST_PYTHON_MODULE(_nuflux)
-{  
+{
 #ifdef USE_NUMPY
   import_array1();
-#endif  
+#endif
   register_FluxFunction();
 }
-
-
-

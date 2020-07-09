@@ -5,5 +5,6 @@
 #include <nuflux/LegacyPromptFlux.h>
 #ifndef NO_PHOTOSPLINE
 #include <nuflux/SplineFlux.h>
+#include <nuflux/SplineFlux2.h>
 #endif
 #endif
