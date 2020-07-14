@@ -16,6 +16,8 @@ namespace nuflux{
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     double readExtents(ParticleType type) const;
     bool PathExist(const std::string& name);
+    double getMinEnergy() const;
+    double getMaxEnergy() const;
   };
 
 } //namespace nuflux

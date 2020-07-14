@@ -12,6 +12,16 @@ namespace nuflux{
     else { return false; }
   }
 
+// These two functions are only needed for the Python API. If you want
+// to get the physics extents of each individual flux, please use
+// the readExtents() function.
+  double SplineFlux2::getMinEnergy()const{
+    return 8e-2;
+  }
+  double SplineFlux2::getMaxEnergy()const{
+    return 1e10;
+  }
+
   double SplineFlux2::readExtents(ParticleType type)const{
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
      ::const_iterator it=components.find(type);
@@ -28,7 +38,7 @@ namespace nuflux{
     FluxFunction(fluxName){
 
         std::vector<ParticleType> particles{ NuE, NuEBar, NuMu, NuMuBar, NuTau, NuTauBar};
-        std::vector<std::string> files {
+        std::vector<std::string> files{
             detail::getDataPath("SplineFlux2/"+fluxName+"_nue.fits"),
             detail::getDataPath("SplineFlux2/"+fluxName+"_nuebar.fits"),
             detail::getDataPath("SplineFlux2/"+fluxName+"_numu.fits"),
