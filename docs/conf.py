@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'nuflux'
-copyright = u'2019, The IceCube Collaboration'
+copyright = u'2020, The IceCube Collaboration'
 author = u'The IceCube Collaboration'
 
 # The short X.Y version

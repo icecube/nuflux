@@ -26,6 +26,18 @@ If you want to use nuflux from a c++ program you need to install it with meson
     ninja -C build
     sudo ninja -C build install
 
+## Documentation
+
+You can build the documentation yourself using sphinx:
+    
+    pip3 install sphinx
+
+In the /nuflux/docs/ directory, run make with the kind of documentation you'd like, e.g.
+
+    make html
+
+Run "make help" to see all available documentation formats.
+
 ## Usage
 
 From python:

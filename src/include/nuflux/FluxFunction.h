@@ -23,18 +23,18 @@ namespace nuflux{
     NuTau = 16,
     NuTauBar = -16,
   };
-    
+
   ///The interface for all neutrino fluxes
   class FluxFunction{
   public:
     FluxFunction(std::string name):name(name){}
     virtual ~FluxFunction(){}
-    
+
     std::string getName() const{ return(name); }
-    
+
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const=0;
-    
+
     ///Computes the expected flux for neutrinos of the given type, energy, azimuth, and zenith angle
     ///If the derived classes do not have a specific azimuth dependence then just use the normal
     ///flux call.
@@ -44,24 +44,24 @@ namespace nuflux{
 
     virtual double getMinEnergy() const{ return NAN;}
     virtual double getMaxEnergy() const{ return NAN;}
-    
-    
+    virtual double readExtents(ParticleType type) const{ return NAN;}
+
   protected:
     std::string name;
   };
-  
+
   ///Things which are useful or necessary internally for the library but which aren't useful for users
   namespace detail{
     ///Add a flux to the registry
-    void registerNeutrinoFlux(const std::string& name, 
+    void registerNeutrinoFlux(const std::string& name,
                               boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&));
     ///Add a flux to the registry with a warning that it is deprecated
     void registerNeutrinoFlux(const std::string& name,
                               boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                               const std::string& deprecationReason);
-    
+
     struct FluxRegisterererer{
-      FluxRegisterererer(const std::string& name, 
+      FluxRegisterererer(const std::string& name,
                          boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
         registerNeutrinoFlux(name,factoryFn);
       }
@@ -72,9 +72,9 @@ namespace nuflux{
       }
     };
     std::string getDataPath(std::string fname);
-    
+
   } //namespace detail
-  
+
 } //namespace nuflux
 
 #define NNF_REGISTER_FLUX(name,factory)\

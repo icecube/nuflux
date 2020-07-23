@@ -1,1 +1,1 @@
-option('python', type : 'string', value : 'python', description : 'python path to compile against')
+option('python', type : 'string', value : 'python3', description : 'python path to compile against')
