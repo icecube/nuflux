@@ -48,5 +48,5 @@ ax.set_ylabel(r"$\frac{E^{3}\rm{d}\Phi}{\rm{d}\,E\rm{d}A\,\rm{d}\,\Omega\,\rm{d}
 ax.set_title(r"$\nu_\mu\ \rm{Flux\ at\ Vertical}$")
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
-# plt.show()
+plt.show()
 # fig.savefig('./scripts/nuflux_models.svg')

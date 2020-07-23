@@ -38,13 +38,6 @@ test('test_basic',
                 include_directories : inc,
                 link_with:libnuflux))
 
-# test('nuflux_test',
-#      executable('nuflux_test',
-#                 'scripts/nuflux_test.cpp',
-#                 dependencies : [photospline,cfitsio],
-#                 include_directories : inc,
-#                 link_with:libnuflux))
-
 pkg_mod = import('pkgconfig')
 pkg_mod.generate(
   libraries : libnuflux,

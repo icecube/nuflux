@@ -20,7 +20,6 @@
 
 
 import os
-from shutil import copyfile
 import math
 import numpy as np
 
