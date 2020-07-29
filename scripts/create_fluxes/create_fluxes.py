@@ -89,6 +89,7 @@ particles = [
 # For exampleflux data, select "nue" only (particles = particles[0:1]).
 particles = particles[0:1]
 # particles = particles[:18] + particles[24:]
+# particles = list(particles[i] for i in [0,6,10,14,18,22,26,28,32])  # all nue variants
 
 ###---------------------------------------------------------------------
 
@@ -311,6 +312,11 @@ def Plot_splines():
     from matplotlib.lines import Line2D
     from matplotlib.backends.backend_pdf import PdfPages as pdf
 
+    # Choose magnification factor. Fluxes will be multiplied by
+    # GeV**mag to better bring out features in steaper regions
+    # (mag = 0 for "pure" fluxes):
+    mag = 3
+
     def Load_data(savename):
         ### Loading the plot data previously stored by Save_data_for_plots():
 
@@ -341,7 +347,7 @@ def Plot_splines():
     def Create_axlabels():
         ### Create title and axis labels.
         xlabel = r'kinetic energy $E$ [GeV]'
-        ylabel = r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
+        ylabel = r'flux $\Phi$ [GeV$^{' + str(mag-1) + r'}$cm$^{-2}$s$^{-1}$sr$^{-1}$]'
         return xlabel, ylabel
 
     def Create_label(particle):
@@ -368,19 +374,19 @@ def Plot_splines():
         ('nutau',    r'$\nu_{\tau}$'),
         ('nutaubar', r'$\bar{\nu}_{\tau}$')
     ]
-    # Currently we have 9 different fluxes to display (total, conv, pi,
+    # Currently we have 9 different flux variants to display (total, conv, pi,
     # k, K0, K0L, K0S, prompt, mu). Adjust the length of this linspace
-    # according to changes:
+    # according to changes in number of variants:
     flavor_colors  = plt.cm.jet(np.linspace(0,1,9))
 
     for f, flavor in enumerate(flavors):
-        pdf_flavor = pdf(dirname + '/plots/perflavor_' + flavor[0] + '.pdf')
+        pdf_flavor = pdf(dirname+'/plots/perflavor_'+flavor[0]+('_mag'+str(mag) if mag!=0 else '')+'.pdf')
         fig3, ax3   = plt.subplots(1, 1, figsize=(9,5))
         fig3.subplots_adjust(bottom=0.14, top=0.91, left=0.12, right=0.95, wspace=0.2)
         fig4, axes4 = plt.subplots(3, numcols, figsize=(9,5), sharex='col')
         fig4.subplots_adjust(bottom=0.13, top=0.76, left=0.1, right=0.95, wspace=0.2, hspace=0.3)
         fig4.text(0.5, 0.03, r'cosine of zenith angle $\cos(\theta)$', ha='center')
-        fig4.text(0.02, 0.5, ylabel, va='center', rotation='vertical')
+        fig4.text(0.02, 0.5, r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]', va='center', rotation='vertical')
 
         p=0
         for particle in particles:
@@ -404,18 +410,18 @@ def Plot_splines():
                 fig2.subplots_adjust(bottom=0.13, top=0.87, left=0.1, right=0.95, wspace=0.2, hspace=0.3)
                 fig2.suptitle(title, fontsize=14)
                 fig2.text(0.5, 0.03, r'cosine of zenith angle $\cos(\theta)$', ha='center')
-                fig2.text(0.02, 0.5, ylabel, va='center', rotation='vertical')
+                fig2.text(0.02, 0.5, r'flux $\Phi$ [GeV$^{-1}$cm$^{-2}$s$^{-1}$sr$^{-1}$]', va='center', rotation='vertical')
                 fig4.suptitle(title_flavor, fontsize=14)
 
 
                 ##--- Energy dependence plots ----------------------------------
-                pdf_particle = pdf(dirname + '/plots/' + savename + '.pdf')
+                pdf_particle = pdf(dirname+'/plots/'+savename+('_mag'+str(mag) if mag!=0 else '')+'.pdf')
 
                 # Plot the splines:
                 for spline, label, color in zip(splines[::cit], xc[::cit], colors):
-                    ax1.loglog(xe, spline, label='%.2f' % label, color=color)
+                    ax1.loglog(xe, spline*xe**mag, label='%.2f' % label, color=color)
                 # Plot the data points:
-                ax1.loglog(xe, datapoints[-1], lw=0, marker=markers, color='gray', alpha=0.4)
+                ax1.loglog(xe, datapoints[-1]*xe**mag, lw=0, marker=markers, color='gray', alpha=0.4)
                 ax1.set_title(title)
                 ax1.set_xlabel(xlabel)
                 ax1.set_ylabel(ylabel)
@@ -423,14 +429,16 @@ def Plot_splines():
                 leg12 = ax1.legend(title=r'$\cos(\theta)$', loc='lower left')
                 ax1.add_artist(leg11)
 
-                ax3.loglog(xe, datapoints[-1], lw=0, marker=markers, color='gray', alpha=0.4)
-                ax3.loglog(xe, splines[-1], label=Create_label(particle), ls=particle[2],
+                # Per flavor:
+                ax3.loglog(xe, datapoints[-1]*xe**mag, lw=0, marker=markers, color='gray', alpha=0.4)
+                ax3.loglog(xe, splines[-1]*xe**mag, label=Create_label(particle), ls=particle[2],
                            color=flavor_colors[p], alpha=0.8)
                 ax3.set_title(title_flavor)
                 ax3.set_xlabel(xlabel)
                 ax3.set_ylabel(ylabel)
+                # ax3.set_ylim(1e-18)
                 leg31 = ax3.legend(handles=custom_legend, loc='upper right')
-                leg32 = ax3.legend(loc='lower left')
+                leg32 = ax3.legend(loc='lower left', ncol=2)
                 ax3.add_artist(leg31)
 
                 ##--- Coszen dependence plots ----------------------------------
