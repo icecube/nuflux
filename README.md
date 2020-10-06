@@ -10,6 +10,8 @@ Nuflux is a library for calculating atmospheric neutrino fluxes.
 
 ## Installation
 
+### Setup Tools
+
 If you only need to use python you can install it directly through pip:
 
     pip install --user git+https://github.com/IceCubeOpenSource/nuflux
@@ -18,6 +20,13 @@ Note that this may fail if photospline and boost_python are installed in nonstan
 
     PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/IceCubeOpenSource/nuflux
 
+If you are running it in IceCube's cvmfs environment you will want to set `PREFIX` to the base of the cvmfs envionment which is stored in the envionment variable `SROOT`:
+
+    eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.1.1/setup.sh`
+    PREFIX=${SROOT} pip install --user git+https://github.com/IceCubeOpenSource/nuflux
+
+### Meson
+
 If you want to use nuflux from a c++ program you need to install it with meson
 
     git clone https://github.com/IceCubeOpenSource/nuflux
@@ -25,6 +34,12 @@ If you want to use nuflux from a c++ program you need to install it with meson
     meson build
     ninja -C build
     sudo ninja -C build install
+
+If boost and photospline are installed in nonstandard locations, you might need to let meson know with environment variables. Since photospline is detected with cmake you need to set `CMAKE_PREFIX_PATH=/path/to/photospline`. Boost uses `BOOST_ROOT`.
+
+For example, in IceCube's cvmfs envionment you should do:
+
+     MAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup --prefix=/path/to/instal/to
 
 ## Documentation
 
