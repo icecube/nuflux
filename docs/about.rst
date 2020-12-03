@@ -14,7 +14,7 @@ The `IceCube Neutrino Observatory <https://icecube.wisc.edu/>`_ is a cubic-kilom
 Authors
 -------
 
-nuflux is a written by the IceCube Collaboration. If you have access to **IceCubeOpenSource**, you can find the github project `here <https://github.com/IceCubeOpenSource/nuflux>`_.
+nuflux is a written by the IceCube Collaboration. You can find the github project `here <https://github.com/icecube/nuflux>`_.
 
 nuflux is currently maintained by:
 

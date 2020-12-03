@@ -14,22 +14,22 @@ Nuflux is a library for calculating atmospheric neutrino fluxes.
 
 If you only need to use python you can install it directly through pip:
 
-    pip install --user git+https://github.com/IceCubeOpenSource/nuflux
+    pip install --user git+https://github.com/icecube/nuflux
 
 Note that this may fail if photospline and boost_python are installed in nonstandard locations, e.g. headers in /opt/toolsets/mystuff/include, libraries in /opt/toolsets/mystuff/lib. In this case, set the `PREFIX` environment variable to the root of your toolset installation:
 
-    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/IceCubeOpenSource/nuflux
+    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/icecube/nuflux
 
 If you are running it in IceCube's cvmfs environment you will want to set `PREFIX` to the base of the cvmfs envionment which is stored in the envionment variable `SROOT`:
 
     eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.1.1/setup.sh`
-    PREFIX=${SROOT} pip install --user git+https://github.com/IceCubeOpenSource/nuflux
+    PREFIX=${SROOT} pip install --user git+https://github.com/icecube/nuflux
 
 ### Meson
 
 If you want to use nuflux from a c++ program you need to install it with meson
 
-    git clone https://github.com/IceCubeOpenSource/nuflux
+    git clone https://github.com/icecube/nuflux
     cd nuflux
     meson build
     ninja -C build

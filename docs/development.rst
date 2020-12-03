@@ -5,7 +5,7 @@ Development
 
 If you are simply looking to use nuflux for your analysis, you can safely disregard this section. :)
 
-If you want to get involved in nuflux, you need access to **IceCubeOpenSource** and the `nuflux repository on github <https://github.com/IceCubeOpenSource/nuflux>`_. Request access on slack or via email from the current development group, see the :ref:`About` section. Then install nuflux with Meson (see :ref:`Build from scratch <Build_from_scratch>`).
+If you want to get involved in nuflux, you need access to the `nuflux repository on github <https://github.com/icecube/nuflux>`_. Request access on slack or via email from the current development group, see the :ref:`About` section. Then install nuflux with Meson (see :ref:`Build from scratch <Build_from_scratch>`).
 
 
 .. _Project_structure:
@@ -42,7 +42,7 @@ In Python::
 Creating new fluxes
 -------------------
 
-| Since the main purpose of nuflux is to provide atmospheric fluxes to analysers in an easy and simple-to-use manner, the introduction of new models and fluxes is the major part of developing it. This section is about creating new fluxes by means of `MCEq <https://github.com/afedynitch/MCEq>`_ and `photospline <https://github.com/IceCubeOpenSource/photospline>`_, with the example of a specific combination of models.
+| Since the main purpose of nuflux is to provide atmospheric fluxes to analysers in an easy and simple-to-use manner, the introduction of new models and fluxes is the major part of developing it. This section is about creating new fluxes by means of `MCEq <https://github.com/afedynitch/MCEq>`_ and `photospline <https://github.com/icecube/photospline>`_, with the example of a specific combination of models.
 | Note that not all fluxes are created this way. This is just to give you an idea of how it might work. If you already have ready-to-go flux tables or splines and are curious on how to integrate them into the project, see :ref:`Storing new fluxes<Storing_new_fluxes>` instead.
 
 1) **Choose your weapon**: To make a new flux, there are three ingredients you need to get started: A primary cosmic ray (CR) model, a hadronic interaction (HI) model, and the type of particle (i.e. atmospheric lepton) you want to make the flux for. In this example, we choose ``HillasGaisser2012 (H3a)``, ``SIBYLL23C``, and ``NuMu``.

@@ -13,7 +13,7 @@ Prerequisites
 The nuflux module requires the following packages:
 
 * **cfitsio** from NASA's website, `https://heasarc.gsfc.nasa.gov/fitsio <https://heasarc.gsfc.nasa.gov/fitsio/>`_. Installation instructions are included in the tar ball.
-* **photospline** from `https://github.com/IceCubeOpenSource/photospline <https://github.com/IceCubeOpenSource/photospline>`_. Access to IceCubeOpenSource required.
+* **photospline** from `https://github.com/icecube/photospline <https://github.com/icecube/photospline>`_. Access to icecube required.
 * **libboost-python-dev** obtained via package manager.
 
 
@@ -23,11 +23,11 @@ Python
 
 Installation via Python3-pip::
 
-   pip3 install --user git+https://github.com/IceCubeOpenSource/nuflux
+   pip3 install --user git+https://github.com/icecube/nuflux
 
 If you want to install from a specific branch::
 
-   pip3 install --user git+https://github.com/IceCubeOpenSource/nuflux.git@<branch>
+   pip3 install --user git+https://github.com/icecube/nuflux.git@<branch>
 
 Build from scratch
 ---------------------
@@ -37,7 +37,7 @@ If you want to run nuflux from a c++ program, and/or you want to get involved in
 
 ::
 
-  git clone https://github.com/IceCubeOpenSource/nuflux
+  git clone https://github.com/icecube/nuflux
   cd nuflux
   meson build
   ninja -C build
@@ -57,7 +57,7 @@ Here are some errors that have been encountered with Python and Meson installati
 
   ::
 
-    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/IceCubeOpenSource/nuflux
+    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/icecube/nuflux
 
 
 * **Meson is out of date**
