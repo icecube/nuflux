@@ -5,15 +5,19 @@ project('nuflux', 'cpp',
 cfitsio = dependency('cfitsio')
 photospline = dependency('photospline', method : 'cmake')
 
-datadir = get_option('prefix') / get_option('datadir') / meson.project_name()
+datadir = get_option('data_path')
+if datadir == ''
+  datadir = get_option('prefix') / get_option('datadir') / meson.project_name()
+endif
 conf_data = configuration_data()
 conf_data.set_quoted('DATA_DIR',datadir)
 configure_file(output : 'config.h',
                configuration : conf_data)
-
-install_subdir('nuflux/data/',
-               install_dir:datadir,
-               strip_directory:true)
+if get_option('install_data')
+  install_subdir('nuflux/data/',
+                 install_dir:datadir,
+                 strip_directory:true)
+endif
 
 inc = include_directories('src/include')
 libnuflux = library(
