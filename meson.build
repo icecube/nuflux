@@ -19,6 +19,8 @@ if get_option('install_data')
                  strip_directory:true)
 endif
 
+subdir('src/include/nuflux')
+
 inc = include_directories('src/include')
 libnuflux = library(
   'nuflux',
