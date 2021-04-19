@@ -1,5 +1,5 @@
 project('nuflux', 'cpp',
-        version : '0.0.1',
+        version : '2.0.0',
         default_options : ['cpp_std=c++11'])
 
 cfitsio = dependency('cfitsio')
