@@ -100,3 +100,5 @@ else
   endif
 
 endif
+
+subdir('docs')
