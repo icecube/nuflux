@@ -2,15 +2,23 @@
 
 Nuflux is a library for calculating atmospheric neutrino fluxes.
 
-## Prerequisites
+## Installation
+
+### Packages
+
+nuflux is packaged [on conda-forge](https://anaconda.org/conda-forge/nuflux). Install with `conda install -c conda-forge nuflux`.
+
+### From source
+
+nuflux uses two different build systems: one based on `setuptools` and one based on `meson`. Which one you should use depends on whether you need to build C++ libraries against nuflux, or are content to use the Python bindings.
+
+#### Prerequisites
 
 * cfitsio
 * photospline
 * boost_python
 
-## Installation
-
-### Setup Tools
+#### setuptools
 
 If you only need to use python you can install it directly through pip:
 
@@ -25,7 +33,7 @@ If you are running it in IceCube's cvmfs environment you will want to set `PREFI
     eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.1.1/setup.sh`
     PREFIX=${SROOT} pip install --user git+https://github.com/icecube/nuflux
 
-### Meson
+#### Meson
 
 If you want to use nuflux from a c++ program you need to install it with meson
 
