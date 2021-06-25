@@ -63,7 +63,7 @@ else
   pydep = python.dependency()
 
   # Find numpy
-  numpy = run_command(python,'-c','import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))')
+  numpy = run_command(python,'-c','import numpy;print(numpy.get_include())')
   if numpy.returncode()==0
     pybind_inc = include_directories(numpy.stdout().strip())
     message ('Numpy found: '+ numpy.stdout().strip())
@@ -100,5 +100,3 @@ else
   endif
 
 endif
-
-subdir('docs')

@@ -1,7 +1,7 @@
 .. _fluxes:
 
-Flux Models
-===========
+Fluxes
+======
 
 This section contains a list of fluxes supported by nuflux. All available fluxes were created with different combinations of primary CR and hadronic interaction models (refer to the :ref:`physics <physics>` section). Not all models are suitable for all neutrino energies. The plot below can give an idea of which model covers which energy range; however, note that it is up to the analyser to make sure a chosen flux is valid for their physics requirements.
 
