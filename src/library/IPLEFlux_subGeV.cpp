@@ -27,7 +27,7 @@ namespace nuflux{
   void IntegralPreservingFluxSubGeV::loadTables(const std::string& fluxName, ParticleType type){
     const double enBinWidth=.05;
     {
-      std::string fname = detail::getDataPath("IPLEFluxs_subGeV/"+fluxName+"3D.dat");
+      std::string fname = detail::getDataPath("IPLEFlux_subGeV/"+fluxName+"3D.dat");
       std::ifstream fluxFile3D((fname).c_str());
       if(!fluxFile3D)
         log_fatal_stream("Failed to open " << fname );
