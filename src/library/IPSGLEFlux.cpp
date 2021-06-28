@@ -6,7 +6,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/math/constants/constants.hpp>
 
-#include <nuflux/IPLEFlux_subGeV.h>
+#include <nuflux/IPSGLEFlux.h>
 
 namespace nuflux{
   boost::shared_ptr<FluxFunction> IntegralPreservingFluxSubGeV::makeFlux(const std::string& fluxName){
@@ -27,7 +27,7 @@ namespace nuflux{
   void IntegralPreservingFluxSubGeV::loadTables(const std::string& fluxName, ParticleType type){
     const double enBinWidth=.05;
     {
-      std::string fname = detail::getDataPath("IPLEFlux_subGeV/"+fluxName+"3D.dat");
+      std::string fname = detail::getDataPath("IPSGLEFlux/"+fluxName+"3D.dat");
       std::ifstream fluxFile3D((fname).c_str());
       if(!fluxFile3D)
         log_fatal_stream("Failed to open " << fname );
@@ -54,7 +54,7 @@ namespace nuflux{
     }
     
     {
-      std::string fname = detail::getDataPath("IPLEFlux_subGeV/"+fluxName+"2D.dat");
+      std::string fname = detail::getDataPath("IPSGLEFlux/"+fluxName+"2D.dat");
       std::ifstream fluxFile2D((fname).c_str());
       if(!fluxFile2D)
         log_fatal_stream("Failed to open " << name );

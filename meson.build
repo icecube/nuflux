@@ -26,7 +26,7 @@ libnuflux = library(
   'nuflux',
   'src/library/ANFlux.cpp',
   'src/library/IPLEFlux.cpp',
-  'src/library/IPLEFlux_subGeV.cpp',
+  'src/library/IPSGLEFlux.cpp',
   'src/library/LegacyConventionalFlux.cpp',
   'src/library/SplineFlux.cpp',
   'src/library/SplineFlux2.cpp',
