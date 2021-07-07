@@ -25,6 +25,11 @@ namespace nuflux{
   IntegralPreservingFlux::~IntegralPreservingFlux(){}
   
   void IntegralPreservingFlux::loadTables(const std::string& fluxName, ParticleType type){
+
+    SetSubGeV = fluxName.find("sk")  != std::string::npos; // Extend to SubGeV for fluxes at SK
+//    SetSubGeV = fluxName.find("sno") != std::string::npos; // Extend to SubGeV for fluxes at SNO
+//    SetSubGeV = fluxName.find("spl") != std::string::npos; // Extend to SubGeV for fluxes at South Pole
+
     const double enBinWidth=.05;
     {
       std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"3D.dat");
@@ -81,7 +86,8 @@ namespace nuflux{
   }
 
   double IntegralPreservingFlux::getMinEnergy() const{
-    return 1;
+    if (SetSubGeV==true) return 1e-1;
+    else return 1;
   }
 
   double IntegralPreservingFlux::getMaxEnergy() const{
@@ -172,5 +178,7 @@ namespace nuflux{
 } //namespace nuflux
 
 NNF_REGISTER_FLUX("IPhonda2014_spl_solmin",&nuflux::IntegralPreservingFlux::makeFlux);
+NNF_REGISTER_FLUX("IPhonda2014_spl_solmax",&nuflux::IntegralPreservingFlux::makeFlux);
 NNF_REGISTER_FLUX("IPhonda2006_sno_solmin",&nuflux::IntegralPreservingFlux::makeFlux);
 NNF_REGISTER_FLUX("IPhonda2014_sk_solmin", &nuflux::IntegralPreservingFlux::makeFlux);
+NNF_REGISTER_FLUX("IPhonda2014_sk_solmax", &nuflux::IntegralPreservingFlux::makeFlux);

@@ -5,7 +5,7 @@
 
 
 namespace {
-  const double MIN_ENERGY = 10;
+  const double MIN_ENERGY = 0.1;
   const double MAX_ENERGY = 1e9;
 }
  

@@ -10,9 +10,8 @@ models = [
     ("CORSIKA_GaisserH3a_average",   'C1','-'),
     ("CORSIKA_GaisserH3a_SIBYLL-2.1",'C1','-.'),
     ("CORSIKA_GaisserH3a_QGSJET-II", 'C1','--'),
-#    ("IPhonda2014_spl_solmin",       'C2','-'),
-    ("IPhonda2006_sno_solmin",       'C2','--'),
-    ("IPSGhonda2014_sk_solmin",      'C2','-'),
+    ("IPhonda2014_spl_solmin",       'C2','-'),
+    ("IPhonda2014_sk_solmin",        'C2','--'),
     ("BERSS_H3a_central",            'C3','-'),
     ("BERSS_H3p_central",            'C4','-'),
     ("BERSS_H3p_upper",              'C4','-.'),
@@ -35,6 +34,7 @@ for model, color, line in models:
     nu_type=nuflux.NuMu
     nu_cos_zenith = 0
     nu_energy= np.logspace(np.log10(erange[0]),np.log10(erange[1]),100)
+    #nu_energy= np.logspace(np.log10(erange[0]),np.log10(1000.),100)
 
     fluxvalues = flux.getFlux(nu_type,nu_energy,nu_cos_zenith)
 
