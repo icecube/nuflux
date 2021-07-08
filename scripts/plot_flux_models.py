@@ -35,7 +35,6 @@ for model, color, line in models:
     nu_type=nuflux.NuMu
     nu_cos_zenith = 0
     nu_energy= np.logspace(np.log10(erange[0]),np.log10(erange[1]),100)
-    #nu_energy= np.logspace(np.log10(erange[0]),np.log10(1000.),100)
 
     fluxvalues = flux.getFlux(nu_type,nu_energy,nu_cos_zenith)
 
@@ -51,4 +50,4 @@ ax.set_title(r"$\nu_\mu\ \rm{Flux\ at\ Vertical}$")
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
 plt.show()
-fig.savefig('./scripts/nuflux_models.png')
+# fig.savefig('./scripts/nuflux_models.svg')

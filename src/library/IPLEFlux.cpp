@@ -178,7 +178,4 @@ namespace nuflux{
 } //namespace nuflux
 
 NNF_REGISTER_FLUX("IPhonda2014_spl_solmin",&nuflux::IntegralPreservingFlux::makeFlux);
-NNF_REGISTER_FLUX("IPhonda2014_spl_solmax",&nuflux::IntegralPreservingFlux::makeFlux);
 NNF_REGISTER_FLUX("IPhonda2006_sno_solmin",&nuflux::IntegralPreservingFlux::makeFlux);
-NNF_REGISTER_FLUX("IPhonda2014_sk_solmin", &nuflux::IntegralPreservingFlux::makeFlux);
-NNF_REGISTER_FLUX("IPhonda2014_sk_solmax", &nuflux::IntegralPreservingFlux::makeFlux);
