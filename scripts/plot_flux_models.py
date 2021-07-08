@@ -11,7 +11,8 @@ models = [
     ("CORSIKA_GaisserH3a_SIBYLL-2.1",'C1','-.'),
     ("CORSIKA_GaisserH3a_QGSJET-II", 'C1','--'),
     ("IPhonda2014_spl_solmin",       'C2','-'),
-    ("IPhonda2014_sk_solmin",        'C2','--'),
+    ("IPhonda2006_sno_solmin",       'C2','--'),
+    ("IPhonda2014_sk_solmin",        'C2','-.'),
     ("BERSS_H3a_central",            'C3','-'),
     ("BERSS_H3p_central",            'C4','-'),
     ("BERSS_H3p_upper",              'C4','-.'),
@@ -50,4 +51,4 @@ ax.set_title(r"$\nu_\mu\ \rm{Flux\ at\ Vertical}$")
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
 plt.show()
-# fig.savefig('./scripts/nuflux_models.svg')
+fig.savefig('./scripts/nuflux_models.png')
