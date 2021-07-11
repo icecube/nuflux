@@ -27,8 +27,6 @@ namespace nuflux{
   void IntegralPreservingFlux::loadTables(const std::string& fluxName, ParticleType type){
 
     SetSubGeV = fluxName.find("sk")  != std::string::npos; // Extend to SubGeV for fluxes at SK
-//    SetSubGeV = fluxName.find("sno") != std::string::npos; // Extend to SubGeV for fluxes at SNO
-//    SetSubGeV = fluxName.find("spl") != std::string::npos; // Extend to SubGeV for fluxes at South Pole
 
     const double enBinWidth=.05;
     {
