@@ -86,8 +86,12 @@ namespace nuflux{
   }
 
   double IntegralPreservingFlux::getMinEnergy() const{
-    if (SetSubGeV==true) return 1e-1;
-    else return 1;
+    if (SetSubGeV==true) {
+      return 1e-1;
+    }
+    else {
+      return 1;
+    }
   }
 
   double IntegralPreservingFlux::getMaxEnergy() const{
