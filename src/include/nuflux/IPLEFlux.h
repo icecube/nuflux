@@ -13,6 +13,8 @@ namespace nuflux{
     
     virtual ~IntegralPreservingFlux();
 
+    bool SetSubGeV;
+
     virtual double getMinEnergy() const;
     virtual double getMaxEnergy() const;
     

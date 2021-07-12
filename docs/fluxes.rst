@@ -67,14 +67,17 @@ This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculat
 [Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, PhD Thesis, Ruhr Universität Bochum, 2016. `PDF <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/deliver/index/docId/5268/file/diss.pdf>`_].
 
 
-IPhonda2006_sno_solmin, IPhonda2014_spl_solmin
-----------------------------------------------
+IPhonda2006_sno_solmin, IPhonda2014_spl_solmin, IPhonda2014_spl_solmax, IPhonda2014_sk_solmin, IPhonda2014_sk_solmax
+--------------------------------------------------------------------------------------------------------------------
 .. _IPhonda2006_sno_solmin:
 .. _IPhonda2014_spl_solmin:
+.. _IPhonda2014_spl_solmax:
+.. _IPhonda2014_sk_solmin:
+.. _IPhonda2014_sk_solmax:
 
 Despite being continuous across energy, azimuth angle, and zenith angle, the fluxes commonly used for atmospheric neutrino estimates are provided from models at discrete points in (energy, azimuth, zenith). For models where the data is generated not at specific points but over suitably small ranges of (energy, azimuth, zenith)—such as the Monte Carlo simulation methods from M. Honda—it is important to preserve the integral of the flux over the 3-dimensional voxel as part of the smoothing process. For the Honda fluxes the integral preserving (IP) fluxes were developed by Steven Wren, where “the basic premise is to calculate splines of the integral of the data rather than the data itself. Then, to calculate the interpolated value of the original data at the desired point in the parameter space, one just evaluates the first derivative of these splines.
 
-The tables presented here are based on Honda 2006 location at SNO during the solar minium/ Honda 2014 location at South Pole during the solar minium.
+The tables presented here are based on Honda 2006 location at SNO during the solar minimum/ Honda 2014 location at South Pole and Kamioka during the solar minimum and maximum.
 
 [Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", PhD Thesis, University of Manchester, 2018. `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_].
 

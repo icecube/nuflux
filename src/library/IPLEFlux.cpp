@@ -25,6 +25,9 @@ namespace nuflux{
   IntegralPreservingFlux::~IntegralPreservingFlux(){}
   
   void IntegralPreservingFlux::loadTables(const std::string& fluxName, ParticleType type){
+
+    SetSubGeV = fluxName.find("sk")  != std::string::npos; // Extend to SubGeV for fluxes at SK
+
     const double enBinWidth=.05;
     {
       std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"3D.dat");
@@ -81,7 +84,12 @@ namespace nuflux{
   }
 
   double IntegralPreservingFlux::getMinEnergy() const{
-    return 1;
+    if (SetSubGeV==true) {
+      return 1e-1;
+    }
+    else {
+      return 1;
+    }
   }
 
   double IntegralPreservingFlux::getMaxEnergy() const{

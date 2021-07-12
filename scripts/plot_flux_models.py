@@ -12,6 +12,7 @@ models = [
     ("CORSIKA_GaisserH3a_QGSJET-II", 'C1','--'),
     ("IPhonda2014_spl_solmin",       'C2','-'),
     ("IPhonda2006_sno_solmin",       'C2','--'),
+    ("IPhonda2014_sk_solmin",        'C2','-.'),
     ("BERSS_H3a_central",            'C3','-'),
     ("BERSS_H3p_central",            'C4','-'),
     ("BERSS_H3p_upper",              'C4','-.'),
