@@ -8,17 +8,12 @@ from test_data import low_energy_data, high_energy_data
 
 
 class TestNuFlux(unittest.TestCase):
-    def compare(self,a,b):
-        if a != 0:
-            assert ((a-b)/a) < 1e-14
-        else:
-            assert a==b
-        self.N+=1
-
     def compare_fluxes(self,data,energies):
         self.N=0
 
         coszeniths = [-1,-.5,0,.5,1]
+        E,cz = np.meshgrid(energies,coszeniths)
+
         for model, x in data.items():
             flux = nuflux.makeFlux(model)
             for knee,y in x.items():
@@ -26,9 +21,8 @@ class TestNuFlux(unittest.TestCase):
                 print("testing ",model,knee)
                 for nu, z in y.items():
                     particle=nuflux.ParticleType.names[nu]
-                    for i, cz in enumerate(coszeniths):
-                        for j,E in enumerate(energies):
-                            self.compare(z[i][j],flux.getFlux(particle,E,cz))
+                    np.testing.assert_allclose(z,flux.getFlux(particle,E,cz),rtol=1e-13)
+                    self.N+=len(E)
 
         print("{} passed comparisons".format(self.N))
 
