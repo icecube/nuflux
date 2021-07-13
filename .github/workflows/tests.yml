@@ -61,11 +61,13 @@ jobs:
       fail-fast: false
     steps:
       - name: Install dependencies
-        run: brew tap icecube/homebrew-icecube && brew install photospline
+        run: brew tap icecube/homebrew-icecube && brew install photospline boost-python3 numpy
+      - name: print
+        run: which python && which python3 && which pip && which pip3
       - name: Checkout nuflux
         uses: actions/checkout@v2
       - name: Build nuflux
-        run: sudo pip install .
+        run: sudo pip3 install .
       - name: Run tests
         run: ./tests/test_fluxes.py
         #env:
