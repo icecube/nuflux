@@ -29,3 +29,29 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
+  SetupToolTests:
+    name: SetupTool Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get install libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy
+      - name: Checkout photospline
+        uses: actions/checkout@v2
+        with:
+          repository: icecube/photospline
+          ref: v2.0.7
+          path: photospline
+      - name: Build photospline
+        run: cmake . && make && sudo make install
+        working-directory: photospline
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
+      - name: Build nuflux
+        run: sudo pip install .
+      - name: Run tests
+        run: ./tests/test_fluxes.py
+        #env:
+        #  LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
+        #  PYTHONPATH: /usr/local/lib/python3.8/site-packages
