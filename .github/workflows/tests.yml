@@ -2,7 +2,7 @@ name: Tests
 on: [push, pull_request]
 jobs:
   MesonTests:
-    name: Meson Tests
+    name: Meson Linux Tests
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -29,8 +29,8 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
-  SetupToolTests:
-    name: SetupTool Tests
+  SetupToolsLinuxTests:
+    name: SetupTools Linux Tests
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -54,3 +54,19 @@ jobs:
         run: ./tests/test_fluxes.py
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
+  SetupToolsMacOSTests:
+    name: SetupTools MacOS Tests
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Install dependencies
+        run: brew tap icecube/homebrew-icecube && brew install photospline
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
+      - name: Build nuflux
+        run: sudo pip install .
+      - name: Run tests
+        run: ./tests/test_fluxes.py
+        #env:
+        #  LD_LIBRARY_PATH: /usr/local/lib/
