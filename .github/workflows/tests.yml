@@ -70,3 +70,4 @@ jobs:
         run: ./tests/test_fluxes.py
         #env:
         #  LD_LIBRARY_PATH: /usr/local/lib/
+
