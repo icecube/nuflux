@@ -23,20 +23,19 @@ jobs:
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
-        with:
-          path: nuflux
       - name: Build nuflux
         run: |
-          meson nuflux -D b_coverage=true
-          ninja
-          sudo ninja install
+          mkdir build
+          meson build nuflux -D b_coverage=true
+          ninja -C build
+          sudo ninja -C build install
       - name: Run tests
-        run: ninja test
+        run: ninja -C build test
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
-      - name: Generate Coverage repository
-        run: ninja coverage
+      - name: Generate Coverage Report
+        run: ninja -C build coverage
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v1
         with:
