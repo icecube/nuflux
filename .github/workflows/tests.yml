@@ -8,7 +8,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Install dependencies
-        run: sudo apt-get install ninja-build libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy && sudo pip3 install meson
+        run: sudo apt-get install ninja-build lcov libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy && sudo pip3 install meson
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
@@ -16,19 +16,32 @@ jobs:
           ref: v2.0.7
           path: photospline
       - name: Build photospline
-        run: cmake . && make && sudo make install
+        run: |
+          cmake .
+          make
+          sudo make install
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
         with:
           path: nuflux
       - name: Build nuflux
-        run: meson nuflux && ninja && sudo ninja install
+        run: |
+          meson nuflux -D b_coverage=true
+          ninja
+          sudo ninja install
       - name: Run tests
         run: ninja test
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
+      - name: Generate Coverage repository
+        run: ninja coverage
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: false
+          verbose: true
   SetupToolsLinuxTests:
     name: SetupTools Linux Tests
     runs-on: ubuntu-latest
