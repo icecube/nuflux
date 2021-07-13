@@ -62,8 +62,6 @@ jobs:
     steps:
       - name: Install dependencies
         run: brew tap icecube/homebrew-icecube && brew install photospline boost-python3 numpy
-      - name: print
-        run: which python && which python3 && which pip && which pip3 && python --version && python3 --version
       - name: Checkout nuflux
         uses: actions/checkout@v2
       - name: Build nuflux
