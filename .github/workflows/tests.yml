@@ -52,6 +52,5 @@ jobs:
         run: sudo pip install .
       - name: Run tests
         run: ./tests/test_fluxes.py
-        #env:
-        #  LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
-        #  PYTHONPATH: /usr/local/lib/python3.8/site-packages
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/
