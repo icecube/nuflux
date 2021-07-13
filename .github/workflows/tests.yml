@@ -1,0 +1,31 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  MesonTests:
+    name: Meson Tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get install ninja-build libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy && sudo pip3 install meson
+      - name: Checkout photospline
+        uses: actions/checkout@v2
+        with:
+          repository: icecube/photospline
+          ref: v2.0.7
+          path: photospline
+      - name: Build photospline
+        run: cmake . && make && sudo make install
+        working-directory: photospline
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
+        with:
+          path: nuflux
+      - name: Build nuflux
+        run: meson nuflux && ninja && sudo ninja install
+      - name: Run tests
+        run: ninja test
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python3.8/site-packages
