@@ -48,7 +48,7 @@ namespace nuflux{
             detail::getDataPath("SplineFlux2/"+fluxName+"_nutaubar.fits")
         };
 
-        for(int f=0; f<files.size(); f++){
+        for(std::size_t f=0; f<files.size(); f++){
             if (PathExist(files.at(f))){
                 components[particles.at(f)] = boost::make_shared<photospline::splinetable<>>(files.at(f));
             }
