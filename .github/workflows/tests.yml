@@ -8,7 +8,7 @@ jobs:
       fail-fast: false
     steps:
       - name: Install dependencies
-        run: sudo apt-get install ninja-build lcov libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy && sudo pip3 install meson
+        run: sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy && sudo pip3 install meson
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
