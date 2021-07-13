@@ -53,7 +53,7 @@ int main(){
     boost::shared_ptr<nuflux::FluxFunction> flux(nuflux::makeFlux(*it));
     double f=flux->getFlux(nuflux::NuE,1e3,0);
     bool pass = abs(f - values[*it])/f < 1e-5 ;
-    good *=pass;
+    good = good && pass;
     std::cout << std::setw(29) << *it << " " <<f <<" "<< values[*it] << " " << (pass?"PASS":"FAIL") << endl;
   }
 

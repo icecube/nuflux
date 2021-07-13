@@ -1,3 +1,4 @@
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS 1
 #include <boost/foreach.hpp>
 #include <boost/preprocessor/seq/for_each.hpp>
 #include <boost/python.hpp>
@@ -13,12 +14,13 @@ namespace bp = boost::python;
 #endif
 
 #ifdef USE_NUMPY
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include <numpy/ndarrayobject.h>
 
 bp::object
 make_array(bp::object obj, int typenum)
 {
-  PyObject *ptype_arr = PyArray_FromAny(obj.ptr(), PyArray_DescrFromType(typenum), 0, 0, NPY_DEFAULT, NULL);
+  PyObject *ptype_arr = PyArray_FromAny(obj.ptr(), PyArray_DescrFromType(typenum), 0, 0, NPY_ARRAY_DEFAULT, NULL);
   if (PyErr_Occurred())
     throw bp::error_already_set();
   return bp::object(bp::detail::new_reference(ptype_arr));
