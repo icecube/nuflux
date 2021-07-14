@@ -1,3 +1,6 @@
+[![Tests](https://github.com/icecube/nuflux/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/icecube/nuflux/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/icecube/nuflux/branch/main/graph/badge.svg?token=O6P20YHAXH)](https://codecov.io/gh/icecube/nuflux)
+
 # nuflux
 
 Nuflux is a library for calculating atmospheric neutrino fluxes.
