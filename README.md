@@ -60,13 +60,13 @@ If you want to install to a read-only file system you can pass -Dinstall_data=Fa
 
 You can build the documentation yourself using sphinx:
     
-    pip3 install sphinx
+    pip3 install sphinx breathe sphinx_rtd_theme
 
-In the /nuflux/docs/ directory, run make with the kind of documentation you'd like, e.g.
+Run ninja with docs/html target:
 
-    make html
+    ninja docs/html
 
-Run "make help" to see all available documentation formats.
+The latest version of the documentation is automatically uploaded to [IceCube documentation server](https://docs.icecube.aq/nuflux/main)
 
 ## Usage
 
