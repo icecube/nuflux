@@ -8,7 +8,9 @@ jobs:
       fail-fast: false
     steps:
       - name: Install dependencies
-        run: sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy && sudo pip3 install meson
+        run: |
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
+          sudo pip3 install meson sphinx breathe sphinx_rtd_theme
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
@@ -41,6 +43,12 @@ jobs:
         with:
           fail_ci_if_error: false
           verbose: true
+      - name: Build Documentation
+        run: ninja -C build docs/html
+      - name: Upload Documentation
+        run: docs/docs-upload.sh
+        env:
+          ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
   SetupToolsLinuxTests:
     name: SetupTools Linux Tests
     runs-on: ubuntu-latest

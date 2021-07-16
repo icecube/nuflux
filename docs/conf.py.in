@@ -101,10 +101,10 @@ html_static_path = ['_static']
 #
 # html_sidebars = {}
 
-html_logo = '@DOCS_SOURCE_DIR@/nuflux_logo.png'
+# html_logo = '@DOCS_SOURCE_DIR@/nuflux_logo.png'
 
 html_theme_options = {
-    'logo_only': True,
+    'display_version': True,
 }
 
 
