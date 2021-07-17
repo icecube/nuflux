@@ -5,6 +5,10 @@
 
 #include <nuflux/LegacyPromptFlux.h>
 
+namespace{
+  float eMax = 1e10; //just a guess here
+}
+
 namespace nuflux{
   
   LegacyPromptFlux::component readPromptComponent(const std::string& path){
@@ -30,9 +34,6 @@ namespace nuflux{
   }
   
   double LegacyPromptFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
-    //as a special case, allow tau neutrinos, but always return zero flux for them
-    if(type==NuTau || type==NuTauBar)
-      return(0);
     std::map<ParticleType,component>::const_iterator it=components.find(type);
     if(it==components.end())
       throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
@@ -62,12 +63,17 @@ namespace nuflux{
   }
   
   double LegacyPromptFlux::getMaxEnergy() const{
-    return 1e9;//just a guess here
+    return eMax;
   }
   
   double LegacyPromptFlux::component::getFlux(double energy, double cosZenith) const{
-    if(energy<eMin) //never compute fluxes below the minimum energy
+    if((energy < eMin) || (energy > eMax)){ //never compute fluxes below the minimum energy
       return(0.0); //might want to issue a warning here?
+    }
+
+    if((cosZenith < -1) || (cosZenith > +1)){
+      return(0.0);
+    }
     
     double lE=log10(energy);
     cosZenith=-std::abs(cosZenith); //sky is symmetrical, parameterization is for upgoing directions

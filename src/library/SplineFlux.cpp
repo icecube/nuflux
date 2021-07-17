@@ -38,8 +38,6 @@ namespace nuflux{
   }
 
   double SimpleSplineFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
-    if(type==NuTau || type==NuTauBar)
-      return(0);
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >::const_iterator it=components.find(type);
     if(it==components.end())
       throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
@@ -48,10 +46,10 @@ namespace nuflux{
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
     double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
     if (!((energy-pow(10, ue)) * (energy-pow(10, le)) <= 0 )){
-        std::cerr << "Warning: Chosen energy not within physics extents" << '\n';
+      return 0;
     }
     if (!( (lc <= cosZenith) && (cosZenith <= uc) )){
-        std::cerr << "Warning: Chosen cos(zenith) not within physics extents" << '\n';
+      return 0;
     }
 
     double coords[2]={log10(energy),cosZenith};

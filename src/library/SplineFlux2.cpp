@@ -61,6 +61,12 @@ namespace nuflux{
   }
 
   double SplineFlux2::getFlux(ParticleType type, double energy, double cosZenith) const{
+    if((energy < getMinEnergy()) || (energy > getMaxEnergy())){
+      return(0.0);
+    }
+    if((cosZenith < -1) || (cosZenith > +1)){
+      return(0.0);
+    }
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
         ::const_iterator it=components.find(type);
     if(it==components.end())
@@ -73,12 +79,6 @@ namespace nuflux{
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
     double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
     lc = -uc;    // because data is symmetrical around cos(zenith)
-    if (!((energy-pow(10, ue)) * (energy-pow(10, le)) <= 0 )){
-        std::cerr << "Warning: Chosen energy not within physics extents" << '\n';
-    }
-    if (!( (lc <= cosZenith) && (cosZenith <= uc) )){
-        std::cerr << "Warning: Chosen cos(zenith) not within physics extents" << '\n';
-    }
 
     double coords[2]={log10(energy),std::abs(cosZenith)};
     int centers[2];

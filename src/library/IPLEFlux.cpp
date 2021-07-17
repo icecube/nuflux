@@ -98,10 +98,12 @@ namespace nuflux{
   
   
   double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
-    if(cosZenith<-1 || cosZenith>1)
-      log_fatal_stream("Out of range cosine of zenith angle " << cosZenith);
-    if(energy< getMinEnergy() || energy> getMaxEnergy())
-      log_fatal_stream("Out of range energy " << energy);
+    if(cosZenith<-1 || cosZenith>1){
+      return 0;
+    }
+    if(energy< getMinEnergy() || energy> getMaxEnergy()){
+      return 0;
+    }
     return(evaluate2D(type, energy, cosZenith));
   }
   
@@ -110,10 +112,12 @@ namespace nuflux{
     //log_fatal_stream("Out of range azimuth angle " << azimuth);
     if(azimuth<0 || azimuth>360)
       log_fatal_stream("Out of range azimuth angle " << azimuth);
-    if(cosZenith<-1 || cosZenith>1)
-      log_fatal_stream("Out of range cosine of zenith angle " << cosZenith);
-    if(energy< getMinEnergy() || energy> getMaxEnergy())
-      log_fatal_stream("Out of range energy " << energy);
+    if(cosZenith < -1 || cosZenith > 1){
+      return 0;
+    }
+    if(energy < getMinEnergy() || energy > getMaxEnergy()){
+      return 0;
+    }
     //Above 15.0 GeV, any azimuthal dependance should be negligible.
     //Due to these small fluctuations, this integral-preserving method does not
     //work well, and as such the azimuth averaged value is always returned here.

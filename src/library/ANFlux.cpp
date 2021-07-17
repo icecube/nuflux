@@ -1,3 +1,4 @@
+#include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include "nuflux/ANFlux.h"
 
@@ -36,9 +37,14 @@ ANFlux::makeFlux(const std::string& fluxName)
 double
 ANFlux::getFlux(ParticleType type, double energy, double cosZenith) const
 {
+  if ((energy < emin_) || (energy > emax_) || (cosZenith < -1) || (cosZenith > 1)){
+    return 0;
+  }
+
   std::map<ParticleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
-  if (f == fluxes_.end())
-    return 0.0;
+  if (f == fluxes_.end()){
+    throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
+  }
   else
     // The current parameterizations are for nu + nubar.
     // FIXME: separate them, then remove the factor of 2!

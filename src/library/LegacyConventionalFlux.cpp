@@ -48,9 +48,6 @@ namespace nuflux{
   }
   
   double LegacyConventionalFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
-    //as a special case, allow tau neutrinos, but always return zero flux for them
-    if(type==NuTau || type==NuTauBar)
-      return(0);
     std::map<ParticleType,component>::const_iterator it=components.find(type);
     if(it==components.end())
       throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
@@ -140,10 +137,11 @@ namespace nuflux{
   double LegacyConventionalFlux::component::getFlux(double energy, double cosZenith) const{
     //never compute fluxes outside this energy range
     if(energy<MIN_ENERGY || energy>MAX_ENERGY){
-      log_warn("The flux value is outside the valid energy range");
       return(0.0);
     }
-    
+    if((cosZenith < -1) || (cosZenith > +1)){
+      return(0.0);
+    }
     if(energy<transitionEnergy(cosZenith)){
       //we can use the low energy polynomial
       double lE=log10(energy);
