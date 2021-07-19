@@ -1,7 +1,7 @@
 name: Tests
 on: [push, pull_request]
 jobs:
-  MesonTests:
+  MesonLinuxTests:
     name: Meson Linux Tests
     runs-on: ubuntu-latest
     strategy:
@@ -49,6 +49,32 @@ jobs:
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
+  MesonMacOSTests:
+    name: Meson MacOS Tests
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Install dependencies
+        run: |
+          brew tap icecube/homebrew-icecube
+          brew install photospline boost-python3 numpy ninja
+      - name: Checkout kjmeagher's fork of meson
+        uses: actions/checkout@v2
+        with:
+          repository: kjmeagher/meson
+          path: meson
+      - name: Install Meson
+        run: pip3 install ./meson --use-feature=in-tree-build
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
+      - name: Build nuflux
+        run: |
+          meson build .
+          ninja -C build
+          sudo ninja -C build install
+      - name: Run tests
+        run: ninja -C build test
   SetupToolsLinuxTests:
     name: SetupTools Linux Tests
     runs-on: ubuntu-latest
@@ -64,7 +90,10 @@ jobs:
           ref: v2.0.7
           path: photospline
       - name: Build photospline
-        run: cmake . && make && sudo make install
+        run: |
+          cmake .
+          make
+          sudo make install
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
@@ -81,7 +110,9 @@ jobs:
       fail-fast: false
     steps:
       - name: Install dependencies
-        run: brew tap icecube/homebrew-icecube && brew install photospline boost-python3 numpy
+        run: |
+          brew tap icecube/homebrew-icecube
+          brew install photospline boost-python3 numpy
       - name: Checkout nuflux
         uses: actions/checkout@v2
       - name: Build nuflux
