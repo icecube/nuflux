@@ -4,7 +4,7 @@ Python API Reference
 Module contents
 ---------------
 
-.. automodule:: nuflux._nuflux
+.. automodule:: nuflux
     :members:
     :imported-members:
     :undoc-members:
