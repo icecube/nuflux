@@ -45,6 +45,9 @@ jobs:
           verbose: true
       - name: Build Documentation
         run: ninja -C build docs/html
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python3.8/site-packages
       - name: Upload Documentation
         run: docs/docs-upload.sh
         env:
