@@ -62,10 +62,10 @@ jobs:
         run: |
           brew tap icecube/homebrew-icecube
           brew install photospline boost-python3 numpy ninja
-      - name: Checkout kjmeagher's fork of meson
+      - name: Checkout meson master
         uses: actions/checkout@v2
         with:
-          repository: kjmeagher/meson
+          repository: mesonbuild/meson
           path: meson
       - name: Install Meson
         run: pip3 install ./meson --use-feature=in-tree-build
