@@ -42,7 +42,7 @@ jobs:
           sudo ninja -C build install
       - name: Build nuflux with setuptools
         if: ${{ matrix.build == 'setuptools' }}
-        run: sudo pip install .
+        run: sudo python3 -m pip install .
       - name: Run tests
         run: ./tests/test_fluxes.py
         env:
