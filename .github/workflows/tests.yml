@@ -40,22 +40,22 @@ jobs:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
       - name: Generate Coverage Report
-        if: ${{ matrix.build == "meson" }}
+        if: ${{ matrix.build == 'meson' }}
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: ${{ matrix.build == "meson" }}
+        if: ${{ matrix.build == 'meson' }}
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
           verbose: true
       - name: Build Documentation
-        if: ${{ matrix.build == "meson" }}
+        if: ${{ matrix.build == 'meson' }}
         run: ninja -C build docs/html
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
       - name: Upload Documentation
-        if: ${{ matrix.build == "meson" }}
+        if: ${{ matrix.build == 'meson' }}
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
