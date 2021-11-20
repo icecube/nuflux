@@ -2,10 +2,13 @@ name: Tests
 on: [push, pull_request]
 jobs:
   MesonLinuxTests:
-    name: Meson Linux Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
+      matrix:
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
+        os: [ubuntu-latest]
+        build: ["meson", "setuptools"]
     steps:
       - name: Install dependencies
         run: |
@@ -37,18 +40,22 @@ jobs:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
       - name: Generate Coverage Report
+        if: ${{ matrix.build == "meson" }}
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
+        if: ${{ matrix.build == "meson" }}
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
           verbose: true
       - name: Build Documentation
+        if: ${{ matrix.build == "meson" }}
         run: ninja -C build docs/html
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
       - name: Upload Documentation
+        if: ${{ matrix.build == "meson" }}
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
