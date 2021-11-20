@@ -12,13 +12,13 @@ jobs:
       - name: Apt-Get Install Dependencies
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
-          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
+          sudo -H apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
+          sudo -H python3 -m pip install meson sphinx breathe sphinx_rtd_theme
       - name: HomeBrew Install Dependencies
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           brew install boost-python3 numpy ninja doxygen cfitsio gcovr
-          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
+          sudo -H python3 -m pip install meson sphinx breathe sphinx_rtd_theme
       - name: Checkout Photospline
         uses: actions/checkout@v2
         with:
@@ -29,7 +29,7 @@ jobs:
         run: |
           cmake .
           make
-          sudo make install
+          sudo -H make install
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
@@ -39,15 +39,15 @@ jobs:
           mkdir build
           meson build . -D b_coverage=true
           ninja -C build
-          sudo ninja -C build install
+          sudo -H ninja -C build install
       - name: Build nuflux with setuptools
         if: ${{ matrix.build == 'setuptools' }}
-        run: sudo python3 -m pip install .
+        run: sudo -H python3 -m pip install .
       - name: Run tests
         run: ./tests/test_fluxes.py
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
-          #PYTHONPATH: /usr/local/lib/python3/dist-packages
+          PYTHONPATH: /usr/local/lib/python3/dist-packages
       - name: Generate Coverage Report
         if: ${{ matrix.build == 'meson' }}
         run: ninja -C build coverage
@@ -62,4 +62,4 @@ jobs:
         run: ninja -C build docs/html
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
-          #PYTHONPATH: /usr/local/lib/python3/dist-packages
+          PYTHONPATH: /usr/local/lib/python3/dist-packages
