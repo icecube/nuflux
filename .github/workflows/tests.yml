@@ -46,7 +46,7 @@ jobs:
       - name: Run tests
         run: ./tests/test_fluxes.py
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
+          LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
       - name: Generate Coverage Report
         if: ${{ matrix.build == 'meson' }}
@@ -63,78 +63,3 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3/dist-packages
-#       - name: Upload Documentation
-#         if: ${{ matrix.build == 'meson' }}
-#         run: docs/docs-upload.sh
-#         env:
-#           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
-  MesonMacOSTests:
-    name: Meson MacOS Tests
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Install dependencies
-        run: |
-          brew tap icecube/homebrew-icecube
-          brew install photospline boost-python3 numpy ninja
-      - name: Checkout meson master
-        uses: actions/checkout@v2
-        with:
-          repository: mesonbuild/meson
-          path: meson
-      - name: Install Meson
-        run: pip3 install ./meson --use-feature=in-tree-build
-      - name: Checkout nuflux
-        uses: actions/checkout@v2
-      - name: Build nuflux
-        run: |
-          meson build .
-          ninja -C build
-          sudo ninja -C build install
-      - name: Run tests
-        run: ninja -C build test
-  SetupToolsLinuxTests:
-    name: SetupTools Linux Tests
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Install dependencies
-        run: sudo apt-get install libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy
-      - name: Checkout photospline
-        uses: actions/checkout@v2
-        with:
-          repository: icecube/photospline
-          ref: v2.0.7
-          path: photospline
-      - name: Build photospline
-        run: |
-          cmake .
-          make
-          sudo make install
-        working-directory: photospline
-      - name: Checkout nuflux
-        uses: actions/checkout@v2
-      - name: Build nuflux
-        run: sudo pip install .
-      - name: Run tests
-        run: ./tests/test_fluxes.py
-        env:
-          LD_LIBRARY_PATH: /usr/local/lib/
-  SetupToolsMacOSTests:
-    name: SetupTools MacOS Tests
-    runs-on: macos-latest
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Install dependencies
-        run: |
-          brew tap icecube/homebrew-icecube
-          brew install photospline boost-python3 numpy
-      - name: Checkout nuflux
-        uses: actions/checkout@v2
-      - name: Build nuflux
-        run: pip3 install . --use-feature=in-tree-build
-      - name: Run tests
-        run: ./tests/test_fluxes.py
