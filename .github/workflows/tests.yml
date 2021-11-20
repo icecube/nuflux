@@ -23,7 +23,7 @@ jobs:
           sudo pip3 install meson sphinx breathe sphinx_rtd_theme
           which python
           which python3
-          dpkg -L dpkg-query -L libboost-python-dev
+          dpkg -L libboost-python-dev
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
