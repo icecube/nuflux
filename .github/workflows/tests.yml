@@ -28,16 +28,18 @@ jobs:
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
-      - name: Build nuflux
-        if: ${{ matrix.build == 'meson' }}      
+      - name: Build nuflux wiht Meson
+        if: ${{ matrix.build == 'meson' }}
         run: |
           mkdir build
           meson build . -D b_coverage=true
           ninja -C build
           sudo ninja -C build install
+      - name: Build nuflux with setuptools
+        if: ${{ matrix.build == 'setuptools' }}
+        run: sudo pip install .
       - name: Run tests
-        if: ${{ matrix.build == 'meson' }}      
-        run: ninja -C build test
+        run: ./tests/test_fluxes.py
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3/dist-packages
