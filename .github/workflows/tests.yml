@@ -46,7 +46,7 @@ jobs:
       - name: Run tests
         run: ./tests/test_fluxes.py
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu
+          LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3/dist-packages
       - name: Generate Coverage Report
         if: ${{ matrix.build == 'meson' }}
