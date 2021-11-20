@@ -6,14 +6,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
         build: ["meson", "setuptools"]
     steps:
-      - name: Install dependencies
+      - name: Apt-Get Install Dependencies
+        if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
           sudo pip3 install meson sphinx breathe sphinx_rtd_theme
-          python -c 'print(__import__("sys").path)'
+      - name: HomeBrew Install Dependencies
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          brew install boost-python3 numpy ninja doxygen
+          sudo pip3 install meson sphinx breathe sphinx_rtd_theme
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
@@ -37,7 +42,7 @@ jobs:
           sudo ninja -C build install
       - name: Build nuflux with setuptools
         if: ${{ matrix.build == 'setuptools' }}
-        run: sudo pip install .
+        run: sudo pip install . --use-feature=in-tree-build
       - name: Run tests
         run: ./tests/test_fluxes.py
         env:
