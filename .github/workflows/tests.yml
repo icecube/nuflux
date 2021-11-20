@@ -13,19 +13,19 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
-          sudo pip3 install meson sphinx breathe sphinx_rtd_theme
+          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
       - name: HomeBrew Install Dependencies
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          brew install boost-python3 numpy ninja doxygen cfitsio
-          sudo pip3 install meson sphinx breathe sphinx_rtd_theme
-      - name: Checkout photospline
+          brew install boost-python3 numpy ninja doxygen cfitsio gcovr
+          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
+      - name: Checkout Photospline
         uses: actions/checkout@v2
         with:
           repository: icecube/photospline
           ref: v2.0.7
           path: photospline
-      - name: Build photospline
+      - name: Build Photospline
         run: |
           cmake .
           make
@@ -33,7 +33,7 @@ jobs:
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
-      - name: Build nuflux wiht Meson
+      - name: Build nuflux with Meson
         if: ${{ matrix.build == 'meson' }}
         run: |
           mkdir build
