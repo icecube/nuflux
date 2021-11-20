@@ -10,11 +10,20 @@ jobs:
         os: [ubuntu-latest]
         build: ["meson", "setuptools"]
     steps:
+    
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
+          which python
+          which python3
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
           sudo pip3 install meson sphinx breathe sphinx_rtd_theme
-          dpkg-query -L dpkg-query -L <package_name>
+          which python
+          which python3
+          dpkg-query -L dpkg-query -L libboost-python-dev
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
