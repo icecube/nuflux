@@ -14,6 +14,7 @@ jobs:
         run: |
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
           sudo pip3 install meson sphinx breathe sphinx_rtd_theme
+          dpkg-query -L dpkg-query -L <package_name>
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
