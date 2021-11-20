@@ -6,24 +6,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
         os: [ubuntu-latest]
         build: ["meson", "setuptools"]
     steps:
-    
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          which python
-          which python3
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
           sudo pip3 install meson sphinx breathe sphinx_rtd_theme
-          which python
-          which python3
-          dpkg -L libboost-python-dev
       - name: Checkout photospline
         uses: actions/checkout@v2
         with:
@@ -39,12 +28,14 @@ jobs:
       - name: Checkout nuflux
         uses: actions/checkout@v2
       - name: Build nuflux
+        if: ${{ matrix.build == 'meson' }}      
         run: |
           mkdir build
           meson build . -D b_coverage=true
           ninja -C build
           sudo ninja -C build install
       - name: Run tests
+        if: ${{ matrix.build == 'meson' }}      
         run: ninja -C build test
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
@@ -64,11 +55,11 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3.8/site-packages
-      - name: Upload Documentation
-        if: ${{ matrix.build == 'meson' }}
-        run: docs/docs-upload.sh
-        env:
-          ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
+#       - name: Upload Documentation
+#         if: ${{ matrix.build == 'meson' }}
+#         run: docs/docs-upload.sh
+#         env:
+#           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
   MesonMacOSTests:
     name: Meson MacOS Tests
     runs-on: macos-latest
