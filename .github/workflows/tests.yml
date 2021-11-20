@@ -47,7 +47,7 @@ jobs:
         run: ./tests/test_fluxes.py
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
-          PYTHONPATH: /usr/local/lib/python3/dist-packages
+          #PYTHONPATH: /usr/local/lib/python3/dist-packages
       - name: Generate Coverage Report
         if: ${{ matrix.build == 'meson' }}
         run: ninja -C build coverage
@@ -62,4 +62,4 @@ jobs:
         run: ninja -C build docs/html
         env:
           LD_LIBRARY_PATH: /usr/local/lib/x86_64-linux-gnu:/usr/local/lib/
-          PYTHONPATH: /usr/local/lib/python3/dist-packages
+          #PYTHONPATH: /usr/local/lib/python3/dist-packages
