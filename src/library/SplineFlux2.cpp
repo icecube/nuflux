@@ -75,11 +75,6 @@ namespace nuflux{
         +boost::lexical_cast<std::string>(type)
       );
 
-    // Warn the user about coordinates outside of physics extents:
-    double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
-    double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
-    lc = -uc;    // because data is symmetrical around cos(zenith)
-
     double coords[2]={log10(energy),std::abs(cosZenith)};
     int centers[2];
     it->second->searchcenters(coords,centers);
