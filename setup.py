@@ -27,7 +27,7 @@ extension = Extension(
 
 setup(
     name = "nuflux",
-    version = "2.0.0",
+    version = "2.0.3",
     packages = find_packages(),
     ext_modules = [extension],
     package_data = {"nuflux":["data/*/*.fits",'data/*/*.dat']},
