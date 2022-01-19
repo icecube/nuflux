@@ -12,6 +12,7 @@ jobs:
       - name: Apt-Get Install Dependencies
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
+          sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
           sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
       - name: HomeBrew Install Dependencies
