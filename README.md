@@ -1,5 +1,6 @@
 [![Tests](https://github.com/icecube/nuflux/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/icecube/nuflux/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/icecube/nuflux/branch/main/graph/badge.svg?token=O6P20YHAXH)](https://codecov.io/gh/icecube/nuflux)
+[![Conda (channel only)](https://img.shields.io/conda/vn/conda-forge/nuflux)](https://anaconda.org/conda-forge/nuflux)
 [![DOI](https://zenodo.org/badge/152797969.svg)](https://zenodo.org/badge/latestdoi/152797969)
 
 # nuflux
