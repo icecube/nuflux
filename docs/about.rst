@@ -18,5 +18,4 @@ nuflux is a written by the IceCube Collaboration. You can find the github projec
 
 nuflux is currently maintained by:
 
-| Raffaela Busse (WWU Münster), rbusse@icecube.wisc.edu
 | Kevin Meagher (UW Madison), kmeagher@icecube.wisc.edu
