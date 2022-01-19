@@ -50,10 +50,10 @@ jobs:
           LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3/dist-packages
       - name: Generate Coverage Report
-        if: ${{ matrix.build == 'meson' }}
+        if: ${{ matrix.build == 'meson' && matrix.os == 'macos-latest' }}
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: ${{ matrix.build == 'meson' }}
+        if: ${{ matrix.build == 'meson' && matrix.os == 'macos-latest' }}
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
