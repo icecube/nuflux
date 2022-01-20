@@ -2,7 +2,8 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
 - family-names: "IceCube Collaboration"
+  given-names: ""
 title: "NuFlux: A library for calculating atmospheric neutrino fluxes"
 doi: 10.5281/zenodo.5874708
 date-released: 2022-01-19
-url: "https://github.com/icecube/nuflux"
+url: "https://doi.org/10.5281/zenodo.5874708"
