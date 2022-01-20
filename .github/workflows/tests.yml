@@ -1,6 +1,7 @@
 name: Tests
 on: [push, pull_request] 
 jobs:
+
   Tests:
     runs-on: ${{ matrix.os }}
     strategy:
@@ -12,6 +13,7 @@ jobs:
       - name: Apt-Get Install Dependencies
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
+
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
           sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
@@ -19,6 +21,7 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
           brew install boost-python3 numpy ninja doxygen cfitsio gcovr
+
           sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
       - name: Checkout Photospline
         uses: actions/checkout@v2
@@ -30,7 +33,7 @@ jobs:
         run: |
           cmake .
           make
-          sudo make install
+          sudo -H make install
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
@@ -50,6 +53,7 @@ jobs:
           LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3/dist-packages
       - name: Generate Coverage Report
+
         if: ${{ matrix.build == 'meson' && matrix.os == 'ubuntu-latest' }}
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
