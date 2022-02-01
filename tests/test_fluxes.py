@@ -6,8 +6,6 @@ import nuflux
 # Importing local data from test_data.py:
 from test_data import low_energy_data, high_energy_data
 
-test_pdgids = [22, 2212, 12, -12, 14, -14, 16, -16]
-
 class TestNuFlux(unittest.TestCase):
     def compare_fluxes(self,data,energies):
         coszeniths = [-1,-.5,0,.5,1]
@@ -19,21 +17,23 @@ class TestNuFlux(unittest.TestCase):
             geomE=(emin*emax)**.5
             for knee,y in x.items():
                 flux.knee_reweighting_model=knee
-                pdgids = set(test_pdgids)
                 print("testing ",model,knee)
-                for nu, z in y.items():
-                    particle=nuflux.ParticleType.names[nu]
-                    np.testing.assert_allclose(z,flux.getFlux(particle,E,cz),rtol=1e-13)
-                    self.assertEqual(flux.getFlux(particle,np.nextafter(emin,-np.inf),0),0)
-                    self.assertEqual(flux.getFlux(particle,np.nextafter(emax,+np.inf),0),0)
-                    self.assertEqual(flux.getFlux(particle,geomE,-1.0000000000000002),0)
-                    self.assertEqual(flux.getFlux(particle,geomE,+1.0000000000000002),0)
-                    pdgids.remove(particle)
-                for particle in pdgids:
-                    with self.assertRaises(Exception):
-                        flux.getFlux(particle,geomE,0)
-
-
+                for nu_str, nu  in nuflux.ParticleType.names.items():
+                    with self.subTest(model = model, knee = knee, nu = nu_str):
+                        if nu_str in y:
+                            np.testing.assert_allclose(y[nu_str], flux.getFlux(nu, E, cz), rtol = 1e-13)
+                        else:
+                            np.testing.assert_array_equal(0, flux.getFlux(nu, E, cz))
+                        self.assertEqual(flux.getFlux(nu, np.nextafter(emin, -np.inf), 0), 0)
+                        self.assertEqual(flux.getFlux(nu, np.nextafter(emax, +np.inf), 0), 0)
+                        self.assertEqual(flux.getFlux(nu, geomE, -1.0000000000000002), 0)
+                        self.assertEqual(flux.getFlux(nu, geomE, +1.0000000000000002), 0)
+                for nu in [ 11, 13, 15, 17, 22, 2212, 1000260560 ]:
+                    with self.subTest(model=model,knee=knee,nu=nu_str):
+                        with self.assertRaises(Exception):
+                            flux.getFlux(nu, geomE, 0)
+                        with self.assertRaises(Exception):
+                            flux.getFlux(-nu, geomE, 0)
 
     def test_fluxes(self):
         self.compare_fluxes(

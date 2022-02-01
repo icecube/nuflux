@@ -69,11 +69,14 @@ namespace nuflux{
     }
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
         ::const_iterator it=components.find(type);
-    if(it==components.end())
-      throw std::runtime_error(
-        name+" does not support particle type "
-        +boost::lexical_cast<std::string>(type)
-      );
+    if(it==components.end()){
+      if (isNeutrino(type)) {
+        return 0;
+      } else {
+        throw std::runtime_error( name+" does not support particle type " + 
+                                  boost::lexical_cast<std::string>(type));
+      }
+    }
 
     double coords[2]={log10(energy),std::abs(cosZenith)};
     int centers[2];

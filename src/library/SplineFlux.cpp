@@ -39,8 +39,14 @@ namespace nuflux{
 
   double SimpleSplineFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >::const_iterator it=components.find(type);
-    if(it==components.end())
-      throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
+    if(it==components.end()) {
+      if (isNeutrino(type)) {
+        return 0;
+      } else {
+        throw std::runtime_error( name+" does not support particle type " + 
+                                  boost::lexical_cast<std::string>(type));
+      }
+    }
 
     // Warn the user about coordinates outside of physics extents:
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);

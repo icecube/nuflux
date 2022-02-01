@@ -130,8 +130,16 @@ namespace nuflux{
     double logEnergy=log10(energy);
     dumbHistogram hFluxVCosZenith(-1);
     std::map<ParticleType, std::map<double,CubicSpline> >::const_iterator typeIt=energySplines2D.find(type);
-    if(typeIt==energySplines2D.end())
-      log_fatal_stream("Particle type not found: " << type);
+
+    if(typeIt==energySplines2D.end()){
+      if (isNeutrino(type)) {
+        return 0;
+      } else {
+        throw std::runtime_error( name + " does not support particle type " + 
+                                  boost::lexical_cast<std::string>(type));
+      }
+    }
+
     for(int cz=0; cz<20; cz++){
       double LCosZenith=(10*cz-95)/100.;
       std::map<double,CubicSpline>::const_iterator it;
@@ -164,8 +172,16 @@ namespace nuflux{
     double logEnergy=log10(energy);
     dumbHistogram hFluxVCosZenith(-1);
     std::map<ParticleType, std::map<std::pair<double,double>,CubicSpline> >::const_iterator typeIt=energySplines3D.find(type);
-    if(typeIt==energySplines3D.end())
-      log_fatal_stream("Particle type not found: " << type);
+
+    if(typeIt==energySplines3D.end()){
+      if (isNeutrino(type)) {
+        return 0;
+      } else {
+        throw std::runtime_error( name + " does not support particle type " + 
+                                  boost::lexical_cast<std::string>(type));
+      }
+    }
+
     for(int cz=0; cz<20; cz++){
       double LCosZenith=(10*cz-95)/100.;
       std::map<std::pair<double,double>,CubicSpline>::const_iterator it;

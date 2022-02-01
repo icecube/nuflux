@@ -35,8 +35,14 @@ namespace nuflux{
   
   double LegacyPromptFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     std::map<ParticleType,component>::const_iterator it=components.find(type);
-    if(it==components.end())
-      throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
+    if(it==components.end()){
+      if (isNeutrino(type)) {
+        return 0;
+      } else {
+        throw std::runtime_error( name+" does not support particle type " + 
+                                  boost::lexical_cast<std::string>(type));
+      }
+    }
     return(it->second.getFlux(energy,cosZenith)*kneeCorrection(energy));
   }
   

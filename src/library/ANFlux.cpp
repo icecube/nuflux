@@ -43,7 +43,12 @@ ANFlux::getFlux(ParticleType type, double energy, double cosZenith) const
 
   std::map<ParticleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
   if (f == fluxes_.end()){
-    throw std::runtime_error(name+" does not support particle type "+boost::lexical_cast<std::string>(type));
+    if (isNeutrino(type)) {
+      return 0;
+    } else {
+      throw std::runtime_error( name+" does not support particle type " + 
+                                boost::lexical_cast<std::string>(type));
+    }
   }
   else
     // The current parameterizations are for nu + nubar.

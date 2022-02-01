@@ -44,7 +44,11 @@ namespace nuflux{
     
 
   }
-  
+
+  bool isNeutrino(ParticleType pdgid){
+    return ( (pdgid==12) || (pdgid==-12) || (pdgid==14) || (pdgid==-14) || (pdgid==16) || (pdgid==-16) );
+  }
+
   boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName){
     if(!detail::registry)
       throw std::invalid_argument("Internal error: Flux registry does not exist");

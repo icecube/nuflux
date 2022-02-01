@@ -24,6 +24,9 @@ namespace nuflux{
     NuTauBar = -16,
   };
 
+  /// Determines if particle type is a neutrino
+  bool isNeutrino(ParticleType pdgid);
+
   ///The interface for all neutrino fluxes
   class FluxFunction{
   public:
