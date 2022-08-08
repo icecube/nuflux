@@ -51,15 +51,16 @@ jobs:
           PYTHONPATH: /usr/local/lib/python3/dist-packages
         run: |
           ./test_fluxes.py
-          python -m doctest ../README.md
+          python3 -m doctest -v ../README.md
       - name: Run C++ Tests
         if: ${{ matrix.build == 'meson' }}
         working-directory: tests          
         env:
           LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
+          PKG_CONFIG_PATH: /usr/local/lib
         run: |
-          g++ -lnuflux test_basic.cxx -o test_basic 
+          g++ `pkg-config nuflux --libs` test_basic.cxx -o test_basic 
           ./test_basic
           ./test_inline_readme.sh
       - name: Generate Coverage Report
