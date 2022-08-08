@@ -75,20 +75,28 @@ The latest version of the documentation is automatically uploaded to [IceCube do
 
 From python:
 
-    import nuflux
-    flux = nuflux.makeFlux('honda2006')
-    nu_type=nuflux.NuMu
-    nu_energy=1e3 # in GeV
-    nu_cos_zenith = 0.5
-    print(flux.getFlux(nu_type,nu_energy,nu_cos_zenith))
+    >>> import nuflux
+    >>> flux = nuflux.makeFlux('honda2006')
+    >>> nu_type=nuflux.NuMu
+    >>> nu_energy=1e3 # in GeV
+    >>> nu_cos_zenith = 0.5
+    >>> flux.getFlux(nu_type,nu_energy,nu_cos_zenith)
+    2.2395566552347364e-11
 
 from c++:
+
+[comment]: # (BEGIN CODE)
 
     #include <nuflux/nuflux.h>
 
     int main(){  
       boost::shared_ptr<nuflux::FluxFunction> flux;
       flux=nuflux::makeFlux("honda2006");
-      double f=flux->getFlux(nuflux::NuMu,1e3,0);
+      nuflux::ParticleType pdgid = nuflux::NuMu;
+      double energy = 1e3; // in GeV
+      double cos_zenith = 0;
+      double f = flux->getFlux(pdgid, energy, cos_zenith);
       std::cout << f << '\n';
     }
+
+[comment]: # (END CODE)

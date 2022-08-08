@@ -44,11 +44,24 @@ jobs:
       - name: Build nuflux with setuptools
         if: ${{ matrix.build == 'setuptools' }}
         run: sudo python3 -m pip install .
-      - name: Run tests
-        run: ./tests/test_fluxes.py
+      - name: Run Python Tests
+        working-directory: tests        
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/
+          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
+        run: |
+          ./test_fluxes.py
+          python -m doctest ../README.md
+      - name: Run C++ Tests
+        if: ${{ matrix.build == 'meson' }}
+        working-directory: tests          
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
+          PYTHONPATH: /usr/local/lib/python3/dist-packages
+        run: |
+          g++ -lnuflux test_basic.cxx -o test_basic 
+          ./test_basic
+          ./test_inline_readme.sh
       - name: Generate Coverage Report
         if: ${{ matrix.build == 'meson' && matrix.os == 'ubuntu-latest' }}
         run: ninja -C build coverage
@@ -73,5 +86,5 @@ jobs:
         if: ${{ matrix.build == 'meson' }}
         run: sphinx-build -c build/docs/ docs/ . -b linkcheck
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/
+          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
