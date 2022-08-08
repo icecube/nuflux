@@ -38,7 +38,7 @@ Particle encoding
 -----------------
 .. _Particle_encoding:
 
-To represent the neutrino flavor, nuflux uses `Monte Carlo Particle Numbering Scheme <http://pdg.lbl.gov/mc_particle_id_contents.html>`_ defined by the Particle Data Group. This scheme assigns a unique integer to every particle, and anti-particles always have a negitive value. For your convience nuflux provides enumerated types with these values:
+To represent the neutrino flavor, nuflux uses `Monte Carlo Particle Numbering Scheme <https://pdg.lbl.gov/2021/reviews/rpp2020-rev-monte-carlo-numbering.pdf>`_ defined by the Particle Data Group. This scheme assigns a unique integer to every particle, and anti-particles always have a negitive value. For your convience nuflux provides enumerated types with these values:
 
 +-----------------------+------------+----------+
 | Neutrino flavor       | Name       | PDG Code |

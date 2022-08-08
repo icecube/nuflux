@@ -120,7 +120,7 @@ namespace nuflux{
   }
   
   /** @brief A correction for the mean interaction length of mesons at production altitude
-   * The form of this correction is derived in <a href="http://arxiv.org/abs/hep-ph/0407078v1">a report by D. Chirkin</a>.
+   * The form of this correction is derived in <a href="https://arxiv.org/abs/hep-ph/0407078v1">a report by D. Chirkin</a>.
    */
   double LegacyConventionalFlux::component::inclination(double abscosZenith) const{
     return(sqrt((abscosZenith*abscosZenith + inclinationCoeffs[0] + inclinationCoeffs[1]*pow(abscosZenith, inclinationCoeffs[2]) + inclinationCoeffs[3]*pow(abscosZenith, inclinationCoeffs[4]))

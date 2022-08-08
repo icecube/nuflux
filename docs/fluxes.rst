@@ -43,8 +43,8 @@ Variants: ``BERSS_H3a_central``
 
 The prompt atmospheric calculation from Bhattacharya *et al.* assuming the Gaisser H3a cosmic ray spectrum as input. The version included in this library was obtained by fitting a spline to data supplied by the authors of that paper to Joanna Kiryluk on or about 2015-02-09 with the following assumptions: 1) The flux is independent of zenith angle 2) The flux is the same for all flavors of neutrinos (and antineutrinos) except nu_tau, for which it is zero.
 
-[Bhattacharya *et al.*, J. High Energ. Phys. **2015**, 110 (2015).
-`arXiv:1502.01076 <https://arxiv.org/abs/1502.01076>`_].
+Bhattacharya *et al.*, J. High Energ. Phys. **2015**, 110 (2015).
+`arXiv:1502.01076 <https://arxiv.org/abs/1502.01076>`_.
 
 
 BERSS_H3p
@@ -64,7 +64,7 @@ Variants: ``CORSIKA_GaisserH3a_QGSJET-II``, ``CORSIKA_GaisserH3a_SIBYLL-2.1``, `
 
 This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculation. A large Monte Carlo set of a modified verison of CORSIKA (v. 7.4003), to allow for the shower output to be serialized into ROOT files, was run for different hadronic interaction models. The neutrino flux at various directions was histogramed and then weighted to the Gaisser H3a cosmic-ray flux. Then these histogram were splined using photospline.
 
-[Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, PhD Thesis, Ruhr Universität Bochum, 2016. `PDF <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/deliver/index/docId/5268/file/diss.pdf>`_].
+Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, `PhD Thesis, Ruhr Universität Bochum, 2016 <https://nbn-resolving.org/urn:nbn:de:hbz:294-52689>`_.
 
 
 IPhonda2006_sno_solmin, IPhonda2014_spl_solmin, IPhonda2014_spl_solmax, IPhonda2014_sk_solmin, IPhonda2014_sk_solmax
@@ -79,17 +79,17 @@ Despite being continuous across energy, azimuth angle, and zenith angle, the flu
 
 The tables presented here are based on Honda 2006 location at SNO during the solar minimum/ Honda 2014 location at South Pole and Kamioka during the solar minimum and maximum.
 
-[Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", PhD Thesis, University of Manchester, 2018. `PDF <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_].
+Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", `PhD Thesis, University of Manchester, 2018. <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_.
 
 
 bartol
 ------
 .. _bartol:
 
-The interaction model is published in Barr *et al.* and tables are available from `Barr's web page <http://www-pnp.physics.ox.ac.uk/%7Ebarr/fluxfiles/0408i/index.html>`_.
+The interaction model is published in Barr *et al.* and tables are available from `Barr's web page <http://www-pnp.physics.ox.ac.uk/~barr/fluxfiles/0408i/index.html>`_.
 
-[Barr *et al.*, Phys. Rev. D **70**, 023006 (2004). `astro-ph/0403630 <https://arxiv.org/abs/astro-ph/0403630>`_].
-[Barr *et al.*, 28th International Cosmic Ray Conferenece (ICRC2003) 1411. `PDF <http://www-rccn.icrr.u-tokyo.ac.jp/icrc2003/PROCEEDINGS/PDF/351.pdf>`_].
+| Barr *et al.*, Phys. Rev. D **70**, 023006 (2004). `astro-ph/0403630 <https://arxiv.org/abs/astro-ph/0403630>`_.
+| Barr *et al.*, `28th International Cosmic Ray Conferenece (ICRC2003) 1411. <http://www-rccn.icrr.u-tokyo.ac.jp/icrc2003/PROCEEDINGS/PDF/351.pdf>`_.
 
 
 honda2006
@@ -98,10 +98,10 @@ honda2006
 
 Alternative Knee Models: ``gaisserH3a_elbert``, ``gaisserH4a_elbert``, ``gst13_elbert``, ``gst13star_elbert``, ``polygonato_mod_elbert``
 
-Original tables from `Honda's web page <http://www.icrr.u-tokyo.ac.jp/~mhonda/>`_.
+Original tables from `Honda's web page <https://www.icrr.u-tokyo.ac.jp/~mhonda/>`_.
 
-[Honda *et al.*, Phys. Rev. D **75**, 043006 (2007).
-`astro-ph/0611418 <http://arxiv.org/abs/astro-ph/0611418>`_].
+Honda *et al.*, Phys. Rev. D **75**, 043006 (2007).
+`astro-ph/0611418 <https://arxiv.org/abs/astro-ph/0611418>`_.
 
 
 sarcevic
@@ -113,4 +113,4 @@ sarcevic
 
 For prompt neutrinos a new model is available by R. Enberg *et al.* This is a pqcd model where parameters where changed so that the model is provided as a best prediction (std) and a max and min ones that provide the uncertainty. Some of the highest predictions (_opt models can be discarded since they seem really too optimistic!)
 
-[Enberg *et al.*, Phys. Rev. D **78**, 043005 (2008). `arXiv:0806.0418 <https://arxiv.org/abs/0806.0418>`_].
+Enberg *et al.*, Phys. Rev. D **78**, 043005 (2008). `arXiv:0806.0418 <https://arxiv.org/abs/0806.0418>`_.

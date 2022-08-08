@@ -69,3 +69,9 @@ jobs:
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
+      - name: Check Documentation Links
+        if: ${{ matrix.build == 'meson' }}
+        run: sphinx-build -c build/docs/ docs/ . -b linkcheck
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python3/dist-packages
