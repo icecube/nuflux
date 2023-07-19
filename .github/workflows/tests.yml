@@ -43,8 +43,7 @@ jobs:
         run: |
           python3 -c 'import numpy; print(numpy.__file__)'
           python3 -c 'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))'
-          mkdir build
-          meson build . -D b_coverage=true
+          python3 -m meson build . -D b_coverage=true
           ninja -C build
           sudo ninja -C build install
       - name: Build nuflux with setuptools
@@ -53,6 +52,7 @@ jobs:
       - name: Run Python Tests
         working-directory: tests        
         env:
+          RPATH: /usr/local/lib/
           LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
         run: |
