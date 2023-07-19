@@ -48,23 +48,23 @@ jobs:
       - name: Checkout nuflux
         uses: actions/checkout@v2
       - name: Build nuflux with Meson
-        if: ${{ matrix.build == 'meson' }}
+        if: matrix.build == 'meson'
         run: |
           python3 -c 'import numpy; print(numpy.__file__)'
           python3 -c 'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))'
           ls -l ${HOME}/.local/bin || true
-          meson build . -D b_coverage=true
+          meson setup build . -D b_coverage=true --libdir=lib
           ninja -C build
           sudo ninja -C build install
       - name: Build nuflux with setuptools
-        if: ${{ matrix.build == 'setuptools' }}
+        if: matrix.build == 'setuptools'
         run: python3 -m pip install --user .
       - name: Run Python Tests
         working-directory: tests        
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/
+          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           #LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3.10/site-packages
+          PYTHONPATH: /usr/local/lib/python3.10/site-packages:/usr/local/lib/python3.11/site-packages/
         #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
         run: |
           ls -l /usr/lib/libphotospline* /usr/local/lib/libphotospline* || true
@@ -74,16 +74,16 @@ jobs:
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
-        if: ${{ matrix.build == 'meson' && matrix.os == 'ubuntu-latest' }}
+        if: matrix.build == 'meson' && matrix.os == 'ubuntu-latest'
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: ${{ matrix.build == 'meson' && matrix.os == 'ubuntu-latest' }}
+        if: matrix.build == 'meson' && matrix.os == 'ubuntu-latest'
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
           verbose: true
       - name: Build Documentation
-        if: ${{ matrix.build == 'meson' }}
+        if: matrix.build == 'meson'
         run: ninja -C build docs/html
         # env:
         #   LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
@@ -94,7 +94,7 @@ jobs:
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
       # - name: Check Documentation Links
-      #   if: ${{ matrix.build == 'meson' }}
+      #   if: matrix.build == 'meson'
       #   run: sphinx-build -c build/docs/ docs/ . -b linkcheck 
       #   env:
       #     LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
