@@ -25,8 +25,8 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
-          python3 -m pip install sphinx breathe sphinx_rtd_theme meson
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
       - name: HomeBrew Install Dependencies
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
@@ -60,8 +60,9 @@ jobs:
         run: python3 -m pip install --user .
       - name: Run Python Tests
         working-directory: tests        
-        # env:
-        #   LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/
+          #LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
         #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
         run: |
           ls -l /usr/lib/libphotospline* /usr/local/lib/libphotospline* || true
