@@ -32,7 +32,7 @@ jobs:
           path: photospline
       - name: Build Photospline
         run: |
-          cmake .
+          cmake -DCMAKE_INSTALL_PREFIX=/usr .
           make
           sudo make install
         working-directory: photospline
@@ -43,7 +43,8 @@ jobs:
         run: |
           python3 -c 'import numpy; print(numpy.__file__)'
           python3 -c 'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))'
-          python3 -m meson build . -D b_coverage=true
+          ls -l ${HOME}/.local/bin || true
+          ${HOME}/.local/bin/meson build . -D b_coverage=true
           ninja -C build
           sudo ninja -C build install
       - name: Build nuflux with setuptools
@@ -52,7 +53,6 @@ jobs:
       - name: Run Python Tests
         working-directory: tests        
         env:
-          RPATH: /usr/local/lib/
           LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
         run: |
