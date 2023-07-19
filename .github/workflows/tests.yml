@@ -22,13 +22,13 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Apt-Get Install Dependencies
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
           python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
       - name: HomeBrew Install Dependencies
-        if: ${{ matrix.os == 'macos-latest' }}
+        if: matrix.os == 'macos-latest'
         run: |
           brew install boost-python3 ninja doxygen cfitsio gcovr
           python3 -m pip install numpy sphinx breathe sphinx_rtd_theme meson
@@ -63,11 +63,13 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
           #LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
+          PYTHONPATH: /usr/local/lib/python3.10/site-packages/nuflux
         #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
         run: |
           ls -l /usr/lib/libphotospline* /usr/local/lib/libphotospline* || true
           python3 -m site
-
+          python -c 'print(__import__("nuflux").__file__)'
+          find $(dirname $(python -c 'print(__import__("nuflux").__file__)'))
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
