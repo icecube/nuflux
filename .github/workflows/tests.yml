@@ -22,8 +22,8 @@ jobs:
       - name: HomeBrew Install Dependencies
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          brew install boost-python3 numpy ninja doxygen cfitsio gcovr
-          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
+          brew install boost-python3 ninja doxygen cfitsio gcovr
+          sudo python3 -m pip install numpy meson sphinx breathe sphinx_rtd_theme
       - name: Checkout Photospline
         uses: actions/checkout@v2
         with:
@@ -56,7 +56,7 @@ jobs:
           LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
           PYTHONPATH: /usr/local/lib/python3/dist-packages
         run: |
-          ls -l /usr/lib/libphotospline.2.dylib /usr/local/lib/libphotospline.2.dylib
+          ls -l /usr/lib/libphotospline.2.dylib /usr/local/lib/libphotospline.2.dylib || true
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
