@@ -1,6 +1,6 @@
 import sys
 import os
-from setuptools import setup, Extension
+from setuptools import setup, Extension ,find_packages
 import numpy
 
 boost_python = 'boost_python'+str(sys.version_info.major)+str(sys.version_info.minor)
@@ -26,5 +26,7 @@ extension = Extension(
     )
 
 setup(
+    packages = ['nuflux'],
     ext_modules = [extension],
+    package_data = {"nuflux":["data/*/*.fits",'data/*/*.dat']},
 )

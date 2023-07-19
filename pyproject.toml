@@ -27,6 +27,3 @@ classifiers = [
     'Topic :: Scientific/Engineering :: Astronomy',
     'Topic :: Scientific/Engineering :: Physics',
     ]
-
-[tool.setuptools]
-packages = ['nuflux']
