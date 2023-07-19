@@ -31,12 +31,14 @@ jobs:
           cmake .
           make
           sudo make install
+          ldconfig
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
       - name: Build nuflux with Meson
         if: ${{ matrix.build == 'meson' }}
         run: |
+          python3 -c 'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))'
           mkdir build
           meson build . -D b_coverage=true
           ninja -C build
