@@ -63,7 +63,10 @@ else
   pydep = python.dependency()
 
   # Find numpy
-  numpy = run_command(python,'-c','import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))')
+  numpy = run_command(python,'-c',
+    'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))',
+    check: true,
+    )
   if numpy.returncode()==0
     pybind_inc = include_directories(numpy.stdout().strip())
     message ('Numpy found: '+ numpy.stdout().strip())
@@ -78,12 +81,10 @@ else
   if not boost.found()
     warning( 'Can\'t find boost python, Skipping python build')
   else
-    py_install_dir = python.get_install_dir() / 'nuflux'
-    message( 'Building package for python version ' +
-             python.language_version() + ': ' + py_install_dir)
-
+    message('Building package for python version ' +
+            python.language_version() + ': ' + python.get_install_dir())
     python.install_sources('nuflux/__init__.py',
-                           subdir: py_install_dir,
+                           subdir: 'nuflux',
                            )
 
     python.extension_module(
@@ -92,7 +93,6 @@ else
       include_directories : [inc,pybind_inc],
       dependencies : [photospline,pydep, boost],
       link_with : libnuflux,
-      install_dir : py_install_dir,
       install:true)
 
     test('test_fluxes',find_program('tests/test_fluxes.py'))
