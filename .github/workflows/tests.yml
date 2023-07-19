@@ -10,20 +10,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        build: ["meson", "setuptools"]
+        os: [ubuntu-22.04, macos-latest]
+        build: [meson, setuptools]
+        include:
+          - os: ubuntu-22.04
+            python-version: "3.10"
+          - os: macos-12
+            python-version: "3.10"
     steps:
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Apt-Get Install Dependencies
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen meson
-          python3 -m pip install --user sphinx breathe sphinx_rtd_theme
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson
       - name: HomeBrew Install Dependencies
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          brew install boost-python3 ninja doxygen cfitsio gcovr meson
-          python3 -m pip install --user numpy sphinx breathe sphinx_rtd_theme
+          brew install boost-python3 ninja doxygen cfitsio gcovr
+          python3 -m pip install numpy sphinx breathe sphinx_rtd_theme meson
       - name: Checkout Photospline
         uses: actions/checkout@v2
         with:
@@ -52,9 +60,9 @@ jobs:
         run: python3 -m pip install --user .
       - name: Run Python Tests
         working-directory: tests        
-        env:
-          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
+        # env:
+        #   LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
+        #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
         run: |
           ls -l /usr/lib/libphotospline* /usr/local/lib/libphotospline* || true
           python3 -m site
@@ -73,11 +81,11 @@ jobs:
       - name: Build Documentation
         if: ${{ matrix.build == 'meson' }}
         run: ninja -C build docs/html
-        env:
-          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
+        # env:
+        #   LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
+        #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
       - name: Upload Documentation
-        if: ${{ matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' }}
+        if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
