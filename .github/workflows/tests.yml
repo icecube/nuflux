@@ -17,13 +17,13 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
-          python3 -m pip install --user meson sphinx breathe sphinx_rtd_theme
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen meson
+          python3 -m pip install --user sphinx breathe sphinx_rtd_theme
       - name: HomeBrew Install Dependencies
         if: ${{ matrix.os == 'macos-latest' }}
         run: |
-          brew install boost-python3 ninja doxygen cfitsio gcovr
-          python3 -m pip install --user numpy meson sphinx breathe sphinx_rtd_theme
+          brew install boost-python3 ninja doxygen cfitsio gcovr meson
+          python3 -m pip install --user numpy sphinx breathe sphinx_rtd_theme
       - name: Checkout Photospline
         uses: actions/checkout@v2
         with:
@@ -32,7 +32,7 @@ jobs:
           path: photospline
       - name: Build Photospline
         run: |
-          cmake -DCMAKE_INSTALL_PREFIX=/usr .
+          cmake .
           make
           sudo make install
         working-directory: photospline
@@ -44,7 +44,7 @@ jobs:
           python3 -c 'import numpy; print(numpy.__file__)'
           python3 -c 'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))'
           ls -l ${HOME}/.local/bin || true
-          ${HOME}/.local/bin/meson build . -D b_coverage=true
+          meson build . -D b_coverage=true
           ninja -C build
           sudo ninja -C build install
       - name: Build nuflux with setuptools
@@ -58,6 +58,7 @@ jobs:
         run: |
           ls -l /usr/lib/libphotospline* /usr/local/lib/libphotospline* || true
           python3 -m site
+
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
