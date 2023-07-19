@@ -98,7 +98,7 @@ honda2006
 
 Alternative Knee Models: ``gaisserH3a_elbert``, ``gaisserH4a_elbert``, ``gst13_elbert``, ``gst13star_elbert``, ``polygonato_mod_elbert``
 
-Original tables from `Honda's web page <https://www.icrr.u-tokyo.ac.jp/~mhonda/>`_.
+Original tables from Honda's web page (Dead link: ``https://www.icrr.u-tokyo.ac.jp/~mhonda/``).
 
 Honda *et al.*, Phys. Rev. D **75**, 043006 (2007).
 `astro-ph/0611418 <https://arxiv.org/abs/astro-ph/0611418>`_.
