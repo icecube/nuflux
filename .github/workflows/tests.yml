@@ -1,5 +1,9 @@
 name: Tests
-on: [push, pull_request] 
+on:
+  push:
+    branches: 
+      - main
+  pull_request: 
 jobs:
   Tests:
     runs-on: ${{ matrix.os }}
@@ -31,7 +35,6 @@ jobs:
           cmake .
           make
           sudo make install
-          ldconfig
         working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
@@ -50,6 +53,7 @@ jobs:
         working-directory: tests        
         env:
           LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
+          DYLD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python3/dist-packages
         run: |
           ./test_fluxes.py
