@@ -62,7 +62,7 @@ Creating new fluxes
     energy = mceq.e_grid
 
   | And obtain an array ``solutions``; one value for each value in the ``energy`` array. And that's basically it! We can now repeat this for several zenith angles, to have a 2D solution array (one dimension being energy, the other being zenith angle).
-  | **Remark:** MCEq can do a lot more than what is currently part of these instructions. For more information and options, please visit `https://github.com/afedynitch/MCEq <https://github.com/afedynitch/MCEq>`_.
+  | **Remark:** MCEq can do a lot more than what is currently part of these instructions. For more information and options, please visit `https://github.com/mceq-project/MCEq`_.
 
 3) **Interpolate the solutions with photospline**: The photospline software is using B-splining as interpolation method. It can turn our 2D solution array into a spline surface that can be evaluated at any desired point on the surface. The splining process is pretty neat but may require some practice. The spline surface is stored in a FITS file, that, if correctly formatted, can be integrated into nuflux.
 
