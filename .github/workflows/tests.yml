@@ -25,7 +25,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Apt-Get Install Dependencies
-        if: matrix.os == 'ubuntu-latest'
+        if: && startsWith( matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
@@ -34,7 +34,7 @@ jobs:
           cmake -S photospline-2.1.0 -B photospline -DCMAKE_BUILD_TYPE=Release
           sudo make install -C photospline
       - name: HomeBrew Install Dependencies
-        if: matrix.os == 'macos-latest'
+        if: && startsWith( matrix.os, 'macos') 
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
@@ -57,22 +57,22 @@ jobs:
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
-        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
           verbose: true
       - name: Build Documentation
-        if: matrix.build == 'meson'
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
         run: ninja -C build docs/html
       - name: Upload Documentation
-        if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/main'
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') && github.ref == 'refs/heads/main'
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
