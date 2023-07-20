@@ -42,7 +42,7 @@ In Python::
 Creating new fluxes
 -------------------
 
-| Since the main purpose of nuflux is to provide atmospheric fluxes to analysers in an easy and simple-to-use manner, the introduction of new models and fluxes is the major part of developing it. This section is about creating new fluxes by means of `MCEq <https://github.com/afedynitch/MCEq>`_ and `photospline <https://github.com/icecube/photospline>`_, with the example of a specific combination of models.
+| Since the main purpose of nuflux is to provide atmospheric fluxes to analysers in an easy and simple-to-use manner, the introduction of new models and fluxes is the major part of developing it. This section is about creating new fluxes by means of `MCEq <https://github.com/mceq-project/MCEq>`_ and `photospline <https://github.com/icecube/photospline>`_, with the example of a specific combination of models.
 | Note that not all fluxes are created this way. This is just to give you an idea of how it might work. If you already have ready-to-go flux tables or splines and are curious on how to integrate them into the project, see :ref:`Storing new fluxes<Storing_new_fluxes>` instead.
 
 1) **Choose your weapon**: To make a new flux, there are three ingredients you need to get started: A primary cosmic ray (CR) model, a hadronic interaction (HI) model, and the type of particle (i.e. atmospheric lepton) you want to make the flux for. In this example, we choose ``HillasGaisser2012 (H3a)``, ``SIBYLL23C``, and ``NuMu``.
@@ -62,7 +62,7 @@ Creating new fluxes
     energy = mceq.e_grid
 
   | And obtain an array ``solutions``; one value for each value in the ``energy`` array. And that's basically it! We can now repeat this for several zenith angles, to have a 2D solution array (one dimension being energy, the other being zenith angle).
-  | **Remark:** MCEq can do a lot more than what is currently part of these instructions. For more information and options, please visit `https://github.com/afedynitch/MCEq <https://github.com/afedynitch/MCEq>`_.
+  | **Remark:** MCEq can do a lot more than what is currently part of these instructions. For more information and options, please visit `MCEq's GitHub <https://github.com/mceq-project/MCEq>`_.
 
 3) **Interpolate the solutions with photospline**: The photospline software is using B-splining as interpolation method. It can turn our 2D solution array into a spline surface that can be evaluated at any desired point on the surface. The splining process is pretty neat but may require some practice. The spline surface is stored in a FITS file, that, if correctly formatted, can be integrated into nuflux.
 

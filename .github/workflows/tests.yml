@@ -1,5 +1,9 @@
 name: Tests
-on: [push, pull_request] 
+on:
+  push:
+    branches: 
+      - main
+  pull_request: 
 jobs:
   Tests:
     runs-on: ${{ matrix.os }}
@@ -7,74 +11,68 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        build: ["meson", "setuptools"]
+        build: [meson, setuptools]
+        include:
+          - os: ubuntu-latest
+            python-version: "3.10"
+          - os: macos-latest
+            python-version: "3.11"
     steps:
-      - name: Apt-Get Install Dependencies
-        if: ${{ matrix.os == 'ubuntu-latest' }}
-        run: |
-          sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev python3-numpy doxygen
-          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
-      - name: HomeBrew Install Dependencies
-        if: ${{ matrix.os == 'macos-latest' }}
-        run: |
-          brew install boost-python3 numpy ninja doxygen cfitsio gcovr
-          sudo python3 -m pip install meson sphinx breathe sphinx_rtd_theme
-      - name: Checkout Photospline
-        uses: actions/checkout@v2
-        with:
-          repository: icecube/photospline
-          ref: v2.0.7
-          path: photospline
-      - name: Build Photospline
-        run: |
-          cmake .
-          make
-          sudo make install
-        working-directory: photospline
       - name: Checkout nuflux
         uses: actions/checkout@v2
-      - name: Build nuflux with Meson
-        if: ${{ matrix.build == 'meson' }}
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Apt-Get Install Dependencies
+        if: matrix.os == 'ubuntu-latest'
         run: |
-          mkdir build
-          meson build . -D b_coverage=true
+          sudo apt-get update
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
+          curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.1.0.tar.gz | tar xz
+          cmake -S photospline-2.1.0 -B photospline -DCMAKE_BUILD_TYPE=Release
+          sudo make install -C photospline
+      - name: HomeBrew Install Dependencies
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew tap icecube/icecube
+          brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
+      - name: Build nuflux with Meson
+        if: matrix.build == 'meson'
+        run: |
+          meson setup build . -D b_coverage=true --libdir=lib
           ninja -C build
           sudo ninja -C build install
       - name: Build nuflux with setuptools
-        if: ${{ matrix.build == 'setuptools' }}
-        run: sudo python3 -m pip install .
+        if: matrix.build == 'setuptools'
+        run: python3 -m pip install --user .
       - name: Run Python Tests
         working-directory: tests        
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3/dist-packages
+          LD_LIBRARY_PATH: /usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
         run: |
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
-        if: ${{ matrix.build == 'meson' && matrix.os == 'ubuntu-latest' }}
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: ${{ matrix.build == 'meson' && matrix.os == 'ubuntu-latest' }}
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
           verbose: true
       - name: Build Documentation
-        if: ${{ matrix.build == 'meson' }}
-        run: ninja -C build docs/html
+        if: matrix.build == 'meson'
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3/dist-packages
+          LD_LIBRARY_PATH: /usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
+        run: ninja -C build docs/html
       - name: Upload Documentation
-        if: ${{ matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' }}
+        if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
-      - name: Check Documentation Links
-        if: ${{ matrix.build == 'meson' }}
-        run: sphinx-build -c build/docs/ docs/ . -b linkcheck
-        env:
-          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3/dist-packages

@@ -64,7 +64,7 @@ Variants: ``CORSIKA_GaisserH3a_QGSJET-II``, ``CORSIKA_GaisserH3a_SIBYLL-2.1``, `
 
 This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculation. A large Monte Carlo set of a modified verison of CORSIKA (v. 7.4003), to allow for the shower output to be serialized into ROOT files, was run for different hadronic interaction models. The neutrino flux at various directions was histogramed and then weighted to the Gaisser H3a cosmic-ray flux. Then these histogram were splined using photospline.
 
-Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, `PhD Thesis, Ruhr Universität Bochum, 2016 <https://nbn-resolving.org/urn:nbn:de:hbz:294-52689>`_.
+Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, `PhD Thesis, Ruhr Universität Bochum, 2016 <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/index/index/docId/5268>`_.
 
 
 IPhonda2006_sno_solmin, IPhonda2014_spl_solmin, IPhonda2014_spl_solmax, IPhonda2014_sk_solmin, IPhonda2014_sk_solmax
@@ -79,7 +79,7 @@ Despite being continuous across energy, azimuth angle, and zenith angle, the flu
 
 The tables presented here are based on Honda 2006 location at SNO during the solar minimum/ Honda 2014 location at South Pole and Kamioka during the solar minimum and maximum.
 
-Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", `PhD Thesis, University of Manchester, 2018. <https://www.research.manchester.ac.uk/portal/en/theses/neutrino-mass-ordering-studies-with-icecubedeepcore(70414fde-3bef-4028-877b-5e1e86b2165d).html>`_.
+Wren, Steven, "Neutrino Mass Ordering Studies with IceCube-DeepCore", `PhD Thesis, University of Manchester, 2018. <https://research.manchester.ac.uk/en/studentTheses/neutrino-mass-ordering-studies-with-icecube-deepcore>`_.
 
 
 bartol
@@ -98,7 +98,7 @@ honda2006
 
 Alternative Knee Models: ``gaisserH3a_elbert``, ``gaisserH4a_elbert``, ``gst13_elbert``, ``gst13star_elbert``, ``polygonato_mod_elbert``
 
-Original tables from `Honda's web page <https://www.icrr.u-tokyo.ac.jp/~mhonda/>`_.
+Original tables from Honda's web page (Dead link: ``https://www.icrr.u-tokyo.ac.jp/~mhonda/``).
 
 Honda *et al.*, Phys. Rev. D **75**, 043006 (2007).
 `astro-ph/0611418 <https://arxiv.org/abs/astro-ph/0611418>`_.

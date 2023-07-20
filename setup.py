@@ -7,7 +7,7 @@ boost_python = 'boost_python'+str(sys.version_info.major)+str(sys.version_info.m
 prefix = os.environ.get('PREFIX', '/usr/local')
 
 extension = Extension(
-    'nuflux._nuflux', [
+    '_nuflux', [
      'src/library/logging.cpp',
      'src/library/SplineFlux.cpp',
      'src/library/SplineFlux2.cpp',
@@ -26,25 +26,7 @@ extension = Extension(
     )
 
 setup(
-    name = "nuflux",
-    version = "2.0.3",
-    packages = find_packages(),
+    packages = ['nuflux'],
     ext_modules = [extension],
     package_data = {"nuflux":["data/*/*.fits",'data/*/*.dat']},
-    test_suite = "tests.test_fluxes",
-    zip_safe = False,
-    keywords = [
-        'neutrino', 'cosmic rays', 'atmospheric neutrinos',
-    ],
-    classifiers = [
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Science/Research',
-        'Operating System :: MacOS :: MacOS X',
-        'Operating System :: POSIX :: Linux',
-        'Programming Language :: C++',
-        'Programming Language :: Python',
-        'Topic :: Scientific/Engineering :: Astronomy',
-        'Topic :: Scientific/Engineering :: Physics',
-    ],
 )

@@ -97,7 +97,7 @@ def Solve_mceqs():
     ### This function solves matrix cascade equations using MCEq. Please
     ### note that MCEq can do a lot more than what is currently used
     ### in this script. For more information and options, visit:
-    ### https://github.com/afedynitch/MCEq
+    ### https://github.com/mceq-project/MCEq
 
     import crflux.models as crf
     from MCEq.core import config, MCEqRun
