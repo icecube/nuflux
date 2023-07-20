@@ -25,7 +25,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - name: Apt-Get Install Dependencies
-        if: && startsWith( matrix.os, 'ubuntu')
+        if: startsWith( matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
