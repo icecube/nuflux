@@ -22,7 +22,7 @@ extension = Extension(
     include_dirs = ['src/include',numpy.get_include(),os.path.join(prefix,'include')],
     library_dirs = [os.path.join(prefix,'lib'),os.path.join(prefix,'lib64')],
     libraries = [boost_python,'photospline'],
-    extra_compile_args = ['-std=c++11','-DUSE_NUMPY'],
+    extra_compile_args = ['-std=c++20','-DUSE_NUMPY'],
     )
 
 setup(

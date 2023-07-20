@@ -1,6 +1,6 @@
 project('nuflux', 'cpp',
         version : '2.0.3',
-        default_options : ['cpp_std=c++11'])
+        default_options : ['cpp_std=c++20'])
 
 cfitsio = dependency('cfitsio')
 photospline = dependency('photospline', method : 'cmake')
