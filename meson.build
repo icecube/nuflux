@@ -37,12 +37,7 @@ libnuflux = library(
   dependencies : [photospline,cfitsio],
   install : true)
 
-test('test_basic',
-     executable('test_basic',
-                'tests/test_basic.cxx',
-                dependencies : [photospline,cfitsio],
-                include_directories : inc,
-                link_with:libnuflux))
+subdir('tests')
 
 pkg_mod = import('pkgconfig')
 pkg_mod.generate(
@@ -95,7 +90,11 @@ else
       link_with : libnuflux,
       install:true)
 
-    test('test_fluxes',find_program('tests/test_fluxes.py'))
+    pytest_env = environment(test_env)
+    pytest_env.append('PYTHONPATH',meson.current_source_dir())
+    pytest_env.append('PYTHONPATH',meson.current_build_dir())
+    test('test_fluxes',find_program('tests/test_fluxes.py'), env: pytest_env)
+    test('doctest',python,args: ['-m','doctest',files('README.md')],env: pytest_env)
 
   endif
 

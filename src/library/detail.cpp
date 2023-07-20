@@ -14,7 +14,12 @@ namespace nuflux{
         return DATA_DIR "/";
     }
     std::string getDataPath(std::string fname){
-      return getBaseDir() + fname;
+      const char* env_p = std::getenv("NUFLUX_DATA");
+      if (env_p){
+        return std::string(env_p) + "/" + fname;
+      }else{
+        return getBaseDir() + fname;
+      }
     }
   }
 }

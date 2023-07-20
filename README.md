@@ -96,7 +96,7 @@ from c++:
       double energy = 1e3; // in GeV
       double cos_zenith = 0;
       double f = flux->getFlux(pdgid, energy, cos_zenith);
-      std::cout << f << '\n';
+      assert(f == 4.6476245267530432e-11);
     }
 
 [comment]: # (END CODE)

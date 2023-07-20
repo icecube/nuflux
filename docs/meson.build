@@ -37,6 +37,7 @@ if sphinx_build.found() and doxygen.found()
     output : ['html'],
     command : ['sphinx-build', '-c', meson.current_build_dir(), meson.current_source_dir(),
               meson.current_build_dir() + '/html'],
+    env: pytest_env,
     )
 else
   warning('Sphinx or Doxygen not found: skipping documentation build')
