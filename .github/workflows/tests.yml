@@ -59,7 +59,8 @@ jobs:
         working-directory: tests        
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
-          PYTHONPATH: /usr/local/lib/python${{python-version}}/site-packages
+          PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
+          LD_RUNPATH_SEARCH_PATH: /usr/local/lib
         run: |
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
