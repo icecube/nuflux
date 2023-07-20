@@ -28,8 +28,11 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen numpy
-          python3 -m pip install sphinx breathe sphinx_rtd_theme meson
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
+          RUN cd / && curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.1.0.tar.gz | tar xz
+          cmake -S photospline-2.1.0 -B photospline -DCMAKE_BUILD_TYPE=Release
+          sudo make install -C photospline
       - name: Cache Homebrew Packages
         if: matrix.os == 'macos-latest'
         id: cache-homebrew-packages
@@ -44,21 +47,21 @@ jobs:
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
-          python3 -m pip install sphinx breathe sphinx_rtd_theme meson
-      - name: Checkout Photospline
-        uses: actions/checkout@v2
-        if: matrix.os == 'ubuntu-latest'
-        with:
-          repository: icecube/photospline
-          ref: v2.0.7
-          path: photospline
-      - name: Build Photospline
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          cmake .
-          make
-          sudo make install
-        working-directory: photospline
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
+      # - name: Checkout Photospline
+      #   uses: actions/checkout@v2
+      #   if: matrix.os == 'ubuntu-latest'
+      #   with:
+      #     repository: icecube/photospline
+      #     ref: v2.0.7
+      #     path: photospline
+      # - name: Build Photospline
+      #   if: matrix.os == 'ubuntu-latest'
+      #   run: |
+      #     cmake .
+      #     make
+      #     sudo make install
+      #   working-directory: photospline
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
