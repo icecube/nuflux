@@ -57,10 +57,9 @@ jobs:
         run: python3 -m pip install --user .
       - name: Run Python Tests
         working-directory: tests        
-        env:
+        env: &run_env
           LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
-          LD_RUNPATH_SEARCH_PATH: /usr/local/lib
         run: |
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
@@ -75,6 +74,7 @@ jobs:
           verbose: true
       - name: Build Documentation
         if: matrix.build == 'meson'
+        env: *run_env
         run: ninja -C build docs/html
       - name: Upload Documentation
         if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
