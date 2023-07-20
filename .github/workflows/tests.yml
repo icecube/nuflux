@@ -21,18 +21,29 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
       - name: Apt-Get Install Dependencies
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
-          python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
+          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen numpy
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson
+      - name: Cache Homebrew Packages
+        if: matrix.os == 'macos-latest'
+        id: cache-homebrew-packages
+        uses: actions/cache@v3
+        env:
+          cache-name: homebrew-packages
+        with:
+          path: $(brew --prefix)
+          key: ${{ matrix.os }}-${{ env.cache-name }}-${{ hashFiles('.config/brew/Brewfile') }}
       - name: HomeBrew Install Dependencies
         if: matrix.os == 'macos-latest'
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
-          python3 -m pip install numpy sphinx breathe sphinx_rtd_theme meson
+          python3 -m pip install sphinx breathe sphinx_rtd_theme meson
       - name: Checkout Photospline
         uses: actions/checkout@v2
         if: matrix.os == 'ubuntu-latest'
