@@ -26,7 +26,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
-          dpkg-query -L libboost-python-dev
           python3 -m pip install sphinx breathe sphinx_rtd_theme meson numpy
       - name: HomeBrew Install Dependencies
         if: matrix.os == 'macos-latest'
@@ -50,9 +49,6 @@ jobs:
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
-          python3 -c 'import numpy; print(numpy.__file__)'
-          python3 -c 'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))'
-          ls -l ${HOME}/.local/bin || true
           meson setup build . -D b_coverage=true --libdir=lib
           ninja -C build
           sudo ninja -C build install
@@ -62,22 +58,16 @@ jobs:
       - name: Run Python Tests
         working-directory: tests        
         env:
-          LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          #LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-          PYTHONPATH: /usr/local/lib/python3.10/site-packages:/usr/local/lib/python3.11/site-packages/
-        #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
+          LD_LIBRARY_PATH: /usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python${{python-version}}/site-packages
         run: |
-          ls -l /usr/lib/libphotospline* /usr/local/lib/libphotospline* || true
-          python3 -m site
-          python -c 'print(__import__("nuflux").__file__)'
-          find $(dirname $(python -c 'print(__import__("nuflux").__file__)'))
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
-        if: matrix.build == 'meson' && matrix.os == 'ubuntu-latest'
+        if: matrix.build == 'meson'
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: matrix.build == 'meson' && matrix.os == 'ubuntu-latest'
+        if: matrix.build == 'meson'
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
@@ -85,9 +75,6 @@ jobs:
       - name: Build Documentation
         if: matrix.build == 'meson'
         run: ninja -C build docs/html
-        # env:
-        #   LD_LIBRARY_PATH: /usr/local/lib/:/usr/local/lib/x86_64-linux-gnu
-        #   PYTHONPATH: /usr/local/lib/python3/dist-packages:/usr/local/lib/python3.11/site-packages
       - name: Upload Documentation
         if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
         run: docs/docs-upload.sh
