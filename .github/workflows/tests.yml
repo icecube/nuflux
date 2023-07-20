@@ -30,15 +30,18 @@ jobs:
       - name: HomeBrew Install Dependencies
         if: matrix.os == 'macos-latest'
         run: |
-          brew install boost-python3 ninja doxygen cfitsio gcovr
+          brew tap icecube/icecube
+          brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
           python3 -m pip install numpy sphinx breathe sphinx_rtd_theme meson
       - name: Checkout Photospline
         uses: actions/checkout@v2
+        if: matrix.os == 'ubuntu-latest'
         with:
           repository: icecube/photospline
           ref: v2.0.7
           path: photospline
       - name: Build Photospline
+        if: matrix.os == 'ubuntu-latest'
         run: |
           cmake .
           make
