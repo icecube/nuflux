@@ -57,10 +57,10 @@ jobs:
           ./test_fluxes.py
           python3 -m doctest -v ../README.md
       - name: Generate Coverage Report
-        if: matrix.build == 'meson'
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
         run: ninja -C build coverage
       - name: Upload Coverage to Codecov
-        if: matrix.build == 'meson'
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') 
         uses: codecov/codecov-action@v1
         with:
           fail_ci_if_error: false
