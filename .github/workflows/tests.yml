@@ -57,7 +57,7 @@ jobs:
         run: python3 -m pip install --user .
       - name: Run Python Tests
         working-directory: tests        
-        env: &run_env
+        env:
           LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
         run: |
@@ -74,7 +74,9 @@ jobs:
           verbose: true
       - name: Build Documentation
         if: matrix.build == 'meson'
-        env: *run_env
+        env:
+          LD_LIBRARY_PATH: /usr/local/lib/
+          PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
         run: ninja -C build docs/html
       - name: Upload Documentation
         if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
