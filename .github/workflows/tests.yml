@@ -34,7 +34,7 @@ jobs:
           cmake -S photospline-2.1.0 -B photospline -DCMAKE_BUILD_TYPE=Release
           sudo make install -C photospline
       - name: HomeBrew Install Dependencies
-        if: && startsWith( matrix.os, 'macos') 
+        if: startsWith( matrix.os, 'macos') 
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
