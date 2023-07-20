@@ -70,7 +70,7 @@ jobs:
         env:
           LD_LIBRARY_PATH: /usr/local/lib/
           PYTHONPATH: /usr/local/lib/python${{matrix.python-version}}/site-packages
-        run: ninja -C build docs/html
+        run: ninja -C build docs/html; echo ${{github.ref}}
       - name: Upload Documentation
         if: matrix.build == 'meson' &&  matrix.os == 'ubuntu-latest' && github.ref == 'refs/heads/master'
         run: docs/docs-upload.sh
