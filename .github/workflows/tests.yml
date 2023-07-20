@@ -46,14 +46,13 @@ jobs:
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
-          python3 -m pip install meson numpy
+          python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme
           meson setup build . -D b_coverage=true
           ninja -C build test
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
         run: |
           ninja -C build coverage
-          python3 -m pip install sphinx breathe sphinx_rtd_theme
           ninja -C build docs/html
       - name: Upload Coverage to Codecov
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
