@@ -18,6 +18,8 @@ jobs:
           - os: macos-latest
             python-version: "3.11"
     steps:
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -57,8 +59,6 @@ jobs:
           make
           sudo make install
         working-directory: photospline
-      - name: Checkout nuflux
-        uses: actions/checkout@v2
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
