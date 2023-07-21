@@ -59,6 +59,9 @@ the option -Ddata_path can be used to install to a directory outside of the PREF
 
 If you want to install to a read-only file system you can pass -Dinstall_data=False
 
+You may also use the environment variable `NUFLUX_DATA` to specify the path of the nuflux data tables if they are in a
+place other than where they were installed to.
+
 ## Documentation
 
 You can build the documentation yourself using sphinx:
