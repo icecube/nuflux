@@ -53,7 +53,7 @@ If boost and photospline are installed in nonstandard locations, you might need 
 
 For example, in IceCube's cvmfs envionment you should do:
 
-     CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup . --prefix=/path/to/instal/to
+     CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build . --prefix=/path/to/instal/to
 
 the option -Ddata_path can be used to install to a directory outside of the PREFIX directory.
 
