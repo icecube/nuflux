@@ -41,12 +41,11 @@ jobs:
         if: matrix.build == 'setuptools'
         run: |
           python3 -m pip install .[test]
-          python3 -m doctest -v README.md
-          ./tests/test_fluxes.py
+          python3 -m pytest
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
-          python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme
+          python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
           meson setup build . -D b_coverage=true
           ninja -C build test
       - name: Generate Coverage Report and Docs
