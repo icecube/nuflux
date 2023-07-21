@@ -32,8 +32,9 @@ namespace nuflux{
     {
       std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"3D.dat");
       std::ifstream fluxFile3D((fname).c_str());
-      if(!fluxFile3D)
-        log_fatal_stream("Failed to open " << fname );
+      if(!fluxFile3D){
+        throw std::runtime_error("Failed to open " + fname );
+      }
       double energy, cosZenith, azimuth, fluxpe;
       double lastAzimuth=-1;
       std::map<std::pair<double,double>,dumbHistogram> p3DFluxMap;
@@ -59,8 +60,9 @@ namespace nuflux{
     {
       std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"2D.dat");
       std::ifstream fluxFile2D((fname).c_str());
-      if(!fluxFile2D)
-        log_fatal_stream("Failed to open " << name );
+      if(!fluxFile2D){
+        throw std::runtime_error("Failed to open " + name );
+      }
       double energy, cosZenith, fluxpe;
       double lastCosZenith=-2;
       std::map<double,dumbHistogram> p2DFluxMap;
@@ -110,8 +112,9 @@ namespace nuflux{
   double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
     //if(azimuth<0 || azimuth>2*boost::math::constants::pi<double>())
     //log_fatal_stream("Out of range azimuth angle " << azimuth);
-    if(azimuth<0 || azimuth>360)
-      log_fatal_stream("Out of range azimuth angle " << azimuth);
+    if(azimuth<0 || azimuth>360){
+      throw std::runtime_error("Out of range azimuth angle " + std::to_string(azimuth));
+    }
     if(cosZenith < -1 || cosZenith > 1){
       return 0;
     }
@@ -144,8 +147,9 @@ namespace nuflux{
       double LCosZenith=(10*cz-95)/100.;
       std::map<double,CubicSpline>::const_iterator it;
       it=typeIt->second.find(LCosZenith);
-      if(it==typeIt->second.end())
-        log_fatal_stream("Internal error: angle not found (" << LCosZenith << ')');
+      if(it==typeIt->second.end()){
+        throw std::runtime_error("Internal error: angle not found (" + std::to_string(LCosZenith) + ')');
+      }
       double flux=it->second.derivative(logEnergy);
       hFluxVCosZenith.push_back((10*cz-90)/100.,flux);
     }
@@ -186,9 +190,11 @@ namespace nuflux{
       double LCosZenith=(10*cz-95)/100.;
       std::map<std::pair<double,double>,CubicSpline>::const_iterator it;
       it=typeIt->second.find(std::make_pair(LCosZenith,azimuth));
-      if(it==typeIt->second.end())
-        log_fatal_stream("Internal error: angle combination not found ("
-                         << LCosZenith << ',' << azimuth << ')');
+      if(it==typeIt->second.end()){
+        throw std::runtime_error(
+          "Internal error: angle combination not found (" + std::to_string(LCosZenith) + ',' + std::to_string(azimuth) + ')'
+        );
+      }
       double flux=it->second.derivative(logEnergy);
       hFluxVCosZenith.push_back((10*cz-90)/100.,flux);
     }

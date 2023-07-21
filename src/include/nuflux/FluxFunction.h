@@ -9,7 +9,6 @@
 #include <boost/shared_ptr.hpp>
 
 #include <nuflux/nuflux.h>
-#include <nuflux/logging.h>
 
 #define NUFLUX_ParticleType  (NuE)(NuEBar)(NuMu)(NuMuBar)(NuTau)(NuTauBar)
 

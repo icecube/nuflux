@@ -150,22 +150,28 @@ namespace nuflux{
       }
       
       double operator()(double x){
-        if(data.empty())
-          log_fatal("Attempting to evaluate empty spline");
-        if(x<data.front().x)
+        if(data.empty()){
+          throw std::runtime_error("Attempting to evaluate empty spline");
+        }
+        if(x<data.front().x){
           return(data.front().c*(x-data.front().x)+data.front().d);
-        if(x>xlast)
+        }
+        if(x>xlast){
           return(mlast*(x-xlast)+blast);
+        }
         return(findSegment(x)(x));
       }
       
       double derivative(double x) const{
-        if(data.empty())
-          log_fatal("Attempting to evaluate empty spline");
-        if(x<data.front().x)
+        if(data.empty()){
+          throw std::runtime_error("Attempting to evaluate empty spline");
+        }
+        if(x<data.front().x){
           return(data.front().c);
-        if(x>xlast)
+        }
+        if(x>xlast){
           return(mlast);
+        }
         return(findSegment(x).derivative(x));
       }
     };

@@ -12,8 +12,9 @@ namespace nuflux{
         factoryFn(factoryFn),deprecationReason(deprecationReason){}
       
       boost::shared_ptr<FluxFunction> operator()(const std::string& name) const{
-        if(!deprecationReason.empty())
-          log_warn_stream("The '" << name << "' flux implementation is deprecated:\n " << deprecationReason << '\n');
+        if(!deprecationReason.empty()){
+          std::cerr << "WARNING: The '" << name << "' flux implementation is deprecated:\n " << deprecationReason << '\n';
+        }
         return(factoryFn(name));
       }
     };

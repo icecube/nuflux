@@ -31,7 +31,6 @@ libnuflux = library(
   'src/library/SplineFlux2.cpp',
   'src/library/FluxFunction.cpp',
   'src/library/LegacyPromptFlux.cpp',
-  'src/library/logging.cpp',
   'src/library/detail.cpp',
   include_directories : inc,
   dependencies : [photospline,cfitsio],
