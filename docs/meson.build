@@ -3,7 +3,14 @@ sphinx_build = find_program('sphinx-build',required:false)
 
 if sphinx_build.found() and doxygen.found()
 
-  version = run_command('git', 'describe', '--tags', '--always', check:true).stdout().strip()
+  version_cmd = run_command('git', 'describe', '--tags', '--always', check:false)
+  if version_cmd.returncode() == 0
+    version = version_cmd.stdout().strip()
+  else
+    version = meson.project_version()
+  endif
+  message('Building Docs as version='+version)
+
   docs_config = {
     'CPP_SOURCE_DIR' : meson.project_source_root() + '/src',
     'DOCS_SOURCE_DIR' : meson.current_source_dir(),
