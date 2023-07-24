@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nuflux"
-version = "2.0.3"
+version = "2.0.4"
 description = "A library for calculating atmospheric neutrino fluxes"
 readme = "README.md"
 requires-python = "~=3.7"
 dependencies = ['numpy']
-license = {file = "LICENCE"}
+license = {file = "LICENSE"}
 keywords = ["python", "science", "astronomy", "astrophysics", "IceCube", "atmospheric", "neutrino"]
 classifiers = [
     'Development Status :: 4 - Beta',
