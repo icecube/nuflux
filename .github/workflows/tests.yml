@@ -108,5 +108,5 @@ jobs:
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            PREFIX=${SROOT} pip install --user /nuflux
+            PREFIX=${SROOT} pip install --user /nuflux[test] --no-build-isolation
             python3 -m pytest /nuflux/tests
