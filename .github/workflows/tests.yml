@@ -6,6 +6,7 @@ on:
   pull_request: 
 jobs:
   Tests:
+    name: ${{matrix.os}} ${{matrix.build}} tests
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -65,7 +66,7 @@ jobs:
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
-  meson_tests_cvmfs:
+  cvmfs_meson_tests:
     name: cvmfs meson tests ${{matrix.cvmfs}}
     runs-on: ubuntu-latest
     strategy:
@@ -88,7 +89,7 @@ jobs:
             pip install --user meson ninja pytest pytest-subtests
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
             ninja -Cbuild test
-  meson_tests_cvmfs:
+  cvmfs_setuptools_tests:
     name: cvmfs setuptools tests ${{matrix.cvmfs}}
     runs-on: ubuntu-latest
     strategy:
