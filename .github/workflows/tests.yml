@@ -85,6 +85,6 @@ jobs:
             yum -y install glibc-headers glibc-devel unzip
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
-            pip install --user meson ninja
+            pip install --user meson ninja pytest pytest-subtest
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
             ninja -Cbuild test
