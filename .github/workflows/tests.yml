@@ -87,4 +87,4 @@ jobs:
             export PATH=${HOME}/.local/bin:${PATH}
             pip install --user meson ninja
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
-            meson -Cbuild test
+            ninja -Cbuild test
