@@ -34,7 +34,7 @@ def compare_fluxes(subtests, data, energies):
                     assert flux.getFlux(nu, geomE, -1.0000000000000002) == 0
                     assert flux.getFlux(nu, geomE, +1.0000000000000002) == 0
             for nu in [11, 13, 15, 17, 22, 2212, 1000260560]:
-                with subtests.test(model=model, knee=knee, nu=nu_str):
+                with subtests.test(model=model, knee=knee, nu=nu):
                     with pytest.raises(RuntimeError):
                         flux.getFlux(nu, geomE, 0)
                     with pytest.raises(RuntimeError):
@@ -47,4 +47,4 @@ def test_fluxes(subtests):
 
 
 if __name__ == "__main__":
-    pytest.main()
+    exit(pytest.main(['-v',__file__]))

@@ -26,3 +26,4 @@ test(
   ),
   env: test_env,
 )
+meson.add_devenv(test_env)
