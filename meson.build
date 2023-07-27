@@ -94,7 +94,7 @@ else
     pytest_env.append('PYTHONPATH',meson.current_build_dir())
     test('test_fluxes',find_program('tests/test_fluxes.py'), env: pytest_env)
     test('doctest',python,args: ['-m','doctest',files('README.md')],env: pytest_env)
-
+    meson.add_devenv(pytest_env)
   endif
 
 endif

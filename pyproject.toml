@@ -32,6 +32,7 @@ classifiers = [
 Documentation = "https://docs.icecube.aq/nuflux/main/"
 Source = "https://github.com/icecube/nuflux"
 Collaboration = "https://icecube.wisc.edu/"
+doi = "https://doi.org/10.5281/zenodo.8180337"
 
 [project.optional-dependencies]
 test = ["pytest","pytest-subtests"]

@@ -6,6 +6,7 @@ on:
   pull_request: 
 jobs:
   Tests:
+    name: ${{matrix.os}} ${{matrix.build}} tests
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -65,8 +66,8 @@ jobs:
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
-  meson_tests_cvmfs:
-    name: cvmfs Meson Tests ${{matrix.cvmfs}}
+  cvmfs_meson_tests:
+    name: cvmfs meson tests ${{matrix.cvmfs}}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -82,9 +83,31 @@ jobs:
           options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
           image: centos:centos7.9.2009
           run: |
-            yum -y install glibc-headers glibc-devel unzip
+            yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
-            pip install --user meson ninja
+            pip install --user meson ninja pytest pytest-subtests
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
-            meson -Cbuild test
+            ninja -Cbuild test
+  cvmfs_setuptools_tests:
+    name: cvmfs setuptools tests ${{matrix.cvmfs}}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cvmfs: [py3-v4.0.1, py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+    steps:
+      - uses: cvmfs-contrib/github-action-cvmfs@v3
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
+      - name: Build and Run Tests in Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
+          image: centos:centos7.9.2009
+          run: |
+            yum -y install glibc-headers glibc-devel
+            eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
+            pip install --user wheel pytest pytest-subtests
+            PREFIX=${SROOT} pip install --user --no-build-isolation /nuflux
+            python3 -m pytest /nuflux
