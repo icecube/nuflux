@@ -15,7 +15,7 @@ namespace nuflux{
   }
 
   double SimpleSplineFlux::readExtents(ParticleType type)const{
-    std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
+    std::map<ParticleType,std::shared_ptr<photospline::splinetable<>> >
      ::const_iterator it=components.find(type);
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
     double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
@@ -27,18 +27,18 @@ namespace nuflux{
   SimpleSplineFlux::SimpleSplineFlux(const std::string& fluxName):
     FluxFunction(fluxName){
 
-    components[NuMu]   =boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_numu.fits"));
-    components[NuMuBar]=boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_numubar.fits"));
-    components[NuE]    =boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_nue.fits"));
-    components[NuEBar] =boost::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_nuebar.fits"));
+    components[NuMu]   =std::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_numu.fits"));
+    components[NuMuBar]=std::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_numubar.fits"));
+    components[NuE]    =std::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_nue.fits"));
+    components[NuEBar] =std::make_shared<photospline::splinetable<>>(detail::getDataPath("SplineFlux/"+fluxName+"_nuebar.fits"));
   }
 
-  boost::shared_ptr<FluxFunction> SimpleSplineFlux::makeFlux(const std::string& fluxName){
-    return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<SimpleSplineFlux>(fluxName)));
+  std::shared_ptr<FluxFunction> SimpleSplineFlux::makeFlux(const std::string& fluxName){
+    return(std::dynamic_pointer_cast<FluxFunction>(std::make_shared<SimpleSplineFlux>(fluxName)));
   }
 
   double SimpleSplineFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
-    std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >::const_iterator it=components.find(type);
+    std::map<ParticleType,std::shared_ptr<photospline::splinetable<>> >::const_iterator it=components.find(type);
     if(it==components.end()) {
       if (isNeutrino(type)) {
         return 0;

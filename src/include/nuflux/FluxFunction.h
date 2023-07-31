@@ -56,19 +56,19 @@ namespace nuflux{
   namespace detail{
     ///Add a flux to the registry
     void registerNeutrinoFlux(const std::string& name,
-                              boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&));
+                              std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&));
     ///Add a flux to the registry with a warning that it is deprecated
     void registerNeutrinoFlux(const std::string& name,
-                              boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
+                              std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                               const std::string& deprecationReason);
 
     struct FluxRegisterererer{
       FluxRegisterererer(const std::string& name,
-                         boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
+                         std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
         registerNeutrinoFlux(name,factoryFn);
       }
       FluxRegisterererer(const std::string& name,
-                         boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
+                         std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                          const std::string& deprecationReason){
         registerNeutrinoFlux(name,factoryFn,deprecationReason);
       }

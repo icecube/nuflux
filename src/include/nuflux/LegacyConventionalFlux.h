@@ -86,7 +86,7 @@ namespace nuflux{
     kneeSpline kneeCorrection;
   public:
     LegacyConventionalFlux(const std::string& fluxName);
-    static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
+    static std::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;

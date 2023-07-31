@@ -36,8 +36,8 @@ namespace nuflux{
     setRelativeKaonContribution(getRelativeKaonContribution());
   }
   
-  boost::shared_ptr<FluxFunction> LegacyConventionalFlux::makeFlux(const std::string& fluxName){
-    return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<LegacyConventionalFlux>(fluxName)));
+  std::shared_ptr<FluxFunction> LegacyConventionalFlux::makeFlux(const std::string& fluxName){
+    return(std::dynamic_pointer_cast<FluxFunction>(std::make_shared<LegacyConventionalFlux>(fluxName)));
   }
 
   double LegacyConventionalFlux::getMinEnergy() const{

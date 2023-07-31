@@ -93,7 +93,7 @@ from c++:
     #include <nuflux/nuflux.h>
 
     int main(){  
-      boost::shared_ptr<nuflux::FluxFunction> flux;
+      std::shared_ptr<nuflux::FluxFunction> flux;
       flux=nuflux::makeFlux("honda2006");
       nuflux::ParticleType pdgid = nuflux::NuMu;
       double energy = 1e3; // in GeV

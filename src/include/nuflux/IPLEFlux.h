@@ -7,7 +7,7 @@ namespace nuflux{
 
   class IntegralPreservingFlux : public FluxFunction{
   public:
-    static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
+    static std::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     
     IntegralPreservingFlux(const std::string& fluxName);
     

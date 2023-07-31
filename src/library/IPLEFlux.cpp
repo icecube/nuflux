@@ -9,8 +9,8 @@
 #include <nuflux/IPLEFlux.h>
 
 namespace nuflux{
-  boost::shared_ptr<FluxFunction> IntegralPreservingFlux::makeFlux(const std::string& fluxName){
-    return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<IntegralPreservingFlux>(fluxName)));
+  std::shared_ptr<FluxFunction> IntegralPreservingFlux::makeFlux(const std::string& fluxName){
+    return(std::dynamic_pointer_cast<FluxFunction>(std::make_shared<IntegralPreservingFlux>(fluxName)));
   }
 
   IntegralPreservingFlux::IntegralPreservingFlux(const std::string& fluxName):
@@ -110,7 +110,7 @@ namespace nuflux{
   }
   
   double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
-    //if(azimuth<0 || azimuth>2*boost::math::constants::pi<double>())
+    //if(azimuth<0 || azimuth>2*std::math::constants::pi<double>())
     //log_fatal_stream("Out of range azimuth angle " << azimuth);
     if(azimuth<0 || azimuth>360){
       throw std::runtime_error("Out of range azimuth angle " + std::to_string(azimuth));

@@ -9,7 +9,7 @@ namespace nuflux{
   class ANFlux : public FluxFunction {
   public:
     ANFlux(const std::string& fluxName);
-    static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
+    static std::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
     
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
@@ -31,7 +31,7 @@ namespace nuflux{
     };
 
     double emin_,emax_;    
-    std::map<ParticleType, boost::shared_ptr<Evaluator> > fluxes_;
+    std::map<ParticleType, std::shared_ptr<Evaluator> > fluxes_;
   };
   
 }

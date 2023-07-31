@@ -50,7 +50,7 @@ int main(){
   vector<string> fluxes = nuflux::availableFluxes();
 
   for (vector<string>::iterator it = fluxes.begin() ; it != fluxes.end(); ++it){
-    boost::shared_ptr<nuflux::FluxFunction> flux(nuflux::makeFlux(*it));
+    std::shared_ptr<nuflux::FluxFunction> flux(nuflux::makeFlux(*it));
     double f=flux->getFlux(nuflux::NuE,1e3,0);
     bool pass = abs(f - values[*it])/f < 1e-5 ;
     good = good && pass;

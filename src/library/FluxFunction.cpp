@@ -4,14 +4,14 @@
 namespace nuflux{
   namespace detail{
     struct FluxFactory{
-      boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&);
+      std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&);
       std::string deprecationReason;
       
-      FluxFactory(boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
+      FluxFactory(std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                   const std::string& deprecationReason):
         factoryFn(factoryFn),deprecationReason(deprecationReason){}
       
-      boost::shared_ptr<FluxFunction> operator()(const std::string& name) const{
+      std::shared_ptr<FluxFunction> operator()(const std::string& name) const{
         if(!deprecationReason.empty()){
           std::cerr << "WARNING: The '" << name << "' flux implementation is deprecated:\n " << deprecationReason << '\n';
         }
@@ -21,14 +21,14 @@ namespace nuflux{
     std::map<std::string,FluxFactory>* registry=NULL;
     
     void registerNeutrinoFlux(const std::string& name, 
-                              boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
+                              std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
       if(!registry)
         registry=new std::map<std::string,detail::FluxFactory>;
       registry->insert(std::make_pair(name,detail::FluxFactory(factoryFn,"")));
     }
     
     void registerNeutrinoFlux(const std::string& name,
-                              boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
+                              std::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                               const std::string& deprecationReason){
       if(!registry)
         registry=new std::map<std::string,detail::FluxFactory>;
@@ -50,7 +50,7 @@ namespace nuflux{
     return ( (pdgid==12) || (pdgid==-12) || (pdgid==14) || (pdgid==-14) || (pdgid==16) || (pdgid==-16) );
   }
 
-  boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName){
+  std::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName){
     if(!detail::registry)
       throw std::invalid_argument("Internal error: Flux registry does not exist");
     std::map<std::string,detail::FluxFactory>::const_iterator it=detail::registry->find(fluxName);

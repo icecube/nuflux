@@ -9,7 +9,7 @@ namespace nuflux{
   ///Constructs a FluxFunction object for the named flux
   /// \fluxName the name of the flux being requested
   /// \throws std::invalid_argument if fluxName does not correspond to a known flux
-  boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
+  std::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
   
   ///Returns a list of the names of the supported flux models
   ///(which may be used when calling makeFlux)

@@ -7,11 +7,11 @@ namespace nuflux {
 ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
 {
   std::string nuefile = detail::getDataPath("/ANFlux/" + fluxName + "_nue.fits");
-  boost::shared_ptr<Evaluator> evaluator = boost::make_shared<Evaluator>(nuefile);
+  std::shared_ptr<Evaluator> evaluator = std::make_shared<Evaluator>(nuefile);
   fluxes_[NuE] = evaluator;
   fluxes_[NuEBar] = evaluator;
   std::string numufile = detail::getDataPath("/ANFlux/" + fluxName + "_numu.fits");  
-  evaluator = boost::make_shared<Evaluator>(numufile);
+  evaluator = std::make_shared<Evaluator>(numufile);
   fluxes_[NuMu] = evaluator;
   fluxes_[NuMuBar] = evaluator;
 
@@ -28,10 +28,10 @@ ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
 
 
 
-boost::shared_ptr<FluxFunction>
+std::shared_ptr<FluxFunction>
 ANFlux::makeFlux(const std::string& fluxName)
 {
-  return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<ANFlux>(fluxName)));
+  return(std::dynamic_pointer_cast<FluxFunction>(std::make_shared<ANFlux>(fluxName)));
 }
 
 double
@@ -41,7 +41,7 @@ ANFlux::getFlux(ParticleType type, double energy, double cosZenith) const
     return 0;
   }
 
-  std::map<ParticleType, boost::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
+  std::map<ParticleType, std::shared_ptr<Evaluator> >::const_iterator f = fluxes_.find(type);
   if (f == fluxes_.end()){
     if (isNeutrino(type)) {
       return 0;

@@ -56,25 +56,31 @@ if not python.found()
 else
   pydep = python.dependency()
 
-  # Find numpy
-  numpy = run_command(python,'-c',
-    'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))',
-    check: true,
-    )
-  if numpy.returncode()==0
-    pybind_inc = include_directories(numpy.stdout().strip())
-    message ('Numpy found: '+ numpy.stdout().strip())
-  else
-    warning ('Numpy not found: building without arrays')
-    pybind_inc = include_directories()
-  endif
+  # # Find numpy
+  # numpy = run_command(python,'-c',
+  #   'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))',
+  #   check: true,
+  #   )
+  # if numpy.returncode()==0
+  #   pybind_inc = include_directories(numpy.stdout().strip())
+  #   message ('Numpy found: '+ numpy.stdout().strip())
+  # else
+  #   warning ('Numpy not found: building without arrays')
+  #   pybind_inc = include_directories()
+  # endif
 
-  python_name = 'python'+''.join(python.language_version().split('.'))
-  boost = dependency('boost'      , modules : [python_name])
+  # python_name = 'python'+''.join(python.language_version().split('.'))
+  # boost = dependency('boost'      , modules : [python_name])
 
-  if not boost.found()
-    warning( 'Can\'t find boost python, Skipping python build')
-  else
+  # if not boost.found()
+  #   warning( 'Can\'t find boost python, Skipping python build')
+  # else
+
+  pybind11 = dependency('pybind11', fallback : ['pybind11'])
+
+  if pybind11.found()
+
+
     message('Building package for python version ' +
             python.language_version() + ': ' + python.get_install_dir())
     python.install_sources('nuflux/__init__.py',
@@ -84,8 +90,8 @@ else
     python.extension_module(
       '_nuflux',
       ['src/pybindings/module.cxx'],
-      include_directories : [inc,pybind_inc],
-      dependencies : [photospline,pydep, boost],
+      include_directories : [inc],
+      dependencies : [photospline,pydep,pybind11],
       link_with : libnuflux,
       install:true)
 

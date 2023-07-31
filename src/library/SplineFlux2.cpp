@@ -24,7 +24,7 @@ namespace nuflux{
 // ---------------------------------------------------------------------
 
   double SplineFlux2::readExtents(ParticleType type)const{
-    std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
+    std::map<ParticleType,std::shared_ptr<photospline::splinetable<>> >
      ::const_iterator it=components.find(type);
     double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
     double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
@@ -50,14 +50,14 @@ namespace nuflux{
 
         for(std::size_t f=0; f<files.size(); f++){
             if (PathExist(files.at(f))){
-                components[particles.at(f)] = boost::make_shared<photospline::splinetable<>>(files.at(f));
+                components[particles.at(f)] = std::make_shared<photospline::splinetable<>>(files.at(f));
             }
         }
     }
 
-  boost::shared_ptr<FluxFunction> SplineFlux2::makeFlux(const std::string& fluxName){
-      return(boost::dynamic_pointer_cast<FluxFunction>(
-          boost::make_shared<SplineFlux2>(fluxName)));
+  std::shared_ptr<FluxFunction> SplineFlux2::makeFlux(const std::string& fluxName){
+      return(std::dynamic_pointer_cast<FluxFunction>(
+          std::make_shared<SplineFlux2>(fluxName)));
   }
 
   double SplineFlux2::getFlux(ParticleType type, double energy, double cosZenith) const{
@@ -67,7 +67,7 @@ namespace nuflux{
     if((cosZenith < -1) || (cosZenith > +1)){
       return(0.0);
     }
-    std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
+    std::map<ParticleType,std::shared_ptr<photospline::splinetable<>> >
         ::const_iterator it=components.find(type);
     if(it==components.end()){
       if (isNeutrino(type)) {

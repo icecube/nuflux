@@ -29,8 +29,8 @@ namespace nuflux{
     components[NuEBar] =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuebarpro.dat"));
   }
   
-  boost::shared_ptr<FluxFunction> LegacyPromptFlux::makeFlux(const std::string& fluxName){
-    return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<LegacyPromptFlux>(fluxName)));
+  std::shared_ptr<FluxFunction> LegacyPromptFlux::makeFlux(const std::string& fluxName){
+    return(std::dynamic_pointer_cast<FluxFunction>(std::make_shared<LegacyPromptFlux>(fluxName)));
   }
   
   double LegacyPromptFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
