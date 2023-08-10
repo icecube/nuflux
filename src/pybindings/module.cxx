@@ -5,6 +5,7 @@
 // #include <boost/python/to_python_converter.hpp>
 #include <nuflux/nuflux.h>
 
+
 // namespace bp = boost::python;
 
 // #if defined(__has_include)
@@ -213,9 +214,9 @@ class PyFluxFunction: public nuflux::FluxFunction {
   public:
     using nuflux::FluxFunction::FluxFunction; // Inherit constructors
 
-    // std::string getName() const{
-    //   PYBIND11_OVERRIDE(std::string, FluxFunction, getName);
-    // }
+    std::string getName() const{
+      PYBIND11_OVERRIDE(std::string, FluxFunction, getName);
+    }
     double getFlux(nuflux::ParticleType type, double energy, double cosZenith) const override {
       PYBIND11_OVERRIDE_PURE(double, FluxFunction, getFlux,type,energy,cosZenith);
     }
@@ -240,6 +241,16 @@ PYBIND11_MODULE(_nuflux, m) {
     //     .def("setName", &Pet::setName)
     //     .def("getName", &Pet::getName);
 
+
+  py::enum_<nuflux::ParticleType>(m, "ParticleType")
+    .value("NuE", nuflux::ParticleType::NuE)
+    .value("NuEBar", nuflux::ParticleType::NuEBar)
+    .value("NuMu", nuflux::ParticleType::NuMu)
+    .value("NuMuBar", nuflux::ParticleType::NuMuBar)
+    .value("NuTau", nuflux::ParticleType::NuTau)
+    .value("NuTauBar", nuflux::ParticleType::NuTauBar)
+    .export_values();
+
   m.def("makeFlux", &nuflux::makeFlux, "Instantiate and return a flux model");
   m.def("availableFluxes", &nuflux::availableFluxes, "Get a list of valid flux model names");
   m.def("kneesForFlux", &nuflux::kneesForFlux, "Get a list of valid knee-reweighting scheme names for the given model");
@@ -250,11 +261,20 @@ PYBIND11_MODULE(_nuflux, m) {
   py::class_<nuflux::FluxFunction, PyFluxFunction>(m, "FluxFunction")
         .def(py::init<const std::string &>())
         //.def("getName",&nuflux::FluxFunction::getName)
-        .def("getFlux",&nuflux::FluxFunction::getFlux)
+        //.def("getFlux",&PyFluxFunction::getFlux)
         ;
 
   
   py::class_<nuflux::LegacyConventionalFlux,nuflux::FluxFunction>(m, "LegacyConventionalFlux")
         .def(py::init<const std::string &>())
+        .def("getFlux",&nuflux::LegacyConventionalFlux::getFlux)
         ;
+
+  py::class_<nuflux::SplineFlux2,nuflux::FluxFunction>(m, "SplineFlux2")
+    .def(py::init<const std::string&>())
+    .def("getFlux",&nuflux::SplineFlux2::getFlux)
+    .def("readExtents", &nuflux::SplineFlux2::readExtents)
+    .def("getMinEnergy",&nuflux::SplineFlux2::getMinEnergy)
+    .def("getMaxEnergy",&nuflux::SplineFlux2::getMaxEnergy)
+  ;
 }
