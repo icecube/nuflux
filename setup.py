@@ -28,20 +28,6 @@ extension = Extension(
     extra_compile_args=["-std=c++17", "-DUSE_NUMPY"],
 )
 
-headers = [
-    "src/include/nuflux/ANFlux.h",
-    "src/include/nuflux/FluxFunction.h",
-    "src/include/nuflux/Fluxes.h",
-    "src/include/nuflux/IPLEFlux.h",
-    "src/include/nuflux/Interfaces.h",
-    "src/include/nuflux/LegacyConventionalFlux.h",
-    "src/include/nuflux/LegacyPromptFlux.h",
-    "src/include/nuflux/SplineFlux.h",
-    "src/include/nuflux/SplineFlux2.h",
-    "src/include/nuflux/logging.h",
-    "src/include/nuflux/nuflux.h",
-]
-
 setup(
     packages=["nuflux"],
     package_dir={"": "src"},
