@@ -1,4 +1,4 @@
-test_env = {'NUFLUX_DATA': meson.project_source_root()+'/nuflux/data'}
+test_env = {'NUFLUX_DATA': meson.project_source_root()+'/src/nuflux/data'}
 test(
   'test_basic',
   executable('test_basic',

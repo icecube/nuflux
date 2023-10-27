@@ -14,7 +14,7 @@ conf_data.set_quoted('DATA_DIR',datadir)
 configure_file(output : 'config.h',
                configuration : conf_data)
 if get_option('install_data')
-  install_subdir('nuflux/data/',
+  install_subdir('src/nuflux/data/',
                  install_dir:datadir,
                  strip_directory:true)
 endif
@@ -77,7 +77,7 @@ else
   else
     message('Building package for python version ' +
             python.language_version() + ': ' + python.get_install_dir())
-    python.install_sources('nuflux/__init__.py',
+    python.install_sources('src/nuflux/__init__.py',
                            subdir: 'nuflux',
                            )
 
@@ -90,7 +90,7 @@ else
       install:true)
 
     pytest_env = environment(test_env)
-    pytest_env.append('PYTHONPATH',meson.current_source_dir())
+    pytest_env.append('PYTHONPATH',meson.current_source_dir()+'/src')
     pytest_env.append('PYTHONPATH',meson.current_build_dir())
     test('test_fluxes',find_program('tests/test_fluxes.py'), env: pytest_env)
     test('doctest',python,args: ['-m','doctest',files('README.md')],env: pytest_env)
