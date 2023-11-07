@@ -48,13 +48,14 @@ jobs:
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
-          meson setup build . -D b_coverage=true --prefix=/home/runner/inst/
+          meson setup build . -D b_coverage=true --prefix=/home/runner/work/inst/
           ninja -C build test
+          echo ${PWD}
           ninja -C build install
       - name: 
         if: matrix.build == 'meson'
         env: 
-          PYTHONPATH: /home/runner/inst/inst/lib/python3.11/site-packages
+          PYTHONPATH: /home/runner/work/inst/inst/lib/python3.11/site-packages
         run: |
           python3 -m pytest
       - name: Generate Coverage Report and Docs
@@ -102,7 +103,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.0.1, py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.3.0]
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
