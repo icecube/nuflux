@@ -1,3 +1,4 @@
-option('python', type : 'string', value : 'python3', description : 'python path to compile against')
-option('data_path', type: 'string', value : '', description: 'absolute path to where to install data files, will overrede --datadir Default will be PREFIX/share/nuflux')
-option('install_data', type: 'boolean', value : true, description: 'can be set to false if installing on a readonly filesystem')
+option('python', type : 'string', value: 'python3', description : 'python path to compile against')
+option('data_path', type: 'string', value: '', description: 'absolute path to where to install data files, will overrede --datadir Default will be PREFIX/share/nuflux')
+option('install_data', type: 'boolean', value: true, description: 'can be set to false if installing on a readonly filesystem')
+option('pymodule', type: 'boolean', value: false, description: 'install as a python module, no shared library, and with the data files as part of the python module' )

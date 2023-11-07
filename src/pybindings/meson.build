@@ -1,0 +1,54 @@
+cppcomp = meson.get_compiler('cpp')
+pymod = import('python')
+python = pymod.find_installation(get_option('python'), required: false)
+test_python = false
+
+if not python.found()
+  warning('Can\'t find python: "' + get_option('python') + '", skipping python build')
+else
+  pydep = python.dependency()
+
+  # Find numpy
+  numpy = run_command(
+    python,'-c',
+    'import importlib.util,os;print(os.path.join(importlib.util.find_spec("numpy").submodule_search_locations[0],"core","include"))',
+    check: true,
+    )
+  if numpy.returncode()==0
+    pybind_inc = include_directories(numpy.stdout().strip())
+    message ('Numpy found: '+ numpy.stdout().strip())
+  else
+    warning ('Numpy not found: building without arrays')
+    pybind_inc = include_directories()
+  endif
+
+  python_name = 'python' + ''.join(python.language_version().split('.'))
+  boost = dependency('boost', modules: [python_name])
+
+  if not boost.found()
+    warning( 'Can\'t find boost python, Skipping python build')
+  else
+    message('Building package for python version ' +
+            python.language_version() + ': ' + python.get_install_dir())
+    python.install_sources(init_file, subdir: 'nuflux')
+
+    pysrc = ['module.cxx']
+    pymodule_link = []
+    if get_option('pymodule')
+      pysrc += lib_src
+      pysrc += 'detail.cxx'
+    else
+      pymodule_link += libnuflux
+    endif
+
+    pymodule = python.extension_module(
+      '_nuflux',
+      pysrc,
+      include_directories: [inc, pybind_inc],
+      dependencies: [photospline, pydep, boost],
+      link_with: pymodule_link,
+      install: true)
+
+    test_python = true
+  endif
+endif
