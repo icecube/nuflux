@@ -48,7 +48,7 @@ jobs:
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
-          meson setup build . -D b_coverage=true --prefix=/home/runner/work/inst/
+          meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
           echo ${PWD}
           ninja -C build install
@@ -103,7 +103,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
@@ -117,5 +117,5 @@ jobs:
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             python3 -m pip install --user pip pytest pytest-subtests
-            BOOST_ROOT=${SROOT} python3 -m pip install --user /nf
+            BOOST_ROOT=${SROOT} python3 -m pip install --user /nf --no-build-isolation
             python3 -m pytest /nf
