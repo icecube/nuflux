@@ -48,13 +48,13 @@ jobs:
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
-          meson setup build . -D b_coverage=true --prefix=/inst/
+          meson setup build . -D b_coverage=true --prefix=/home/runner/inst/
           ninja -C build test
           ninja -C build install
       - name: 
         if: matrix.build == 'meson'
         env: 
-          PYTHONPATH: /inst/lib/python3.11/site-packages
+          PYTHONPATH: /home/runner/inst/inst/lib/python3.11/site-packages
         run: |
           python3 -m pytest
       - name: Generate Coverage Report and Docs
@@ -116,5 +116,5 @@ jobs:
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             python3 -m pip install --user pip pytest pytest-subtests
-            python3 -m pip install --user /nf
+            BOOST_ROOT=${SROOT} python3 -m pip install --user /nf
             python3 -m pytest /nf
