@@ -53,7 +53,8 @@ jobs:
           ninja -C build install
       - name: 
         if: matrix.build == 'meson'
-        env: PYTHONPATH: /inst/lib/python3.11/site-packages
+        env: 
+          PYTHONPATH: /inst/lib/python3.11/site-packages
         run: |
           python3 -m pytest
       - name: Generate Coverage Report and Docs
