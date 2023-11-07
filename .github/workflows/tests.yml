@@ -60,7 +60,8 @@ jobs:
           PKG_CONFIG_PATH: /home/runner/inst/lib/x86_64-linux-gnu/pkgconfig:/Users/runner/inst/lib/pkgconfig
         run: |
           python3 -m pytest
-          g++ $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
+          pkg-config nuflux --cflags --libs
+          g++ --std=c++17 $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
           ./test_basic
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
