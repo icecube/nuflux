@@ -48,11 +48,12 @@ jobs:
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
-          meson setup build . -D b_coverage=true
+          meson setup build . -D b_coverage=true --prefix=/inst/
           ninja -C build test
           ninja -C build install
       - name: 
         if: matrix.build == 'meson'
+        env: PYTHONPATH: /inst/lib/python3.11/site-packages
         run: |
           python3 -m pytest
       - name: Generate Coverage Report and Docs
@@ -108,11 +109,11 @@ jobs:
       - name: Build and Run Tests in Docker
         uses: addnab/docker-run-action@v3
         with:
-          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
+          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nf
           image: centos:centos7.9.2009
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            pip install --user pytest pytest-subtests
-            PREFIX=${SROOT} pip install --user /nuflux
-            python3 -m pytest /nuflux
+            python3 -m pip install --user pip pytest pytest-subtests
+            python3 -m pip install --user /nf
+            python3 -m pytest /nf
