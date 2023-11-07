@@ -56,8 +56,12 @@ jobs:
         if: matrix.build == 'meson'
         env: 
           PYTHONPATH: /home/runner/inst/lib/python3.10/site-packages/:/Users/runner/inst/lib/python3.11/site-packages
+          LD_LIBRARY_PATH: /home/runner/inst/lib/x86_64-linux-gnu
+          PKG_CONFIG_PATH: /home/runner/inst/lib/x86_64-linux-gnu/pkgconfig:/Users/runner/inst/lib/pkgconfig
         run: |
           python3 -m pytest
+          g++ $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
+          ./test_basic
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
         run: |
