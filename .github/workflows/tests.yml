@@ -55,7 +55,7 @@ jobs:
       - name: 
         if: matrix.build == 'meson'
         env: 
-          PYTHONPATH: /home/runner/work/inst/inst/lib/python3.11/site-packages
+          PYTHONPATH: /home/runner/inst/lib/python3.10/site-packages/:/Users/runner/inst/lib/python3.11/site-packages
         run: |
           python3 -m pytest
       - name: Generate Coverage Report and Docs
@@ -103,7 +103,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.3.0]
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
@@ -117,5 +117,5 @@ jobs:
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             python3 -m pip install --user pip pytest pytest-subtests
-            BOOST_ROOT=${SROOT} python3 -m pip install --user /nf --no-build-isolation
+            BOOST_ROOT=${SROOT} python3 -m pip install --user /nf
             python3 -m pytest /nf
