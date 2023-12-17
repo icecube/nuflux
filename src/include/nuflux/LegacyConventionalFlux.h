@@ -7,7 +7,7 @@
 
 namespace nuflux{
 
-  class LegacyConventionalFlux : public FluxFunction, public KneeReweightable, public PionKaonAdjustable{
+  class LegacyConventionalFlux : public FluxFunction{
   public:
     class component{
     public:
@@ -84,6 +84,10 @@ namespace nuflux{
     std::map<ParticleType,component> components;
 
     kneeSpline kneeCorrection;
+    ///the factor by which to boost the pion decay contribution
+    double pionAdjust;
+    ///the factor by which to boost the kaon decay contribution
+    double kaonAdjust;
   public:
     LegacyConventionalFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
@@ -93,8 +97,15 @@ namespace nuflux{
     virtual double getMinEnergy() const;
     virtual double getMaxEnergy() const;
 
-    virtual void setRelativePionContribution(double adjust);
-    virtual void setRelativeKaonContribution(double adjust);
+    ///boosts the contribution from pion decays
+    ///\param adjust the factor by which to increase the pion contribution
+    void setRelativePionContribution(double adjust);
+    double getRelativePionContribution() const{ return(pionAdjust); }
+
+    ///boosts the contribution from kaon decays
+    ///\param adjust the factor by which to increase the kaon contribution
+    void setRelativeKaonContribution(double adjust);
+    double getRelativeKaonContribution() const{ return(kaonAdjust); }
 
     virtual void setKneeReweightingModel(std::string reweightModel);
   };

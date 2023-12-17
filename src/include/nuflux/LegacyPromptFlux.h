@@ -7,7 +7,7 @@
 
 namespace nuflux{
 
-  class LegacyPromptFlux : public FluxFunction, public KneeReweightable{
+  class LegacyPromptFlux : public FluxFunction{
   private:
     class component{
     private:
