@@ -109,5 +109,5 @@ jobs:
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             python3 -m pip install --user pip pytest pytest-subtests
-            BOOST_ROOT=${SROOT} python3 -m pip install --user --no-build-isolation --verbose /nf
+            BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
             python3 -m pytest /nf
