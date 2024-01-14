@@ -61,7 +61,8 @@ jobs:
         run: |
           python3 -m pytest
           pkg-config nuflux --cflags --libs
-          g++ --std=c++17 $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
+          echo $(pkg-config nuflux --cflags --libs)
+          g++ --std=c++17  -I/home/runner/inst/include -L/home/runner/inst/lib/x86_64-linux-gnu -lnuflux tests/test_basic.cxx -o test_basic
           ./test_basic
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
