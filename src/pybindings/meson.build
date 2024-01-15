@@ -1,6 +1,6 @@
 cppcomp = meson.get_compiler('cpp')
 pymod = import('python')
-python = pymod.find_installation(get_option('python'), required: false)
+python = pymod.find_installation(get_option('python'), required: false, pure: false)
 test_python = false
 
 if not python.found()
