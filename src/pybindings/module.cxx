@@ -100,6 +100,7 @@ register_FluxFunction()
 {
   using namespace nuflux;
 
+  bp::def("getVersion", &getVersion, "Get the current nuflux version");
   bp::def("makeFlux", &makeFlux, "Instantiate and return a flux model");
   bp::def("availableFluxes", &available_fluxes_list, "Get a list of valid flux model names");
   bp::def("kneesForFlux", &knees_for_flux_list, "Get a list of valid knee-reweighting scheme names for the given model");

@@ -15,8 +15,10 @@ if not get_option('pymodule')
   endif
   conf_data = configuration_data()
   conf_data.set_quoted('DATA_DIR',datadir)
-  configure_file(output: 'config.h',
-                configuration: conf_data)
+  conf_data.set_quoted('NUFLUX_VERSION',meson.project_version())
+  configure_file(
+    output: 'config.h',
+    configuration: conf_data)
 
   libnuflux = library(
     'nuflux',
