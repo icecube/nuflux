@@ -55,11 +55,11 @@ For example, in IceCube's cvmfs envionment you should do:
 
      CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build . --prefix=/path/to/instal/to
 
-the option -Ddata_path can be used to install to a directory outside of the PREFIX directory.
+the option -Ddata_path can be used to install the raw flux tables to a directory outside of the PREFIX directory.
 
 If you want to install to a read-only file system you can pass -Dinstall_data=False
 
-You may also use the environment variable `NUFLUX_DATA` to specify the path of the nuflux data tables if they are in a
+You may also use the environment variable `NUFLUX_DATA` to specify the path of the raw flux tables if they are in a
 place other than where they were installed to.
 
 ## Documentation
