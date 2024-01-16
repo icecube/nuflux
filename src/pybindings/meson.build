@@ -7,6 +7,7 @@ if not python.found()
   warning('Can\'t find python: "' + get_option('python') + '", skipping python build')
 else
   pydep = python.dependency()
+  module_inc = [inc]
 
   # Find numpy
   numpy = run_command(
@@ -15,11 +16,10 @@ else
     check: true,
     )
   if numpy.returncode()==0
-    pybind_inc = include_directories(numpy.stdout().strip())
+    module_inc += include_directories(numpy.stdout().strip())
     message ('Numpy found: '+ numpy.stdout().strip())
   else
     warning ('Numpy not found: building without arrays')
-    pybind_inc = include_directories()
   endif
 
   python_name = 'python' + ''.join(python.language_version().split('.'))
@@ -37,6 +37,7 @@ else
     if get_option('pymodule')
       pysrc += lib_src
       pysrc += 'detail.cxx'
+      module_inc += configuration_inc
     else
       pymodule_link += libnuflux
     endif
@@ -44,7 +45,7 @@ else
     pymodule = python.extension_module(
       '_nuflux',
       pysrc,
-      include_directories: [inc, pybind_inc],
+      include_directories: module_inc,
       dependencies: [photospline, pydep, boost],
       link_with: pymodule_link,
       cpp_args: '-Wno-deprecated',

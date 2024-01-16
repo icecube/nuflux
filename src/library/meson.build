@@ -9,21 +9,11 @@ lib_src = files(
   )
 
 if not get_option('pymodule')
-  datadir = get_option('data_path')
-  if datadir == ''
-    datadir = get_option('prefix') / get_option('datadir') / meson.project_name()
-  endif
-  conf_data = configuration_data()
-  conf_data.set_quoted('DATA_DIR',datadir)
-  conf_data.set_quoted('NUFLUX_VERSION',meson.project_version())
-  configure_file(
-    output: 'config.h',
-    configuration: conf_data)
 
   libnuflux = library(
     'nuflux',
     lib_src + 'detail.cpp',
-    include_directories: inc,
+    include_directories: [inc, configuration_inc],
     dependencies : [photospline, cfitsio],
     install: true)
 
