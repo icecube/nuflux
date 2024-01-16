@@ -47,6 +47,7 @@ else
       include_directories: [inc, pybind_inc],
       dependencies: [photospline, pydep, boost],
       link_with: pymodule_link,
+      cpp_args: '-Wno-deprecated',
       install: true)
 
     test_python = true
