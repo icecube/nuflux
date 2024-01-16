@@ -30,14 +30,14 @@ If you only need to use python you can install it directly through pip:
 
     pip install --user git+https://github.com/icecube/nuflux
 
-Note that this may fail if photospline and boost_python are installed in nonstandard locations, e.g. headers in /opt/toolsets/mystuff/include, libraries in /opt/toolsets/mystuff/lib. In this case, set the `PREFIX` environment variable to the root of your toolset installation:
+Note that this may fail if photospline and boost_python are installed in nonstandard locations, e.g. headers in /opt/toolsets/photospline/include, libraries in /opt/toolsets/photospline/lib. In this case, set the `CMAKE_PREFIX_PATH` environment variable to the root of your photospline installation and `BOOST_ROOT` to the root of your boost installation:
 
-    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/icecube/nuflux
+    CMAKE_PREFIX_PATH=/opt/toolsets/photospline BOOST_ROOT=/opt/toolsets/boost pip install --user git+https://github.com/icecube/nuflux
 
-If you are running it in IceCube's cvmfs environment you will want to set `PREFIX` to the base of the cvmfs envionment which is stored in the envionment variable `SROOT`:
+If you are running it in IceCube's cvmfs environment you will want to set `CMAKE_PREFIX_PATH` and `BOOST_ROOT` to the base of the cvmfs envionment which is stored in the environment variable `SROOT`:
 
-    eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.1.1/setup.sh`
-    PREFIX=${SROOT} pip install --user git+https://github.com/icecube/nuflux
+    eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.3.0/setup.sh`
+    CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} pip install --user git+https://github.com/icecube/nuflux
 
 #### Meson
 
