@@ -8,7 +8,7 @@ namespace nuflux{
 
   class SimpleSplineFlux : public FluxFunction{
   private:
-    std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> > components;
+    boost::shared_ptr<photospline::splinetable<>> spline;
   public:
     SimpleSplineFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
