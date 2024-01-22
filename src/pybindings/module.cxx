@@ -108,18 +108,18 @@ register_FluxFunction()
   bp::def("dataPath", &detail::getDataPath, "Print the data path for a given model");
 
   bp::class_<FluxFunction, boost::shared_ptr<FluxFunction>, boost::noncopyable>("FluxFunction", bp::no_init)
-    .def("getFlux",
+    .def( "getFlux",
 #ifdef USE_NUMPY
-         &getFlux,
+          &getFlux,
 #else
-         (double (FluxFunction::*)(ParticleType type,double,double) const)&FluxFunction::getFlux,
+          (double (FluxFunction::*)(ParticleType type,double,double) const)&FluxFunction::getFlux,
 #endif
-         "Get the flux of neutrinos predicted by this model. \n\n"
-         ":param particle_type: type of neutrino\n"
-         ":param energy: energy of neutrino in GeV\n"
-         ":param cos_zen: cosine of the zenith angle in radians\n\n"
-         ":returns: a differential flux in units of 1/GeV cm^2 sr s",
-         (bp::args("particle_type"), "energy", "cos_zen"))
+          "Get the flux of neutrinos predicted by this model. \n\n"
+          ":param particle_type: type of neutrino\n"
+          ":param energy: energy of neutrino in GeV\n"
+          ":param cos_zen: cosine of the zenith angle in radians\n\n"
+          ":returns: a differential flux in units of 1/GeV cm^2 sr s",
+          (bp::args("particle_type"), "energy", "cos_zen"))
     .add_property("name", &FluxFunction::getName)
     .add_property("energy_range",&energy_range)
 
@@ -134,12 +134,12 @@ register_FluxFunction()
     .add_property("relative_kaon_contribution", &PionKaonAdjustable::getRelativeKaonContribution, &PionKaonAdjustable::setRelativeKaonContribution)
     ;
 
-  bp::class_<LegacyConventionalFlux, boost::shared_ptr<LegacyConventionalFlux>,
-             bp::bases<FluxFunction, PionKaonAdjustable, KneeReweightable> >("LegacyConventionalFlux", bp::no_init)
+  bp::class_< LegacyConventionalFlux, boost::shared_ptr<LegacyConventionalFlux>,
+              bp::bases<FluxFunction, PionKaonAdjustable, KneeReweightable> >("LegacyConventionalFlux", bp::no_init)
     ;
 
-  bp::class_<LegacyPromptFlux, boost::shared_ptr<LegacyPromptFlux>,
-             bp::bases<FluxFunction, KneeReweightable> >("LegacyPromptFlux", bp::no_init)
+  bp::class_< LegacyPromptFlux, boost::shared_ptr<LegacyPromptFlux>,
+              bp::bases<FluxFunction, KneeReweightable> >("LegacyPromptFlux", bp::no_init)
     ;
 
   {
@@ -152,11 +152,11 @@ register_FluxFunction()
   }
 
 #ifndef NO_PHOTOSPLINE
-  bp::class_<SimpleSplineFlux, boost::shared_ptr<SimpleSplineFlux>,
-             bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux", bp::no_init)
+  bp::class_< SimpleSplineFlux, boost::shared_ptr<SimpleSplineFlux>,
+              bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux", bp::no_init)
     ;
-  bp::class_<SplineFlux2, boost::shared_ptr<SplineFlux2>,
-             bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux2", bp::no_init)
+  bp::class_< SplineFlux2, boost::shared_ptr<SplineFlux2>,
+              bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux2", bp::no_init)
     ;
 #endif
 

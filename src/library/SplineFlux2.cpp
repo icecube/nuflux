@@ -25,7 +25,7 @@ namespace nuflux{
 
   double SplineFlux2::readExtents(ParticleType type)const{
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
-     ::const_iterator it=components.find(type);
+      ::const_iterator it=components.find(type);
     double low_energy=it->second->lower_extent(0), up_energy=it->second->upper_extent(0);
     double low_coszen=it->second->lower_extent(1), up_coszen=it->second->upper_extent(1);
     std::cout << "Extents for dim energy:\t\t" << pow(10,low_energy) << "\t" << pow(10,up_energy) << std::endl;

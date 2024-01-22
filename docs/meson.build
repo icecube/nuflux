@@ -38,9 +38,9 @@ if sphinx_build.found() and doxygen.found()
 
   html = custom_target('sphinx',
     depends : doxygen_xml,
-    input : [sphinx_conf, 'about.rst', 'development.rst', 'fluxes.rst',
-             'installation.rst', 'pythonapi.rst', 'cppapi.rst', 'evaluation.rst',
-             'index.rst', 'overview.rst', 'usage.rst' ],
+    input : [ sphinx_conf, 'about.rst', 'development.rst', 'fluxes.rst',
+              'installation.rst', 'pythonapi.rst', 'cppapi.rst', 'evaluation.rst',
+              'index.rst', 'overview.rst', 'usage.rst' ],
     output : ['html'],
     command : ['sphinx-build', '-c', meson.current_build_dir(), meson.current_source_dir(),
               meson.current_build_dir() + '/html'],

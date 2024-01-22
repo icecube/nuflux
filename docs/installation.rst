@@ -27,11 +27,11 @@ Python
 
 Installation via Python3-pip::
 
-   pip3 install --user git+https://github.com/icecube/nuflux
+  pip3 install --user git+https://github.com/icecube/nuflux
 
 If you want to install from a specific branch::
 
-   pip3 install --user git+https://github.com/icecube/nuflux.git@<branch>
+  pip3 install --user git+https://github.com/icecube/nuflux.git@<branch>
 
 Build from scratch
 ---------------------
@@ -105,7 +105,7 @@ and the steps taken to resolve them:
 
   ::
 
-     /usr/bin/ld: cannot find -lboost_python36
+    /usr/bin/ld: cannot find -lboost_python36
 
   Error message for Meson installation:
 

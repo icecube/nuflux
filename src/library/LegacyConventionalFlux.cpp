@@ -262,8 +262,8 @@ namespace nuflux{
     std::string correctionFilePath=detail::getDataPath("LegacyConventionalFlux/"+name+"_"+reweightModel+".dat");
     std::ifstream infile(correctionFilePath.c_str());
     if(!infile)
-      throw std::runtime_error("Unable to read "+correctionFilePath+"; are you sure that "
-                               +reweightModel+" is a valid knee model for "+name+"?");
+      throw std::runtime_error( "Unable to read "+correctionFilePath+"; are you sure that "
+                                +reweightModel+" is a valid knee model for "+name+"?");
     infile >> kneeCorrection;
   }
 }

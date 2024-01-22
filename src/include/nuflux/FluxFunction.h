@@ -63,13 +63,13 @@ namespace nuflux{
                               const std::string& deprecationReason);
 
     struct FluxRegisterererer{
-      FluxRegisterererer(const std::string& name,
-                         boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
+      FluxRegisterererer( const std::string& name,
+                          boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
         registerNeutrinoFlux(name,factoryFn);
       }
-      FluxRegisterererer(const std::string& name,
-                         boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
-                         const std::string& deprecationReason){
+      FluxRegisterererer( const std::string& name,
+                          boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
+                          const std::string& deprecationReason){
         registerNeutrinoFlux(name,factoryFn,deprecationReason);
       }
     };

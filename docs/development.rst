@@ -71,13 +71,13 @@ Note that not all fluxes are created this way. This is just to give you an idea 
 If you already have ready-to-go flux tables or splines and are curious on how to integrate them into the project,
 see :ref:`Storing new fluxes<Storing_new_fluxes>` instead.
 
-1) **Choose your weapon**: To make a new flux, there are three ingredients you need to get started:
-   A primary cosmic ray (CR) model, a hadronic interaction (HI) model, and the type of particle
-   (i.e. atmospheric lepton) you want to make the flux for.
-   In this example, we choose ``HillasGaisser2012 (H3a)``, ``SIBYLL23C``, and ``NuMu``.
+1)  **Choose your weapon**: To make a new flux, there are three ingredients you need to get started:
+    A primary cosmic ray (CR) model, a hadronic interaction (HI) model, and the type of particle
+    (i.e. atmospheric lepton) you want to make the flux for.
+    In this example, we choose ``HillasGaisser2012 (H3a)``, ``SIBYLL23C``, and ``NuMu``.
 
-2) **Calculate a tabulated spectrum with MCEq**: Together with a zenith angle of our choice
-   (note that this is zenith and *not* cosine zenith), we feed our three ingredients to MCEq:
+2)  **Calculate a tabulated spectrum with MCEq**: Together with a zenith angle of our choice
+    (note that this is zenith and *not* cosine zenith), we feed our three ingredients to MCEq:
 
   ::
 
@@ -98,11 +98,11 @@ see :ref:`Storing new fluxes<Storing_new_fluxes>` instead.
   **Remark:** MCEq can do a lot more than what is currently part of these instructions.
   For more information and options, please visit `MCEq's GitHub <https://github.com/mceq-project/MCEq>`_.
 
-3) **Interpolate the solutions with photospline**:
-   The photospline software is using B-splining as interpolation method.
-   It can turn our 2D solution array into a spline surface that can be evaluated at any desired point on the surface.
-   The splining process is pretty neat but may require some practice.
-   The spline surface is stored in a FITS file, that, if correctly formatted, can be integrated into nuflux.
+3)  **Interpolate the solutions with photospline**:
+    The photospline software is using B-splining as interpolation method.
+    It can turn our 2D solution array into a spline surface that can be evaluated at any desired point on the surface.
+    The splining process is pretty neat but may require some practice.
+    The spline surface is stored in a FITS file, that, if correctly formatted, can be integrated into nuflux.
 
 
 **Create fluxes using the script**
@@ -123,11 +123,11 @@ In contrast to the previous section, this one should be applicable to all kinds 
 Whether you created new fluxes according to the above instructions, or in any other way:
 They have to be integrated into nuflux. Here is an example of how that can be accomplished.
 
-1) **Create a new flux class**: You can either choose one of the existing classes,
-   e.g. ``ANFlux``, ``IPLEFlux``, or ``SplineFlux`` if you think your new flux fits the class, or,
-   as we do in this example, create a new one (in this case, our flux is a spline flux,
-   but has some new features that are not incorporated in the existing ``SplineFlux``).
-   We call it ``SplineFlux3``:
+1)  **Create a new flux class**: You can either choose one of the existing classes,
+    e.g. ``ANFlux``, ``IPLEFlux``, or ``SplineFlux`` if you think your new flux fits the class, or,
+    as we do in this example, create a new one (in this case, our flux is a spline flux,
+    but has some new features that are not incorporated in the existing ``SplineFlux``).
+    We call it ``SplineFlux3``:
 
   ::
 

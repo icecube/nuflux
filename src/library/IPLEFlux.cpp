@@ -42,8 +42,8 @@ namespace nuflux{
       while(fluxFile3D >> energy >> cosZenith >> azimuth >> fluxpe){
         double flux=fluxpe*energy;
         if(azimuth!=lastAzimuth){
-          curHist=&(p3DFluxMap.insert(std::make_pair(std::make_pair(cosZenith,azimuth),
-                                                     dumbHistogram(-1.025))).first->second);
+          curHist=&(p3DFluxMap.insert(std::make_pair( std::make_pair(cosZenith,azimuth),
+                                                      dumbHistogram(-1.025))).first->second);
           lastAzimuth = azimuth;
         }
         curHist->push_back(log10(energy)+enBinWidth/2,flux);
