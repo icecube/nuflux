@@ -20,9 +20,9 @@ nuflux uses two different build systems: one based on `setuptools` and one based
 
 #### Prerequisites
 
-* cfitsio
-* photospline
-* boost_python
+- cfitsio
+- photospline
+- boost_python
 
 #### setuptools
 
@@ -88,11 +88,11 @@ From python:
 
 from c++:
 
-[comment]: # (BEGIN CODE)
+[comment]: # "BEGIN CODE"
 
     #include <nuflux/nuflux.h>
 
-    int main(){  
+    int main(){
       boost::shared_ptr<nuflux::FluxFunction> flux;
       flux=nuflux::makeFlux("honda2006");
       nuflux::ParticleType pdgid = nuflux::NuMu;
@@ -102,4 +102,4 @@ from c++:
       assert(f == 4.6476245267530432e-11);
     }
 
-[comment]: # (END CODE)
+[comment]: # "END CODE"
