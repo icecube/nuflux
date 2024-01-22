@@ -6,11 +6,11 @@ namespace nuflux {
 
 ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
 {
-  std::string nuefile = detail::getDataPath("/ANFlux/" + fluxName + "_nue.fits");
+  std::string nuefile = detail::getDataPath("ANFlux/" + fluxName + "_nue.fits");
   boost::shared_ptr<Evaluator> evaluator = boost::make_shared<Evaluator>(nuefile);
   fluxes_[NuE] = evaluator;
   fluxes_[NuEBar] = evaluator;
-  std::string numufile = detail::getDataPath("/ANFlux/" + fluxName + "_numu.fits");  
+  std::string numufile = detail::getDataPath("ANFlux/" + fluxName + "_numu.fits");  
   evaluator = boost::make_shared<Evaluator>(numufile);
   fluxes_[NuMu] = evaluator;
   fluxes_[NuMuBar] = evaluator;

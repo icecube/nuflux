@@ -12,12 +12,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest]
-        build: [meson, setuptools]
+        build: [meson, pyproject]
         include:
           - os: ubuntu-latest
             python-version: "3.10"
           - os: macos-latest
-            python-version: "3.11"
+            python-version: "3.12"
     steps:
       - name: Checkout nuflux
         uses: actions/checkout@v2
@@ -31,16 +31,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
           sudo dpkg -r lcov
-          curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.1.0.tar.gz | tar xz
-          cmake -S photospline-2.1.0 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+          curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.2.1.tar.gz | tar xz
+          cmake -S photospline-2.2.1 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
           sudo make install -C photospline
       - name: HomeBrew Install Dependencies
         if: startsWith( matrix.os, 'macos') 
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
-      - name: Build nuflux with setuptools
-        if: matrix.build == 'setuptools'
+      - name: Build nuflux with pyproject
+        if: matrix.build == 'pyproject'
         run: |
           python3 -m pip install .[test]
           python3 -m pytest
@@ -48,7 +48,7 @@ jobs:
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
-          meson setup build . -D b_coverage=true
+          meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
@@ -72,7 +72,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.0.1, py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
@@ -89,13 +89,13 @@ jobs:
             pip install --user meson ninja pytest pytest-subtests
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
             ninja -Cbuild test
-  cvmfs_setuptools_tests:
-    name: cvmfs setuptools tests ${{matrix.cvmfs}}
+  cvmfs_pyproject_tests:
+    name: cvmfs pyproject tests ${{matrix.cvmfs}}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.0.1, py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.3.0]
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
@@ -103,11 +103,11 @@ jobs:
       - name: Build and Run Tests in Docker
         uses: addnab/docker-run-action@v3
         with:
-          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
+          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nf
           image: centos:centos7.9.2009
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            pip install --user wheel pytest pytest-subtests
-            PREFIX=${SROOT} pip install --user --no-build-isolation /nuflux
-            python3 -m pytest /nuflux
+            python3 -m pip install --user pip pytest pytest-subtests
+            BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
+            python3 -m pytest /nf

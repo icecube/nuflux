@@ -22,6 +22,9 @@ namespace nuflux{
   
   ///Print an listing of all supported models
   void printModels();
+
+  ///Return the current nuflux version
+  std::string getVersion();
   
 } //namespace nuflux
 

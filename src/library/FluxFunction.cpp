@@ -1,7 +1,14 @@
 #include <nuflux/nuflux.h>
 #include <iostream>
+#include "config.h"
 
 namespace nuflux{
+
+  ///Return the current nuflux version
+  std::string getVersion(){
+    return NUFLUX_VERSION;
+  }
+
   namespace detail{
     struct FluxFactory{
       boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&);

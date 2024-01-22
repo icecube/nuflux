@@ -53,11 +53,11 @@ Here are some errors that have been encountered with Python and Meson installati
 
 * **photospline and boost are installed in non-standard locations**
 
-  The Python installation may fail if photospline and boost_python are installed in non-standard locations, e.g. headers in ``/opt/toolsets/mystuff/include``, libraries in ``/opt/toolsets/mystuff/lib``. In this case, set the `PREFIX` environment variable to the root of your toolset installation:
+  The Python installation may fail if photospline and boost_python are installed in non-standard locations, e.g. headers in ``/opt/toolsets/mystuff/include``, libraries in ``/opt/toolsets/mystuff/lib``. In this case, set the `CMAKE_PREFIX_PATH` and `BOOST_ROOT` environment variables to the root of your toolset installation:
 
   ::
 
-    PREFIX=/opt/toolsets/mystuff pip install --user git+https://github.com/icecube/nuflux
+    CMAKE_PREFIX_PATH=/opt/toolsets/photospline and `BOOST_ROOT`=/opt/toolsets/boost pip install --user git+https://github.com/icecube/nuflux
 
 
 * **Meson is out of date**
