@@ -50,6 +50,14 @@ jobs:
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
+      - name: Install and test linking
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
+        env: 
+          PKG_CONFIG_PATH: /Users/runner/inst/lib/pkgconfig
+        run: |
+          ninja -C build install
+          c++ -std=c++17 $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
+          ./test_basic
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
         run: |
@@ -83,7 +91,7 @@ jobs:
           options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
           image: centos:centos7.9.2009
           run: |
-            yum -y install glibc-headers glibc-devel
+            yum -y install glibc-headers glibc-devel unzip
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
             pip install --user meson ninja pytest pytest-subtests

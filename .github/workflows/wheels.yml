@@ -1,0 +1,128 @@
+name: Build Wheels
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+  release:
+    types:
+      - published
+jobs:
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcfitsio-dev python-is-python3 libboost-python-dev ninja-build
+          curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.2.1.tar.gz | tar xz
+          cmake -S photospline-2.2.1 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+          sudo make install -C photospline
+      - uses: actions/checkout@v4
+      - name: Build sdist
+        run: pipx run build --sdist
+      - name: Test sdist
+        run: |
+          python -m pip install meson pytest pytest-subtests
+          python -m pip install dist/nuflux-*.tar.gz
+          python tests/test_fluxes.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-sdist
+          path: dist/nuflux-*.tar.gz
+  build_wheels:
+    name: Build wheels cp${{ matrix.python }}-manylinux_x86_64
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ["37","38","39","310","311","312"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.16.2
+        env:
+          CIBW_BUILD: cp${{ matrix.python }}-manylinux_x86_64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-cp${{ matrix.python }}
+          path: ./wheelhouse/*.whl
+  test_wheels:
+    name: Test Wheel with Python ${{ matrix.python-version }} on ${{ matrix.os }}
+    needs: build_wheels
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+    steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Download  wheel
+        uses: actions/download-artifact@v4
+        with:
+          path: artifact
+      - name: Display structure of downloaded files
+        run: |
+          PYNAME=$(echo cp${{matrix.python-version}} | sed 's/\.//')
+          FNAME=artifact/cibw-wheels-${PYNAME}/nuflux-*-${PYNAME}-*.whl
+          python3 -m pip install pytest pytest-subtests $FNAME
+      - uses: actions/checkout@v4
+      - name: Test
+        working-directory: tests
+        run: ./test_fluxes.py
+  cvmfs_test_wheel:
+    name: Test Wheel with cvmfs ${{matrix.cvmfs}}
+    needs: build_wheels
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        include:
+          - cvmfs: py3-v4.1.1
+            python-tag: cp37
+          - cvmfs: py3-v4.2.1
+            python-tag: cp310
+          - cvmfs: py3-v4.3.0
+            python-tag: cp311
+    steps:
+      - uses: cvmfs-contrib/github-action-cvmfs@v3
+      - name: Checkout nuflux
+        uses: actions/checkout@v2
+      - name: Download  wheel
+        uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-wheels-${{ matrix.python-tag }}
+          merge-multiple: true
+      - name: Build and Run Tests in Docker
+        uses: addnab/docker-run-action@v3
+        with:
+          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
+          image: centos:centos7.9.2009
+          run: |
+            eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
+            python3 -m pip install --user pytest pytest-subtests /nuflux/nuflux-*-${{matrix.python-tag}}-*.whl
+            python3 /nuflux/tests/test_fluxes.py 
+  upload_pypi:
+    needs: [cvmfs_test_wheel,test_wheels,build_sdist]
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    if: github.event_name == 'release' && github.event.action == 'published'
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-*
+          path: dist
+          merge-multiple: true
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

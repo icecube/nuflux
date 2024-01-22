@@ -4,4 +4,7 @@ nuflux_headers = [
   'LegacyPromptFlux.h', 'nuflux.h',
   'SplineFlux2.h', 'SplineFlux.h',
 ]
-install_headers(nuflux_headers, subdir : 'nuflux')
+
+if not get_option('pymodule')
+  install_headers(nuflux_headers, subdir : 'nuflux')
+endif
