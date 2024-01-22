@@ -84,3 +84,5 @@ cmd = "sed -i '' \"s/date-released: .*$/date-released: $(date -uI)/\" CITATION.c
 skip = '*.pdf,*.dat,*.fits'
 ignore-words-list = 'nd'
 
+[tool.doc8]
+max-line-length=128

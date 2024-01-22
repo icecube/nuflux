@@ -25,20 +25,20 @@ repos:
       - id: ruff
         args: [--fix, --show-fixes]
       - id: ruff-format
-  # - repo: https://github.com/PyCQA/doc8
-  #   rev: "v1.1.1"
-  #   hooks:
-  #     - id: doc8
-  # - repo: https://github.com/pre-commit/pygrep-hooks
-  #   rev: v1.10.0
-  #   hooks:
-  #     - id: python-no-log-warn
-  #     - id: python-no-eval
-  #       exclude: ^tests/.*
-  #     - id: python-use-type-annotations
-  #     - id: rst-backticks
-  #     - id: rst-directive-colons
-  #     - id: rst-inline-touching-normal
+  - repo: https://github.com/PyCQA/doc8
+    rev: "v1.1.1"
+    hooks:
+      - id: doc8
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-no-log-warn
+      - id: python-no-eval
+        exclude: ^tests/.*
+      - id: python-use-type-annotations
+      - id: rst-backticks
+      - id: rst-directive-colons
+      - id: rst-inline-touching-normal
   # - repo: https://github.com/Lucas-C/pre-commit-hooks
   #   rev: v1.5.4
   #   hooks:
