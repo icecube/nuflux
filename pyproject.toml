@@ -36,6 +36,7 @@ doi = "https://doi.org/10.5281/zenodo.8180337"
 
 [project.optional-dependencies]
 test = ["pytest","pytest-subtests"]
+dev = ["tbump"]
 
 [tool.meson-python.args]
 setup = ['-Dpymodule=true']
@@ -43,3 +44,38 @@ setup = ['-Dpymodule=true']
 [tool.pytest.ini_options]
 addopts = "--doctest-glob='README.md'"
 testpaths = ["tests", "README.md"]
+
+[tool.cibuildwheel]
+build = "cp3{7,8,9,10,11,12}-manylinux_x86_64"
+manylinux-x86_64-image = "kjmeagher/nuflux-manylinux2014_x86_64"
+test-extras = ["test"]
+test-command = "{project}/tests/test_fluxes.py"
+
+[tool.tbump]
+github_url = "https://github.com/icecube/nuflux"
+
+[tool.tbump.version]
+current = "2.0.4"
+regex = '''
+  (?P<major>\d+)
+  \.
+  (?P<minor>\d+)
+  \.
+  (?P<patch>\d+)
+  '''
+
+[tool.tbump.git]
+message_template = "Bump to {new_version}"
+tag_template = "v{new_version}"
+
+[[tool.tbump.file]]
+src = "meson.build"
+search = "version: '{current_version}'"
+
+[[tool.tbump.file]]
+src = "CITATION.cff"
+search = "version: {current_version}"
+
+ [[tool.tbump.before_commit]]
+ name = "Update release date in citation file"
+ cmd = "sed -i '' \"s/date-released: .*$/date-released: $(date -uI)/\" CITATION.cff"
