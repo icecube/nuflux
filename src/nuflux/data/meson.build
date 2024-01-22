@@ -172,7 +172,7 @@ if not get_option('pymodule')
       install_subdir(d, install_dir:datadir)
     endforeach
   endif
-else 
+else
   test_env = {}
   foreach d, f: data_files
     python.install_sources(f, subdir: 'nuflux/data/' + d)

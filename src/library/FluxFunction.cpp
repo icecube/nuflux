@@ -13,11 +13,11 @@ namespace nuflux{
     struct FluxFactory{
       boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&);
       std::string deprecationReason;
-      
+
       FluxFactory(boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                   const std::string& deprecationReason):
         factoryFn(factoryFn),deprecationReason(deprecationReason){}
-      
+
       boost::shared_ptr<FluxFunction> operator()(const std::string& name) const{
         if(!deprecationReason.empty()){
           std::cerr << "WARNING: The '" << name << "' flux implementation is deprecated:\n " << deprecationReason << '\n';
@@ -26,14 +26,14 @@ namespace nuflux{
       }
     };
     std::map<std::string,FluxFactory>* registry=NULL;
-    
-    void registerNeutrinoFlux(const std::string& name, 
+
+    void registerNeutrinoFlux(const std::string& name,
                               boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&)){
       if(!registry)
         registry=new std::map<std::string,detail::FluxFactory>;
       registry->insert(std::make_pair(name,detail::FluxFactory(factoryFn,"")));
     }
-    
+
     void registerNeutrinoFlux(const std::string& name,
                               boost::shared_ptr<FluxFunction>(*factoryFn)(const std::string&),
                               const std::string& deprecationReason){
@@ -41,15 +41,15 @@ namespace nuflux{
         registry=new std::map<std::string,detail::FluxFactory>;
       registry->insert(std::make_pair(name,detail::FluxFactory(factoryFn,deprecationReason)));
     }
-    
+
     std::multimap<std::string,std::string>* kneeRegistry=NULL;
-    
+
     void registerKneeModel(const std::string baseModel, const std::string name){
       if(!kneeRegistry)
         kneeRegistry=new std::multimap<std::string,std::string>;
       kneeRegistry->insert(std::make_pair(baseModel,name));
     }
-    
+
 
   }
 
@@ -65,7 +65,7 @@ namespace nuflux{
       throw std::invalid_argument("Unregistered flux name: "+fluxName);
     return(it->second(fluxName));
   }
-  
+
   std::vector<std::string> availableFluxes(){
     std::vector<std::string> validNames;
     if(!detail::registry)
@@ -75,7 +75,7 @@ namespace nuflux{
       validNames.push_back(it->first);
     return(validNames);
   }
-  
+
   std::vector<std::string> kneesForFlux(std::string fluxName){
     std::vector<std::string> validKnees;
     if(!detail::kneeRegistry)
@@ -86,7 +86,7 @@ namespace nuflux{
       validKnees.push_back(it->second);
     return(validKnees);
   }
-  
+
   void printModels(){
     std::cout << "Available models are: \n";
     std::vector<std::string> models=availableFluxes();

@@ -44,29 +44,29 @@ repos:
     hooks:
       - id: forbid-crlf
       - id: forbid-tabs
-  # - repo: https://github.com/pre-commit/pre-commit-hooks
-  #   rev: v4.5.0
-  #   hooks:
-  #     - id: check-added-large-files
-  #     - id: check-builtin-literals
-  #     - id: check-case-conflict
-  #     - id: check-docstring-first
-  #     - id: check-executables-have-shebangs
-  #     - id: check-json
-  #     - id: check-merge-conflict
-  #     - id: check-shebang-scripts-are-executable
-  #     - id: check-toml
-  #     - id: check-vcs-permalinks
-  #     - id: check-yaml
-  #     - id: debug-statements
-  #     - id: detect-private-key
-  #     - id: end-of-file-fixer
-  #     - id: fix-byte-order-marker
-  #     - id: mixed-line-ending
-  #     - id: name-tests-test
-  #       args: [--pytest-test-first]
-  #     - id: trailing-whitespace
-  #       exclude: \.svg$
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-toml
+      - id: check-vcs-permalinks
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: mixed-line-ending
+      - id: name-tests-test
+        args: [--pytest-test-first]
+      - id: trailing-whitespace
+        exclude: \.svg$
   # - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
   #   rev: "2.7.3"
   #   hooks:

@@ -1,4 +1,4 @@
-lib_src = files( 
+lib_src = files(
   'ANFlux.cpp',
   'IPLEFlux.cpp',
   'LegacyConventionalFlux.cpp',

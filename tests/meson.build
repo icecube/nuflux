@@ -13,7 +13,7 @@ if not get_option('pymodule')
   test(
     'readme',
     executable(
-      'README', 
+      'README',
       custom_target(
         input: ['../README.md'],
         output: ['README.cxx'],

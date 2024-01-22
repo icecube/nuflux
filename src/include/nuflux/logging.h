@@ -30,10 +30,10 @@ public:
   static I3LogLevel LogLevelForUnit(const std::string& unit);
   static void SetLogLevelForUnit(const std::string &unit, I3LogLevel level);
   static void SetLogLevel(I3LogLevel level);
-  
+
   static std::string I3LoggingStringF(const char* format, ...)
     __attribute__((__format__ (__printf__, 1, 2)));
-  
+
   static void Log(I3LogLevel level, const std::string& unit,
                   const std::string& file, int line, const std::string& func,
                   const std::string& message);

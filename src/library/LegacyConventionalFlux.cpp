@@ -8,13 +8,13 @@ namespace {
   const double MIN_ENERGY = 10;
   const double MAX_ENERGY = 1e9;
 }
- 
+
 namespace nuflux{
   LegacyConventionalFlux::component readConvComponent(const std::string& fname){
-    
+
     std::string path = detail::getDataPath("LegacyConventionalFlux/"+fname);
-    
-    
+
+
     std::ifstream infile(path.c_str());
     if(!infile)
       throw std::runtime_error("Unable to read "+path);
@@ -22,7 +22,7 @@ namespace nuflux{
     infile >> c;
     return(c);
   }
-  
+
   LegacyConventionalFlux::LegacyConventionalFlux(const std::string& fluxName):
     FluxFunction(fluxName),
     KneeReweightable("none"),
@@ -35,31 +35,31 @@ namespace nuflux{
     setRelativePionContribution(getRelativePionContribution());
     setRelativeKaonContribution(getRelativeKaonContribution());
   }
-  
+
   boost::shared_ptr<FluxFunction> LegacyConventionalFlux::makeFlux(const std::string& fluxName){
     return(boost::dynamic_pointer_cast<FluxFunction>(boost::make_shared<LegacyConventionalFlux>(fluxName)));
   }
 
   double LegacyConventionalFlux::getMinEnergy() const{
     return MIN_ENERGY;
-  }    
+  }
   double LegacyConventionalFlux::getMaxEnergy() const{
     return MAX_ENERGY;
   }
-  
+
   double LegacyConventionalFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     std::map<ParticleType,component>::const_iterator it=components.find(type);
     if(it==components.end()){
       if (isNeutrino(type)) {
         return 0;
       } else {
-        throw std::runtime_error( name+" does not support particle type " + 
+        throw std::runtime_error( name+" does not support particle type " +
                                   boost::lexical_cast<std::string>(type));
       }
     }
     return(it->second.getFlux(energy,cosZenith)*kneeCorrection(energy));
   }
-  
+
   //returns true if the given critical energy is one associated with kaons,
   //or false if it is associated with pions
   bool classifyCriticalEnergy(double E_c){
@@ -68,7 +68,7 @@ namespace nuflux{
     double kPlusMinus=850;
     double kLong=205;
     double none=1000; //of course we use this value to indicate no data
-    
+
     if(std::abs(E_c/piPlusMinus-1)<tol)
       return(false);
     if(std::abs(E_c/none-1)<tol)
@@ -80,14 +80,14 @@ namespace nuflux{
     throw std::domain_error("Unable to identify particle type associated with a critical energy of "+
                             boost::lexical_cast<std::string>(E_c)+" GeV");
   }
-  
+
   std::istream& operator>>(std::istream& is, LegacyConventionalFlux::component::progenitorComponent& c){
     is >> c.A >> c.B >> c.E_c;
     c.E_c*=1e3; //convert TeV to GeV
     c.kaonic=classifyCriticalEnergy(c.E_c);
     return(is);
   }
-  
+
   std::istream& operator>>(std::istream& is, LegacyConventionalFlux::component& c){
     //read all 49 unlabeled parameters from the input stream
     for(unsigned int i=0; i<15; i++)
@@ -114,11 +114,11 @@ namespace nuflux{
     c.pionKaonNorm=1.0;
     return(is);
   }
-  
+
   double LegacyConventionalFlux::component::progenitorComponent::operator()(double energy, double inclination) const{
     return(A/(1+B*inclination*energy/E_c));
   }
-  
+
   /** @brief A correction for the mean interaction length of mesons at production altitude
    * The form of this correction is derived in <a href="https://arxiv.org/abs/hep-ph/0407078v1">a report by D. Chirkin</a>.
    */
@@ -126,7 +126,7 @@ namespace nuflux{
     return(sqrt((abscosZenith*abscosZenith + inclinationCoeffs[0] + inclinationCoeffs[1]*pow(abscosZenith, inclinationCoeffs[2]) + inclinationCoeffs[3]*pow(abscosZenith, inclinationCoeffs[4]))
                 /(1+inclinationCoeffs[0]+inclinationCoeffs[1]+inclinationCoeffs[3])));
   }
-  
+
   //figure out what energy is appropriate for transitioning to the high energy calculation for the given direction
   double LegacyConventionalFlux::component::transitionEnergy(double cosZenith) const{
     double acz=std::abs(cosZenith);
@@ -160,7 +160,7 @@ namespace nuflux{
     }
     //otherwise, we're in the high energy regime
     cosZenith=std::abs(cosZenith);
-    
+
     //figure out the correction factor for the normalization
     //code preserved from original, without comment
     double normCosTheta[6] = {0.1, 0.2, 0.4, 0.6, 0.8, 1.0};
@@ -172,7 +172,7 @@ namespace nuflux{
     normTweak = normTweaks[normIdx] +
       (normTweaks[normIdx+1]-normTweaks[normIdx])/(normCosTheta[normIdx+1]-normCosTheta[normIdx]) *
       (cosZenith-normCosTheta[normIdx]);
-    
+
     double inc=inclination(cosZenith);
     double core=0;
     for(unsigned int i=0; i<2; i++)
@@ -182,11 +182,11 @@ namespace nuflux{
       core+=modification*modifiedComponents[i](energy,inc)*(modifiedComponents[i].kaonic?kaonAdjust:pionAdjust);
     return(normTweak*norm*pow(energy,highEIndex-1)*pow(10.,-3*highEIndex)*core);
   }
-  
+
   void LegacyConventionalFlux::component::adjustPionKaonRatio(double pionAdjust, double kaonAdjust){
     const double czStep=.1;
     const double enEps=.1;
-    
+
     //set the adjusted ratio
     this->pionAdjust=pionAdjust;
     this->kaonAdjust=kaonAdjust;
@@ -202,29 +202,29 @@ namespace nuflux{
       mismatch+=high/low;
     }
     mismatch/=samples;
-    
+
     //set the relative normalization
     pionKaonNorm=mismatch;
   }
-  
+
   void LegacyConventionalFlux::setRelativePionContribution(double adjust){
     pionAdjust=adjust;
     for(std::map<ParticleType,component>::iterator it=components.begin(), end=components.end();
         it!=end; it++)
       it->second.adjustPionKaonRatio(pionAdjust,kaonAdjust);
   }
-  
+
   void LegacyConventionalFlux::setRelativeKaonContribution(double adjust){
     kaonAdjust=adjust;
     for(std::map<ParticleType,component>::iterator it=components.begin(), end=components.end();
         it!=end; it++)
       it->second.adjustPionKaonRatio(pionAdjust,kaonAdjust);
   }
-  
+
   //knee reweighting stuff
   LegacyConventionalFlux::kneeSpline::kneeSpline():
     x(1,0.0),y(1,1.0),b(1,0.0),c(1,0.0),d(1,0.0){}
-  
+
   double LegacyConventionalFlux::kneeSpline::operator()(double energy) const{
     const double lE=log10(energy);
     int idx=std::distance(x.begin(),std::lower_bound(x.begin(),x.end(),lE));
@@ -233,7 +233,7 @@ namespace nuflux{
     double dx=lE-x[idx];
     return(y[idx]+dx*(b[idx]+dx*(c[idx]+dx*d[idx])));
   }
-  
+
   std::istream& operator>>(std::istream& is, LegacyConventionalFlux::kneeSpline& s){
     s.x.resize(100);
     for(unsigned int i=0; i<100; i++)
@@ -252,7 +252,7 @@ namespace nuflux{
       is >> s.d[i];
     return(is);
   }
-  
+
   void LegacyConventionalFlux::setKneeReweightingModel(std::string reweightModel){
     kneeCorrectionName=reweightModel;
     if(kneeCorrectionName=="none"){

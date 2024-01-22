@@ -21,9 +21,9 @@ namespace nuflux{
     loadTables(fluxName+"_num",NuMu);
     loadTables(fluxName+"_nbm",NuMuBar);
   }
-  
+
   IntegralPreservingFlux::~IntegralPreservingFlux(){}
-  
+
   void IntegralPreservingFlux::loadTables(const std::string& fluxName, ParticleType type){
 
     SetSubGeV = fluxName.find("sk")  != std::string::npos; // Extend to SubGeV for fluxes at SK
@@ -48,7 +48,7 @@ namespace nuflux{
         }
         curHist->push_back(log10(energy)+enBinWidth/2,flux);
       }
-      
+
       for(std::map<std::pair<double,double>,dumbHistogram>::const_iterator it=p3DFluxMap.begin(), end=p3DFluxMap.end(); it!=end; it++){
         const dumbHistogram& hist=it->second;
         std::pair<std::vector<double>,std::vector<double> > integratedFlux=hist.accumulate();
@@ -56,7 +56,7 @@ namespace nuflux{
         energySplines3D[type].insert(std::make_pair(it->first,integratedSpline));
       }
     }
-    
+
     {
       std::string fname = detail::getDataPath("IPLEFlux/"+fluxName+"2D.dat");
       std::ifstream fluxFile2D((fname).c_str());
@@ -75,7 +75,7 @@ namespace nuflux{
         }
         curHist->push_back(log10(energy)+enBinWidth/2,flux);
       }
-      
+
       for(std::map<double,dumbHistogram>::const_iterator it=p2DFluxMap.begin(), end=p2DFluxMap.end(); it!=end; it++){
         const dumbHistogram& hist=it->second;
         std::pair<std::vector<double>,std::vector<double> > integratedFlux=hist.accumulate();
@@ -96,9 +96,9 @@ namespace nuflux{
 
   double IntegralPreservingFlux::getMaxEnergy() const{
     return 1e4;
-  }  
-  
-  
+  }
+
+
   double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double cosZenith) const{
     if(cosZenith<-1 || cosZenith>1){
       return 0;
@@ -108,7 +108,7 @@ namespace nuflux{
     }
     return(evaluate2D(type, energy, cosZenith));
   }
-  
+
   double IntegralPreservingFlux::getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
     //if(azimuth<0 || azimuth>2*boost::math::constants::pi<double>())
     //log_fatal_stream("Out of range azimuth angle " << azimuth);
@@ -128,7 +128,7 @@ namespace nuflux{
       return(evaluate2D(type, energy, cosZenith));
     return(InterpolateAzimuth(type, energy, azimuth, cosZenith));
   }
-  
+
   double IntegralPreservingFlux::evaluate2D(ParticleType type, double energy, double cosZenith) const{
     double logEnergy=log10(energy);
     dumbHistogram hFluxVCosZenith(-1);
@@ -138,7 +138,7 @@ namespace nuflux{
       if (isNeutrino(type)) {
         return 0;
       } else {
-        throw std::runtime_error( name + " does not support particle type " + 
+        throw std::runtime_error( name + " does not support particle type " +
                                   boost::lexical_cast<std::string>(type));
       }
     }
@@ -171,7 +171,7 @@ namespace nuflux{
     CubicSpline integratedSpline(integratedFlux.first,integratedFlux.second);
     return(integratedSpline.derivative(azimuth)*UnitFactor/energy);
   }
-  
+
   double IntegralPreservingFlux::InterpolateCZFlux(ParticleType type, double energy, double azimuth, double cosZenith) const{
     double logEnergy=log10(energy);
     dumbHistogram hFluxVCosZenith(-1);
@@ -181,7 +181,7 @@ namespace nuflux{
       if (isNeutrino(type)) {
         return 0;
       } else {
-        throw std::runtime_error( name + " does not support particle type " + 
+        throw std::runtime_error( name + " does not support particle type " +
                                   boost::lexical_cast<std::string>(type));
       }
     }
@@ -202,7 +202,7 @@ namespace nuflux{
     CubicSpline integratedSpline(integratedFlux.first,integratedFlux.second);
     return(integratedSpline.derivative(cosZenith));
   }
-  
+
 } //namespace nuflux
 
 NNF_REGISTER_FLUX("IPhonda2006_sno_solmin",&nuflux::IntegralPreservingFlux::makeFlux);

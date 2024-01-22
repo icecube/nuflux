@@ -6,7 +6,7 @@
 #include <map>
 
 namespace nuflux{
-  
+
   class LegacyConventionalFlux : public FluxFunction, public KneeReweightable, public PionKaonAdjustable{
   public:
     class component{
@@ -43,7 +43,7 @@ namespace nuflux{
       double modificationNorm;
       ///The scale log10(energy) for the 'modification' term
       double modificationScale;
-      
+
       ///the factor by which to boost the pion decay contribution
       double pionAdjust;
       ///the factor by which to boost the kaon decay contribution
@@ -51,20 +51,20 @@ namespace nuflux{
       ///the additional normalization factor necessary to maintain the same
       ///total flux over all angles and energies after adjusting the pion/kaon ratio
       double pionKaonNorm;
-      
+
       double inclination(double cosZenith) const;
       double transitionEnergy(double cosZenith) const;
-      
+
       friend std::istream& operator>>(std::istream&,component&);
     public:
       //energy should be in GeV
       double getFlux(double energy, double cosZenith) const;
-      
+
       void adjustPionKaonRatio(double pionAdjust, double kaonAdjust);
     };
     friend std::istream& operator>>(std::istream&,component&);
     friend component readConvComponent(const std::string& path);
-    
+
     class kneeSpline{
     private:
       //knot locations and coefficients for a cubic spline
@@ -82,23 +82,23 @@ namespace nuflux{
     };
   private:
     std::map<ParticleType,component> components;
-    
+
     kneeSpline kneeCorrection;
   public:
     LegacyConventionalFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
-    
+
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
-    virtual double getMinEnergy() const;    
+    virtual double getMinEnergy() const;
     virtual double getMaxEnergy() const;
-    
+
     virtual void setRelativePionContribution(double adjust);
     virtual void setRelativeKaonContribution(double adjust);
-    
+
     virtual void setKneeReweightingModel(std::string reweightModel);
   };
-  
+
 } //namespace nuflux
 
 #endif //LEGACYCONVENTIONALFLUX_H

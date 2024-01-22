@@ -20,14 +20,14 @@ void SimpleLogger::SetLogLevel(I3LogLevel level){
 std::string SimpleLogger::I3LoggingStringF(const char* format, ...){
   va_list args;
   va_start(args, format);
-  
+
   size_t messagesize = vsnprintf(NULL, 0, format, args)+1;
-  
+
   std::string s(messagesize,'\0');
-  
+
   va_start(args, format);
   vsprintf(&*s.begin(), format, args);
-  
+
   return s;
 }
 
@@ -35,10 +35,10 @@ void SimpleLogger::Log(I3LogLevel level, const std::string& unit,
                        const std::string& file, int line, const std::string& func,
                        const std::string& message){
   const char *log_description;
-  
+
   if (LogLevelForUnit(unit) > level)
     return;
-  
+
   switch (level) {
   case I3LOG_TRACE:
     log_description = "TRACE";
@@ -65,7 +65,7 @@ void SimpleLogger::Log(I3LogLevel level, const std::string& unit,
     log_description = "UNKNOWN";
     break;
   }
-  
+
   std::cerr << log_description << " (" << log_description << "): "
             << message << " (" << file << ':' << line << " in " << func << std::endl;
 }

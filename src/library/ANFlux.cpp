@@ -10,13 +10,13 @@ ANFlux::ANFlux(const std::string& fluxName) : FluxFunction(fluxName)
   boost::shared_ptr<Evaluator> evaluator = boost::make_shared<Evaluator>(nuefile);
   fluxes_[NuE] = evaluator;
   fluxes_[NuEBar] = evaluator;
-  std::string numufile = detail::getDataPath("ANFlux/" + fluxName + "_numu.fits");  
+  std::string numufile = detail::getDataPath("ANFlux/" + fluxName + "_numu.fits");
   evaluator = boost::make_shared<Evaluator>(numufile);
   fluxes_[NuMu] = evaluator;
   fluxes_[NuMuBar] = evaluator;
 
   emin_ = pow(10,std::nextafter(evaluator->GetExtents(0).first,std::numeric_limits<double>::infinity())) ;
-  emax_ = pow(10,evaluator->GetExtents(0).second) ;  
+  emax_ = pow(10,evaluator->GetExtents(0).second) ;
 }
 
   double ANFlux::getMinEnergy() const{
@@ -46,7 +46,7 @@ ANFlux::getFlux(ParticleType type, double energy, double cosZenith) const
     if (isNeutrino(type)) {
       return 0;
     } else {
-      throw std::runtime_error( name+" does not support particle type " + 
+      throw std::runtime_error( name+" does not support particle type " +
                                 boost::lexical_cast<std::string>(type));
     }
   }
@@ -57,7 +57,7 @@ ANFlux::getFlux(ParticleType type, double energy, double cosZenith) const
 }
 
 ANFlux::Evaluator::Evaluator(const std::string& fname):data(fname){}
-  
+
 ANFlux::Evaluator::~Evaluator(){}
 
 std::pair<double, double>
@@ -83,7 +83,7 @@ ANFlux::Evaluator::operator()(double energy, double cosZenith) const
     double result=data.ndsplineeval(coords, centers, 0);
     return(std::pow(10, result)/std::pow(energy, 3.0));
   }
-  
+
   return(0.0);
 }
 
