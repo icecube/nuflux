@@ -10,7 +10,7 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
-        exclude: test_data.json
+        files: \.ya?ml$
   # - repo: https://github.com/fsfe/reuse-tool
   #   rev: v2.1.0
   #   hooks:
@@ -39,11 +39,11 @@ repos:
       - id: rst-backticks
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
-  # - repo: https://github.com/Lucas-C/pre-commit-hooks
-  #   rev: v1.5.4
-  #   hooks:
-  #     - id: forbid-crlf
-  #     - id: forbid-tabs
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+      - id: forbid-crlf
+      - id: forbid-tabs
   # - repo: https://github.com/pre-commit/pre-commit-hooks
   #   rev: v4.5.0
   #   hooks:
