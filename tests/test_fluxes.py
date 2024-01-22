@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 import json
+import sys
 from pathlib import Path
 
+import nuflux
 import numpy as np
 import pytest
-
-import nuflux
 
 with (Path(__file__).parent / "test_data.json").open() as f:
     data = json.load(f)
@@ -26,7 +26,12 @@ def compare_fluxes(subtests, data, energies):
             for nu_str, nu in nuflux.ParticleType.names.items():
                 with subtests.test(model=model, knee=knee, nu=nu_str):
                     if nu_str in y:
-                        np.testing.assert_allclose(flux.getFlux(nu, E, cz), y[nu_str], rtol=1e-13, atol=1e-13)
+                        np.testing.assert_allclose(
+                            flux.getFlux(nu, E, cz),
+                            y[nu_str],
+                            rtol=1e-13,
+                            atol=1e-13,
+                        )
                     else:
                         np.testing.assert_array_equal(flux.getFlux(nu, E, cz), 0)
                     assert flux.getFlux(nu, np.nextafter(emin, -np.inf), 0) == 0
@@ -47,4 +52,4 @@ def test_fluxes(subtests):
 
 
 if __name__ == "__main__":
-    exit(pytest.main(['-v',__file__]))
+    sys.exit(pytest.main(["-v", __file__]))

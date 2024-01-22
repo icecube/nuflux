@@ -83,3 +83,4 @@ cmd = "sed -i '' \"s/date-released: .*$/date-released: $(date -uI)/\" CITATION.c
 [tool.codespell]
 skip = '*.pdf,*.dat,*.fits'
 ignore-words-list = 'nd'
+
