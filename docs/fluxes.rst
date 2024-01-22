@@ -62,7 +62,7 @@ CORSIKA_GaisserH3a
 
 Variants: ``CORSIKA_GaisserH3a_QGSJET-II``, ``CORSIKA_GaisserH3a_SIBYLL-2.1``, ``CORSIKA_GaisserH3a_average``
 
-This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculation. A large Monte Carlo set of a modified verison of CORSIKA (v. 7.4003), to allow for the shower output to be serialized into ROOT files, was run for different hadronic interaction models. The neutrino flux at various directions was histogramed and then weighted to the Gaisser H3a cosmic-ray flux. Then these histogram were splined using photospline.
+This flux is the atmospheric neutrino flux (ANFlux) from direct CORSIKA calculation. A large Monte Carlo set of a modified version of CORSIKA (v. 7.4003), to allow for the shower output to be serialized into ROOT files, was run for different hadronic interaction models. The neutrino flux at various directions was histogramed and then weighted to the Gaisser H3a cosmic-ray flux. Then these histogram were splined using photospline.
 
 Schöneberg, Sebastian, The spectrum of atmospheric neutrinos above GeV energies, `PhD Thesis, Ruhr Universität Bochum, 2016 <https://hss-opus.ub.ruhr-uni-bochum.de/opus4/frontdoor/index/index/docId/5268>`_.
 

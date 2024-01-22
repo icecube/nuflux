@@ -26,7 +26,7 @@ namespace nuflux{
     ///Must be filled from left to right.
     struct dumbHistogram{
     public:
-      ///Construct a histogram initiallized wih the lower edge of its first bin
+      ///Construct a histogram initialized with the lower edge of its first bin
       explicit dumbHistogram(double firstEdge){
         binEdges.push_back(firstEdge);
       }

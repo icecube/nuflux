@@ -35,7 +35,7 @@ if not os.path.exists(dirname):
     os.mkdir(dirname)
     os.mkdir(dirname + '/data')         # The 2D tabulated data files. If MCEq is used, this is where it puts the solutions.
     os.mkdir(dirname + '/splines')      # The photospline generated FITS files are stored here.
-    os.mkdir(dirname + '/plotdata')     # Data for plots (re-scaled and coverted to physical units for easy plotting) goes here.
+    os.mkdir(dirname + '/plotdata')     # Data for plots (re-scaled and converted to physical units for easy plotting) goes here.
     os.mkdir(dirname + '/plots')        # Plots are being saved in here.
 
 # Particle types you want to make fluxes for (choose from the list by commenting
@@ -212,7 +212,7 @@ def Spline_fluxes(particle):
         # instead of an energy spectrum for each zenith angle. That's how nuflux wants it!
         data = np.transpose(data)
         # Energy bins and flux values are stored as base-10 log in nuflux, so we are
-        # converting them here. In the fluxes, there may be occurences of negative
+        # converting them here. In the fluxes, there may be occurrences of negative
         # values or zeros which are considered unphysical and therefore set to NaN
         # (otherwise they will later mess up the fitting process).
         energy = np.log10(energy)

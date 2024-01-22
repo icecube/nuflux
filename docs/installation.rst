@@ -3,7 +3,7 @@
 Installation
 ############
 
-Please follow the installation instructions below. If you have problems, refer to the :ref:`Kown problems <Known_problems>` section. If that doesn't help to resolve your issue, feel free to contact the developers (see :ref:`About <About>` section).
+Please follow the installation instructions below. If you have problems, refer to the :ref:`Known problems <Known_problems>` section. If that doesn't help to resolve your issue, feel free to contact the developers (see :ref:`About <About>` section).
 
 
 Prerequisites

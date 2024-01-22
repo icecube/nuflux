@@ -121,7 +121,7 @@ namespace nuflux{
     if(energy < getMinEnergy() || energy > getMaxEnergy()){
       return 0;
     }
-    //Above 15.0 GeV, any azimuthal dependance should be negligible.
+    //Above 15.0 GeV, any azimuthal dependence should be negligible.
     //Due to these small fluctuations, this integral-preserving method does not
     //work well, and as such the azimuth averaged value is always returned here.
     if(energy>15)

@@ -76,6 +76,10 @@ search = "version: '{current_version}'"
 src = "CITATION.cff"
 search = "version: {current_version}"
 
- [[tool.tbump.before_commit]]
- name = "Update release date in citation file"
- cmd = "sed -i '' \"s/date-released: .*$/date-released: $(date -uI)/\" CITATION.cff"
+[[tool.tbump.before_commit]]
+name = "Update release date in citation file"
+cmd = "sed -i '' \"s/date-released: .*$/date-released: $(date -uI)/\" CITATION.cff"
+
+[tool.codespell]
+skip = '*.pdf,*.dat,*.fits'
+ignore-words-list = 'nd'

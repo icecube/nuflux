@@ -26,11 +26,11 @@ namespace nuflux{
   double SplineFlux2::readExtents(ParticleType type)const{
     std::map<ParticleType,boost::shared_ptr<photospline::splinetable<>> >
      ::const_iterator it=components.find(type);
-    double le=it->second->lower_extent(0), ue=it->second->upper_extent(0);
-    double lc=it->second->lower_extent(1), uc=it->second->upper_extent(1);
-    std::cout << "Extents for dim energy:\t\t" << pow(10,le) << "\t" << pow(10,ue) << std::endl;
-    lc = -uc;    // because data is symmetrical around cos(zenith)
-    std::cout << "Extents for dim cos(zenith):\t" << lc << "\t" << uc << std::endl;
+    double low_energy=it->second->lower_extent(0), up_energy=it->second->upper_extent(0);
+    double low_coszen=it->second->lower_extent(1), up_coszen=it->second->upper_extent(1);
+    std::cout << "Extents for dim energy:\t\t" << pow(10,low_energy) << "\t" << pow(10,up_energy) << std::endl;
+    low_coszen = -up_coszen;    // because data is symmetrical around cos(zenith)
+    std::cout << "Extents for dim cos(zenith):\t" << low_coszen << "\t" << up_coszen << std::endl;
     return 0;
   }
 
@@ -73,7 +73,7 @@ namespace nuflux{
       if (isNeutrino(type)) {
         return 0;
       } else {
-        throw std::runtime_error( name+" does not support particle type " + 
+        throw std::runtime_error( name+" does not support particle type " +
                                   boost::lexical_cast<std::string>(type));
       }
     }

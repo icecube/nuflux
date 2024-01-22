@@ -3,7 +3,7 @@
 Evaluation methods
 ##################
 
-nuflux contains several different methods for evaluating flux tables. Over the years, as better methods were deveopled, the older methods were kept to maintain reproducability with older analyses. This page contains a description of each evaluation method which is available.
+nuflux contains several different methods for evaluating flux tables. Over the years, as better methods were deveopled, the older methods were kept to maintain reproducibility with older analyses. This page contains a description of each evaluation method which is available.
 
 New evaluation methods
 =========================
@@ -59,7 +59,7 @@ The provided tables only contains values up to 1 TeV, to extrapolate the model t
 The model parameters are fit to the table and the model is used above 700 GeV.
 
 [Gaisser and Honda, Ann. Rev. Nucl. Part. Sci. **52**, 153 (2002). `hep-ph/0203272 <https://arxiv.org/abs/hep-ph/0203272>`_].
-[Gaisser T., *Cosmic Rays and Particle Physics*, Cambrige University Press, 1990, p. 88].
+[Gaisser T., *Cosmic Rays and Particle Physics*, Cambridge University Press, 1990, p. 88].
 
 Available fluxes in this class:
 

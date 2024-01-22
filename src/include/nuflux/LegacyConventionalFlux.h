@@ -76,7 +76,7 @@ namespace nuflux{
     public:
       ///Constructs a kneeSpline whose value is 1 for all energies
       kneeSpline();
-      ///Computes the corection factor for this knee model, relative to the base model
+      ///Computes the correction factor for this knee model, relative to the base model
       ///\param energy the neutrino energy in GeV
       double operator()(double energy) const;
     };
