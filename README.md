@@ -20,9 +20,9 @@ nuflux uses two different build systems: one based on `setuptools` and one based
 
 #### Prerequisites
 
-* cfitsio
-* photospline
-* boost_python
+- cfitsio
+- photospline
+- boost_python
 
 #### setuptools
 
@@ -34,7 +34,7 @@ Note that this may fail if photospline and boost_python are installed in nonstan
 
     CMAKE_PREFIX_PATH=/opt/toolsets/photospline BOOST_ROOT=/opt/toolsets/boost pip install --user git+https://github.com/icecube/nuflux
 
-If you are running it in IceCube's cvmfs environment you will want to set `CMAKE_PREFIX_PATH` and `BOOST_ROOT` to the base of the cvmfs envionment which is stored in the environment variable `SROOT`:
+If you are running it in IceCube's cvmfs environment you will want to set `CMAKE_PREFIX_PATH` and `BOOST_ROOT` to the base of the cvmfs environment which is stored in the environment variable `SROOT`:
 
     eval `/cvmfs/icecube.opensciencegrid.org/py3-v4.3.0/setup.sh`
     CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} pip install --user git+https://github.com/icecube/nuflux
@@ -51,9 +51,9 @@ If you want to use nuflux from a c++ program you need to install it with meson
 
 If boost and photospline are installed in nonstandard locations, you might need to let meson know with environment variables. Since photospline is detected with cmake you need to set `CMAKE_PREFIX_PATH=/path/to/photospline`. Boost uses `BOOST_ROOT`.
 
-For example, in IceCube's cvmfs envionment you should do:
+For example, in IceCube's cvmfs environment you should do:
 
-     CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build . --prefix=/path/to/instal/to
+    CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build . --prefix=/path/to/install/to
 
 the option -Ddata_path can be used to install the raw flux tables to a directory outside of the PREFIX directory.
 
@@ -88,11 +88,11 @@ From python:
 
 from c++:
 
-[comment]: # (BEGIN CODE)
+[comment]: # "BEGIN CODE"
 
     #include <nuflux/nuflux.h>
 
-    int main(){  
+    int main(){
       boost::shared_ptr<nuflux::FluxFunction> flux;
       flux=nuflux::makeFlux("honda2006");
       nuflux::ParticleType pdgid = nuflux::NuMu;
@@ -102,4 +102,4 @@ from c++:
       assert(f == 4.6476245267530432e-11);
     }
 
-[comment]: # (END CODE)
+[comment]: # "END CODE"

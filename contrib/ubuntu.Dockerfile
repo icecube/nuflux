@@ -11,7 +11,7 @@ RUN git clone https://github.com/icecube/photospline.git
 
 #build photospline
 WORKDIR /photospline
-RUN cmake . 
+RUN cmake .
 RUN make install
 
 #checkout nuflux

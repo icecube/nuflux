@@ -3,7 +3,9 @@
 Usage
 ############
 
-Here are two very short examples of how to use nuflux in your own project. The below code snippets will calculate a flux value for a given model, particle type, neutrino energy and cosine zenith angle.
+Here are two very short examples of how to use nuflux in your own project.
+The below code snippets will calculate a flux value for a given model,
+particle type, neutrino energy and cosine zenith angle.
 
 
 In Python

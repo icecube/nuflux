@@ -6,7 +6,7 @@
 #include <map>
 
 namespace nuflux{
-  
+
   class LegacyPromptFlux : public FluxFunction, public KneeReweightable{
   private:
     class component{
@@ -17,13 +17,13 @@ namespace nuflux{
     public:
       //The minimum energy for which this parameterization is considered valid
       double eMin;
-      
+
       //energy should be in GeV
       double getFlux(double energy, double cosZenith) const;
     };
     friend std::istream& operator>>(std::istream&,component&);
     friend component readPromptComponent(const std::string& path);
-    
+
     class kneeFunction{
     private:
       double c0, c1, x0, e0;
@@ -33,23 +33,23 @@ namespace nuflux{
       double operator()(double energy) const;
     };
     friend std::istream& operator>>(std::istream&, kneeFunction&);
-    
+
     std::map<ParticleType,component> components;
     kneeFunction kneeCorrection;
   public:
-    
+
     double getMinEnergy() const;
     double getMaxEnergy() const;
 
     LegacyPromptFlux(const std::string& fluxName);
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
-    
+
     ///Computes the expected flux for neutrinos of the given type, energy, and zenith angle
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
-    
+
     virtual void setKneeReweightingModel(std::string reweightModel);
   };
-  
+
 } //namespace nuflux
 
 #endif //LEGACYPROMPTFLUX_H

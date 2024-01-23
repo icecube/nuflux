@@ -1,9 +1,9 @@
 name: Tests
 on:
   push:
-    branches: 
+    branches:
       - main
-  pull_request: 
+  pull_request:
 jobs:
   Tests:
     name: ${{matrix.os}} ${{matrix.build}} tests
@@ -35,7 +35,7 @@ jobs:
           cmake -S photospline-2.2.1 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
           sudo make install -C photospline
       - name: HomeBrew Install Dependencies
-        if: startsWith( matrix.os, 'macos') 
+        if: startsWith( matrix.os, 'macos')
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
@@ -52,7 +52,7 @@ jobs:
           ninja -C build test
       - name: Install and test linking
         if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
-        env: 
+        env:
           PKG_CONFIG_PATH: /Users/runner/inst/lib/pkgconfig
         run: |
           ninja -C build install

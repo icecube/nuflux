@@ -15,10 +15,10 @@ namespace nuflux{
   }
 
   double SimpleSplineFlux::readExtents(ParticleType type)const{
-    double le=spline->lower_extent(0), ue=spline->upper_extent(0);
-    double lc=spline->lower_extent(1), uc=spline->upper_extent(1);
-    std::cout << "Extents for dim energy:\t\t" << pow(10,le) << "\t" << pow(10,ue) << std::endl;
-    std::cout << "Extents for dim cos(zenith):\t" << lc << "\t" << uc << std::endl;
+    double low_energy=spline->lower_extent(0), up_energy=spline->upper_extent(0);
+    double low_coszen=spline->lower_extent(1), up_coszen=spline->upper_extent(1);
+    std::cout << "Extents for dim energy:\t\t" << pow(10,low_energy) << "\t" << pow(10,up_energy) << std::endl;
+    std::cout << "Extents for dim cos(zenith):\t" << low_coszen << "\t" << up_coszen << std::endl;
     return 0;
   }
 
@@ -37,18 +37,18 @@ namespace nuflux{
       if (isNeutrino(type)) {
         return 0;
       } else {
-        throw std::runtime_error( name+" does not support particle type " + 
+        throw std::runtime_error( name+" does not support particle type " +
                                   boost::lexical_cast<std::string>(type));
       }
     }
 
     // Warn the user about coordinates outside of physics extents:
-    double le=spline->lower_extent(0), ue=spline->upper_extent(0);
-    double lc=spline->lower_extent(1), uc=spline->upper_extent(1);
-    if (!((energy-pow(10, ue)) * (energy-pow(10, le)) <= 0 )){
+    double low_energy=spline->lower_extent(0), up_energy=spline->upper_extent(0);
+    double low_coszen=spline->lower_extent(1), up_coszen=spline->upper_extent(1);
+    if (!((energy-pow(10, low_energy)) * (energy-pow(10, up_energy)) <= 0 )){
       return 0;
     }
-    if (!( (lc <= cosZenith) && (cosZenith <= uc) )){
+    if (!( (low_coszen <= cosZenith) && (cosZenith <= up_coszen) )){
       return 0;
     }
 

@@ -8,25 +8,25 @@ namespace nuflux{
   class IntegralPreservingFlux : public FluxFunction{
   public:
     static boost::shared_ptr<FluxFunction> makeFlux(const std::string& fluxName);
-    
+
     IntegralPreservingFlux(const std::string& fluxName);
-    
+
     virtual ~IntegralPreservingFlux();
 
     bool SetSubGeV;
 
     virtual double getMinEnergy() const;
     virtual double getMaxEnergy() const;
-    
+
     virtual double getFlux(ParticleType type, double energy, double cosZenith) const;
     virtual double getFlux(ParticleType type, double energy, double azimuth, double cosZenith) const;
-    
+
   private:
     ///A really simple histogram.
     ///Must be filled from left to right.
     struct dumbHistogram{
     public:
-      ///Construct a histogram initiallized wih the lower edge of its first bin
+      ///Construct a histogram initialized with the lower edge of its first bin
       explicit dumbHistogram(double firstEdge){
         binEdges.push_back(firstEdge);
       }
@@ -65,19 +65,19 @@ namespace nuflux{
     private:
       std::vector<double> binEdges, values;
     };
-    
+
     //TODO: expose CubicSpline for testing
     class CubicSpline{
     private:
       struct splineSegment{
         double x;
         double a,b,c,d;
-        
+
         double operator()(double x) const{
           double xs=x-this->x;
           return(((a*xs+b)*xs+c)*xs+d);
         }
-        
+
         double derivative(double x) const{
           double xs=x-this->x;
           return((3*a*xs+2*b)*xs+c);
@@ -86,7 +86,7 @@ namespace nuflux{
       std::vector<splineSegment> data;
       double xlast; //upper bound of interpolation domain
       double mlast, blast; //coefficients for extrapolation beyond xlast
-      
+
       ///\pre x is within the domain of the spline
       const splineSegment& findSegment(double x) const{
         unsigned int iMin=0, iMax=data.size()-1;
@@ -105,12 +105,12 @@ namespace nuflux{
       }
     public:
       CubicSpline(){}
-      
+
       CubicSpline(const std::vector<double>& x, const std::vector<double>& y):
         data(x.size()-1){
         const unsigned int N=x.size();
         assert(y.size()==N);
-        
+
         //store h values in a coefficients
         //store beta values in c coefficients
         std::vector<double> M(N);
@@ -142,13 +142,13 @@ namespace nuflux{
         data[0].a=M[1]/(6.*data[0].a);
         data[0].b=0.0;
         data[0].d=y[0];
-        
+
         xlast=x[N-1];
         double xslast = x[N-1]-x[N-2];
         mlast = (3*data.back().a*xslast + 2*data.back().b)*xslast + data.back().c;
         blast = ((data[N-2].a*xslast+data[N-2].b)*xslast+data[N-2].c)*xslast+data[N-2].d;
       }
-      
+
       double operator()(double x){
         if(data.empty()){
           throw std::runtime_error("Attempting to evaluate empty spline");
@@ -161,7 +161,7 @@ namespace nuflux{
         }
         return(findSegment(x)(x));
       }
-      
+
       double derivative(double x) const{
         if(data.empty()){
           throw std::runtime_error("Attempting to evaluate empty spline");
@@ -175,17 +175,17 @@ namespace nuflux{
         return(findSegment(x).derivative(x));
       }
     };
-    
+
     void loadTables(const std::string& fluxName, ParticleType type);
-    
+
     double evaluate2D(ParticleType type, double energy, double cosZenith) const;
     double InterpolateAzimuth(ParticleType type, double energy, double azimuth, double cosZenith) const;
     double InterpolateCZFlux(ParticleType type, double energy, double azimuth, double cosZenith) const;
-    
+
     std::map<ParticleType, std::map<double, CubicSpline> > energySplines2D;
     std::map<ParticleType, std::map<std::pair<double,double>,CubicSpline> > energySplines3D;
   };
-  
+
 } //namespace nuflux
 
 #endif //NEWNUFLUX_LEFLUX_H
