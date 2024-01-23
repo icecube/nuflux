@@ -4,7 +4,7 @@ authors:
   - family-names: "IceCube Collaboration"
     given-names: ""
 title: "NuFlux: A library for calculating atmospheric neutrino fluxes"
-version: 2.0.4
-date-released: 2023-05-24
+version: 2.0.5
+date-released: 2024-01-23
 doi: 10.5281/zenodo.5874708
 url: "https://doi.org/10.5281/zenodo.5874708"
