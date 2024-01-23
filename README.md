@@ -1,5 +1,6 @@
 [![Tests](https://github.com/icecube/nuflux/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/icecube/nuflux/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/icecube/nuflux/branch/main/graph/badge.svg?token=O6P20YHAXH)](https://codecov.io/gh/icecube/nuflux)
+[![PyPI version](https://badge.fury.io/py/nuflux.svg)](https://badge.fury.io/py/nuflux)
 [![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/nuflux?color=%2344A833&logo=condaforge)](https://anaconda.org/conda-forge/nuflux)
 [![AUR](https://img.shields.io/aur/version/nuflux?color=%231793D1&logo=Arch%20Linux)](https://aur.archlinux.org/packages/nuflux/)
 [![DOI](https://zenodo.org/badge/152797969.svg)](https://zenodo.org/badge/latestdoi/152797969)
