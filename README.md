@@ -12,7 +12,17 @@ Nuflux is a library for calculating atmospheric neutrino fluxes.
 
 ### Packages
 
+nuflux is available [on pypi](https://pypi.org/project/nuflux/).
+If you only need to use nuflux in python this is the easiest way to install it.
+Run `pip install nuflux`.
+
 nuflux is packaged [on conda-forge](https://anaconda.org/conda-forge/nuflux). Install with `conda install -c conda-forge nuflux`.
+
+On MacOS you can use homebrew. IceCube maintains a [tap](https://github.com/icecube/homebrew-icecube)
+which includes a formulat for nuflux. Run:
+
+    brew tap "icecube/icecube"
+    brew install nuflux
 
 ### From source
 
