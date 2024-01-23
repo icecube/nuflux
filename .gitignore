@@ -131,3 +131,5 @@ dmypy.json
 
 #cibuildwheel
 /wheelhouse/
+
+a.out
