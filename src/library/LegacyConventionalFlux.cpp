@@ -3,11 +3,8 @@
 #include <boost/make_shared.hpp>
 #include "nuflux/LegacyConventionalFlux.h"
 
-
-namespace {
-  const double MIN_ENERGY = 10;
-  const double MAX_ENERGY = 1e9;
-}
+const double MIN_ENERGY = 10;
+const double MAX_ENERGY = 1e9;
 
 namespace nuflux{
   LegacyConventionalFlux::component readConvComponent(const std::string& fname){

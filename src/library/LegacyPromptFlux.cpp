@@ -5,9 +5,7 @@
 
 #include <nuflux/LegacyPromptFlux.h>
 
-namespace{
-  float eMax = 1e10; //just a guess here
-}
+const float eMax = 1e10; //just a guess here
 
 namespace nuflux{
 
