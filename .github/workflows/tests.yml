@@ -11,10 +11,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-latest]
         build: [meson, pyproject]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
+            python-version: "3.8"
+          - os: ubuntu-22.04
             python-version: "3.10"
           - os: macos-latest
             python-version: "3.12"
@@ -29,7 +31,7 @@ jobs:
         if: startsWith( matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
+          sudo apt-get install ninja-build gcovr libcfitsio-dev libboost-python-dev doxygen
           sudo dpkg -r lcov
           curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.2.1.tar.gz | tar xz
           cmake -S photospline-2.2.1 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
@@ -50,13 +52,11 @@ jobs:
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
-      - name: Test Report
-        uses: dorny/test-reporter@v1
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Test Results
-          path: pytest.junit.xml,build/meson-logs/testlog.junit.xml
-          reporter: jest-junit
+          name: test-results-${{ matrix.build}}-${{ matrix.os}}
+          path: pytest.junit.xml|build/meson-logs/testlog.junit.xml
       - name: Install and test linking
         if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:
