@@ -34,7 +34,7 @@ if test_python
   pytest_env = environment(test_env)
   pytest_env.append('PYTHONPATH', meson.source_root() / 'src')
   pytest_env.append('PYTHONPATH', fs.parent(pymodule.full_path()))
-  test('test_fluxes', python, args: [files('test_fluxes.py'), '--tap'], env: pytest_env,protocol: 'tap')
+  test('test_fluxes', python, args: [files('test_fluxes.py'), '--tap'], env: pytest_env, protocol: 'tap')
   test('doctest', python, args: ['-m', 'doctest', files('../README.md')], env: pytest_env)
   meson.add_devenv(pytest_env)
 endif
