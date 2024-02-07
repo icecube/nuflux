@@ -11,14 +11,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, macos-latest]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-13, macos-14]
         build: [meson, pyproject]
         include:
           - os: ubuntu-20.04
             python-version: "3.8"
           - os: ubuntu-22.04
             python-version: "3.10"
-          - os: macos-latest
+          - os: macos-13
+            python-version: "3.12"
+          - os: macos-13
             python-version: "3.12"
     steps:
       - name: Checkout nuflux
@@ -107,7 +109,7 @@ jobs:
             yum -y install glibc-headers glibc-devel unzip
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
-            pip install --user meson ninja pytest pytest-tap
+            pip install --upgrade --user meson ninja pytest pytest-tap
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
             ninja -Cbuild test
   cvmfs_pyproject_tests:
@@ -129,6 +131,16 @@ jobs:
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python3 -m pip install --user pip pytest pytest-tap
+            python3 -m pip install --upgrade --user pip pytest pytest-tap
             BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
             python3 -m pytest /nf
+  test_report:
+    needs: [Tests]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/test-reporter@v1
+        with:
+          artifact: test-results-*
+          name: JEST Tests
+          path: "*.xml"
+          reporter: jest-junit
