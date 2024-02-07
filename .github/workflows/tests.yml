@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, macos-12, macos-13, macos-14]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-12, macos-14]
         build: [meson, pyproject]
         include:
           - os: ubuntu-20.04
@@ -23,8 +23,6 @@ jobs:
           - os: ubuntu-22.04
             python-version: "3.10"
           - os: macos-12
-            python-version: "3.12"
-          - os: macos-13
             python-version: "3.12"
           - os: macos-14
             python-version: "3.12"
@@ -54,7 +52,7 @@ jobs:
         run: |
           echo "BOOST_ROOT: ${BOOST_ROOT}"
           python3 -m pip install .[test]
-          python3 -m pytest --junit-xml=pytest.junit.xml
+          python3 -m pytest --junit-xml=test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
@@ -62,18 +60,19 @@ jobs:
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
+          mv -v build/meson-logs/testlog.junit.xml test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-results-${{ matrix.build}}-${{ matrix.os}}
-          path: ${{ matrix.build == 'meson' && 'build/meson-logs/testlog.junit.xml' || 'pytest.junit.xml' }}
+          name: test-results-${{matrix.build}}-${{matrix.os}}
+          path: test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - name: Install and test linking
         if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:
           PKG_CONFIG_PATH: /Users/runner/inst/lib/pkgconfig
         run: |
           ninja -C build install
-          c++ -std=c++17 $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
+          c++ -std=c++17 $(pkg-config nuflux --cflags --libs) -I$(brew --prefix)/include tests/test_basic.cxx -o test_basic
           ./test_basic
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
@@ -141,9 +140,15 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - uses: dorny/test-reporter@v1
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
         with:
-          artifact: /test-results-(.*)/
-          name: JEST Tests
-          path: "*.xml"
+          path: test-results
+          pattern: test-results-*
+          merge-multiple: true
+      - run: ls -R test-results
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        with:
+          path: test-results/*.xml
           reporter: jest-junit
