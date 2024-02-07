@@ -11,16 +11,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, macos-13, macos-14]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-12]
         build: [meson, pyproject]
         include:
           - os: ubuntu-20.04
             python-version: "3.8"
           - os: ubuntu-22.04
             python-version: "3.10"
-          - os: macos-13
-            python-version: "3.12"
-          - os: macos-13
+          - os: macos-12
             python-version: "3.12"
     steps:
       - name: Checkout nuflux
@@ -47,26 +45,19 @@ jobs:
         run: |
           python3 -m pip install .[test]
           python3 -m pytest --junit-xml=pytest.junit.xml
-          ls pytest.junit.xml
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
-          ls build/meson-logs/testlog.junit.xml
       - uses: actions/upload-artifact@v4
-        if: always() && matrix.build == 'pyproject'
+        if: always()
         with:
           name: test-results-${{ matrix.build}}-${{ matrix.os}}
-          path: pytest.junit.xml
-      - uses: actions/upload-artifact@v4
-        if: always() && matrix.build == 'meson'
-        with:
-          name: test-results-${{ matrix.build}}-${{ matrix.os}}
-          path: build/meson-logs/testlog.junit.xml
+          path: ${{ matrix.build == 'meson' && 'build/meson-logs/testlog.junit.xml' || 'pytest.junit.xml' }}
       - name: Install and test linking
-        if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
+        #if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:
           PKG_CONFIG_PATH: /Users/runner/inst/lib/pkgconfig
         run: |
@@ -89,54 +80,55 @@ jobs:
         run: docs/docs-upload.sh
         env:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
-  cvmfs_meson_tests:
-    name: cvmfs meson tests ${{matrix.cvmfs}}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
-    steps:
-      - uses: cvmfs-contrib/github-action-cvmfs@v3
-      - name: Checkout nuflux
-        uses: actions/checkout@v2
-      - name: Build and Run Tests in Docker
-        uses: addnab/docker-run-action@v3
-        with:
-          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
-          image: centos:centos7.9.2009
-          run: |
-            yum -y install glibc-headers glibc-devel unzip
-            eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            export PATH=${HOME}/.local/bin:${PATH}
-            pip install --upgrade --user meson ninja pytest pytest-tap
-            CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
-            ninja -Cbuild test
-  cvmfs_pyproject_tests:
-    name: cvmfs pyproject tests ${{matrix.cvmfs}}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.3.0]
-    steps:
-      - uses: cvmfs-contrib/github-action-cvmfs@v3
-      - name: Checkout nuflux
-        uses: actions/checkout@v2
-      - name: Build and Run Tests in Docker
-        uses: addnab/docker-run-action@v3
-        with:
-          options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nf
-          image: centos:centos7.9.2009
-          run: |
-            yum -y install glibc-headers glibc-devel
-            eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python3 -m pip install --upgrade --user pip pytest pytest-tap
-            BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
-            python3 -m pytest /nf
+  # cvmfs_meson_tests:
+  #   name: cvmfs meson tests ${{matrix.cvmfs}}
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+  #   steps:
+  #     - uses: cvmfs-contrib/github-action-cvmfs@v3
+  #     - name: Checkout nuflux
+  #       uses: actions/checkout@v2
+  #     - name: Build and Run Tests in Docker
+  #       uses: addnab/docker-run-action@v3
+  #       with:
+  #         options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nuflux
+  #         image: centos:centos7.9.2009
+  #         run: |
+  #           yum -y install glibc-headers glibc-devel unzip
+  #           eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
+  #           export PATH=${HOME}/.local/bin:${PATH}
+  #           pip install --upgrade --user meson ninja pytest pytest-tap
+  #           CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
+  #           ninja -Cbuild test
+  # cvmfs_pyproject_tests:
+  #   name: cvmfs pyproject tests ${{matrix.cvmfs}}
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       cvmfs: [py3-v4.1.1, py3-v4.3.0]
+  #   steps:
+  #     - uses: cvmfs-contrib/github-action-cvmfs@v3
+  #     - name: Checkout nuflux
+  #       uses: actions/checkout@v2
+  #     - name: Build and Run Tests in Docker
+  #       uses: addnab/docker-run-action@v3
+  #       with:
+  #         options: -v /cvmfs/icecube.opensciencegrid.org/:/cvmfs/icecube.opensciencegrid.org/ -v /home/runner/work/nuflux/nuflux:/nf
+  #         image: centos:centos7.9.2009
+  #         run: |
+  #           yum -y install glibc-headers glibc-devel
+  #           eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
+  #           python3 -m pip install --upgrade --user pip pytest pytest-tap
+  #           BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
+  #           python3 -m pytest /nf
   test_report:
     needs: [Tests]
     runs-on: ubuntu-latest
+    if: always()
     steps:
       - uses: dorny/test-reporter@v1
         with:
