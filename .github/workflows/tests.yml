@@ -153,5 +153,5 @@ jobs:
         uses: dorny/test-reporter@v1
         with:
           name: Test Results
-          path: test-results/test-results-meson-*.xml
+          path: test-results/test-results-*.xml
           reporter: jest-junit
