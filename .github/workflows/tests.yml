@@ -32,7 +32,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install ninja-build gcovr libcfitsio-dev libboost-python-dev doxygen
-          sudo dpkg -r lcov
           curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.2.1.tar.gz | tar xz
           cmake -S photospline-2.2.1 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
           sudo make install -C photospline
@@ -46,17 +45,24 @@ jobs:
         run: |
           python3 -m pip install .[test]
           python3 -m pytest --junit-xml=pytest.junit.xml
+          ls pytest.junit.xml
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
+          ls build/meson-logs/testlog.junit.xml
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && matrix.build == 'pyproject'
         with:
           name: test-results-${{ matrix.build}}-${{ matrix.os}}
-          path: pytest.junit.xml|build/meson-logs/testlog.junit.xml
+          path: pytest.junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always() && matrix.build == 'meson'
+        with:
+          name: test-results-${{ matrix.build}}-${{ matrix.os}}
+          path: build/meson-logs/testlog.junit.xml
       - name: Install and test linking
         if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:
