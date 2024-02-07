@@ -4,6 +4,10 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   Tests:
     name: ${{matrix.os}} ${{matrix.build}} tests
@@ -11,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, macos-12]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-12, macos-13, macos-14]
         build: [meson, pyproject]
         include:
           - os: ubuntu-20.04
@@ -19,6 +23,10 @@ jobs:
           - os: ubuntu-22.04
             python-version: "3.10"
           - os: macos-12
+            python-version: "3.12"
+          - os: macos-13
+            python-version: "3.12"
+          - os: macos-14
             python-version: "3.12"
     steps:
       - name: Checkout nuflux
@@ -40,14 +48,17 @@ jobs:
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
+          echo BOOST_ROOT=$(brew --prefix) >> "$GITHUB_ENV"
       - name: Build nuflux with pyproject
         if: matrix.build == 'pyproject'
         run: |
+          echo "BOOST_ROOT: ${BOOST_ROOT}"
           python3 -m pip install .[test]
           python3 -m pytest --junit-xml=pytest.junit.xml
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
+          echo "BOOST_ROOT: ${BOOST_ROOT}"
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
