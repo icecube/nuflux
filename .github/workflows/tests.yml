@@ -57,7 +57,7 @@ jobs:
           name: test-results-${{ matrix.build}}-${{ matrix.os}}
           path: ${{ matrix.build == 'meson' && 'build/meson-logs/testlog.junit.xml' || 'pytest.junit.xml' }}
       - name: Install and test linking
-        #if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
+        if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:
           PKG_CONFIG_PATH: /Users/runner/inst/lib/pkgconfig
         run: |
@@ -132,7 +132,7 @@ jobs:
     steps:
       - uses: dorny/test-reporter@v1
         with:
-          artifact: test-results-*
+          artifact: /test-results-(.*)/
           name: JEST Tests
           path: "*.xml"
           reporter: jest-junit
