@@ -50,6 +50,13 @@ jobs:
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           ninja -C build test
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if: always() && matrix.build == 'meson'
+        with:
+          name: ${{matrix.os}}-${{matrix.build}}
+          path: build/meson-logs/testlog.junit.xml
+          reporter: dotnet-trx
       - name: Install and test linking
         if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:

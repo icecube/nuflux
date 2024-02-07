@@ -35,7 +35,7 @@ Collaboration = "https://icecube.wisc.edu/"
 doi = "https://doi.org/10.5281/zenodo.8180337"
 
 [project.optional-dependencies]
-test = ["pytest","pytest-subtests"]
+test = ["pytest","pytest-tap"]
 dev = ["tbump"]
 
 [tool.meson-python.args]
