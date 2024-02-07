@@ -95,7 +95,7 @@ jobs:
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Download  wheel
         uses: actions/download-artifact@v4
         with:

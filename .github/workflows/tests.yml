@@ -28,7 +28,7 @@ jobs:
             python-version: "3.12"
     steps:
       - name: Checkout nuflux
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -64,6 +64,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
+          if-no-files-found: error
           name: test-results-${{matrix.build}}-${{matrix.os}}
           path: test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - name: Install and test linking
@@ -100,7 +101,7 @@ jobs:
   #   steps:
   #     - uses: cvmfs-contrib/github-action-cvmfs@v3
   #     - name: Checkout nuflux
-  #       uses: actions/checkout@v2
+  #       uses: actions/checkout@v4
   #     - name: Build and Run Tests in Docker
   #       uses: addnab/docker-run-action@v3
   #       with:
@@ -123,7 +124,7 @@ jobs:
   #   steps:
   #     - uses: cvmfs-contrib/github-action-cvmfs@v3
   #     - name: Checkout nuflux
-  #       uses: actions/checkout@v2
+  #       uses: actions/checkout@v4
   #     - name: Build and Run Tests in Docker
   #       uses: addnab/docker-run-action@v3
   #       with:
@@ -146,9 +147,9 @@ jobs:
           path: test-results
           pattern: test-results-*
           merge-multiple: true
-      - run: ls -R test-results
       - name: Test Report
         uses: dorny/test-reporter@v1
         with:
-          path: test-results/*.xml
+          name: Test Results
+          path: test-results/test-results-meson-*.xml
           reporter: jest-junit
