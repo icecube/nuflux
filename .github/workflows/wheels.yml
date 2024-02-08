@@ -27,11 +27,13 @@ jobs:
         run: |
           python -m pip install meson pytest
           python -m pip install dist/nuflux-*.tar.gz
-          python tests/test_fluxes.py --junit-xml=/nf/test-results-cibw-sdist.junit.xml
+          python tests/test_fluxes.py --junit-xml=test-results-cibw-sdist.junit.xml
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-sdist
-          path: dist/nuflux-*.tar.gz
+          path: |
+            dist/nuflux-*.tar.gz
+            test-results-cibw-sdist.junit.xml
   build_wheels:
     name: Build wheels cp${{ matrix.python }}-manylinux_x86_64
     runs-on: ${{ matrix.os }}

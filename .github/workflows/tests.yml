@@ -120,6 +120,9 @@ jobs:
       - name: Rename TestLog
         if: always()
         run: |
+          pwd
+          ls -l
+          ls -l /home/runner/work/nuflux/nuflux
           mv -v build/meson-logs/testlog.junit.xml test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
       - uses: actions/upload-artifact@v4
         if: always()
@@ -153,8 +156,8 @@ jobs:
         if: always()
         with:
           if-no-files-found: error
-          name: test-results-pyproject-cvmfs-${{matrix.os}}
-          path: test-results-pyproject-cvmfs-${{matrix.os}}.junit.xml
+          name: test-results-pyproject-cvmfs-${{matrix.cvmfs}}
+          path: test-results-pyproject-cvmfs-${{matrix.cvmfs}}.junit.xml
   publish-test-results:
     name: "Publish Tests Results"
     needs: Tests
