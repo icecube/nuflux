@@ -25,13 +25,15 @@ jobs:
         run: pipx run build --sdist
       - name: Test sdist
         run: |
-          python -m pip install meson pytest pytest-subtests
+          python -m pip install meson pytest
           python -m pip install dist/nuflux-*.tar.gz
-          python tests/test_fluxes.py
+          python tests/test_fluxes.py --junit-xml=test-results-cibw-sdist.junit.xml
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-sdist
-          path: dist/nuflux-*.tar.gz
+          path: |
+            dist/nuflux-*.tar.gz
+            test-results-cibw-sdist.junit.xml
   build_wheels:
     name: Build wheels cp${{ matrix.python }}-manylinux_x86_64
     runs-on: ${{ matrix.os }}
@@ -53,11 +55,10 @@ jobs:
   test_wheels:
     name: Test Wheel with Python ${{ matrix.python-version }} on ${{ matrix.os }}
     needs: build_wheels
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
         python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
     steps:
       - name: Set up Python ${{ matrix.python-version }}
@@ -72,11 +73,11 @@ jobs:
         run: |
           PYNAME=$(echo cp${{matrix.python-version}} | sed 's/\.//')
           FNAME=artifact/cibw-wheels-${PYNAME}/nuflux-*-${PYNAME}-*.whl
-          python3 -m pip install pytest pytest-subtests $FNAME
+          python3 -m pip install pytest $FNAME
       - uses: actions/checkout@v4
       - name: Test
         working-directory: tests
-        run: ./test_fluxes.py
+        run: ./test_fluxes.py --junit-xml=test-results-cibw-${{ matrix.python-version }}.junit.xml
   cvmfs_test_wheel:
     name: Test Wheel with cvmfs ${{matrix.cvmfs}}
     needs: build_wheels
@@ -95,7 +96,7 @@ jobs:
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Download  wheel
         uses: actions/download-artifact@v4
         with:
@@ -108,8 +109,8 @@ jobs:
           image: centos:centos7.9.2009
           run: |
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python3 -m pip install --user pytest pytest-subtests /nuflux/nuflux-*-${{matrix.python-tag}}-*.whl
-            python3 /nuflux/tests/test_fluxes.py
+            python3 -m pip install --user 'pytest>=7,<8' /nuflux/nuflux-*-${{matrix.python-tag}}-*.whl
+            python3 /nuflux/tests/test_fluxes.py --junit-xml=test-results-cibw-cvmfs-${{ matrix.cvmfs }}.junit.xml
   upload_pypi:
     needs: [cvmfs_test_wheel, test_wheels, build_sdist]
     runs-on: ubuntu-latest

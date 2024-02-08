@@ -32,9 +32,16 @@ endif
 if test_python
   fs = import('fs')
   pytest_env = environment(test_env)
-  pytest_env.append('PYTHONPATH', meson.source_root() + '/src')
+  pytest_env.append('PYTHONPATH', meson.source_root() / 'src')
   pytest_env.append('PYTHONPATH', fs.parent(pymodule.full_path()))
-  test('test_fluxes', find_program('test_fluxes.py'), env: pytest_env)
-  test('doctest', python, args: ['-m', 'doctest', files('../README.md')], env: pytest_env)
+  test('test_fluxes',
+    python, args: [files('test_fluxes.py'), '--tap'],
+    env: pytest_env,
+    protocol: 'tap',
+    depends: pymodule)
+  test('doctest',
+    python, args: ['-m', 'doctest', files('../README.md')],
+    env: pytest_env,
+    depends: pymodule)
   meson.add_devenv(pytest_env)
 endif

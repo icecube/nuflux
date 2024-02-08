@@ -133,3 +133,4 @@ dmypy.json
 /wheelhouse/
 
 a.out
+*.junit.xml
