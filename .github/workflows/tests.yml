@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, ubuntu-22.04, macos-12, macos-14]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-12, macos-13, macos-14]
         build: [meson, pyproject]
         include:
           - os: ubuntu-20.04
@@ -23,6 +23,8 @@ jobs:
           - os: ubuntu-22.04
             python-version: "3.10"
           - os: macos-12
+            python-version: "3.12"
+          - os: macos-13
             python-version: "3.12"
           - os: macos-14
             python-version: "3.12"
@@ -50,13 +52,11 @@ jobs:
       - name: Build nuflux with pyproject
         if: matrix.build == 'pyproject'
         run: |
-          echo "BOOST_ROOT: ${BOOST_ROOT}"
           python3 -m pip install .[test]
           python3 -m pytest --junit-xml=test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
-          echo "BOOST_ROOT: ${BOOST_ROOT}"
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           meson test -C build
@@ -114,17 +114,12 @@ jobs:
             yum -y install glibc-headers glibc-devel unzip
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
-            pip install --upgrade --user meson ninja 'pytest~=7' pytest-tap
+            pip install --upgrade --user meson ninja 'pytest>=7,<8' pytest-tap
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup /nuflux/build /nuflux
             meson test -C/nuflux/build
-      - name: Rename TestLog
+      - name: Copy TestLog
         if: always()
-        run: |
-          pwd
-          ls -l
-          ls -l /home/runner/work/nuflux/nuflux
-          ls -l build/meson-logs/testlog.junit.xml
-          cp -v build/meson-logs/testlog.junit.xml test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
+        run: cp -v build/meson-logs/testlog.junit.xml test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -150,7 +145,7 @@ jobs:
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python3 -m pip install --upgrade --user pip 'pytest~=7'
+            python3 -m pip install --upgrade --user pip 'pytest>=7,<8'
             BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
             python3 -m pytest /nf --junit-xml=/nf/test-results-pyproject-cvmfs-${{matrix.cvmfs}}.junit.xml
       - uses: actions/upload-artifact@v4
