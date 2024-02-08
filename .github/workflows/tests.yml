@@ -161,7 +161,7 @@ jobs:
           path: test-results-pyproject-cvmfs-${{matrix.cvmfs}}.junit.xml
   publish-test-results:
     name: "Publish Tests Results"
-    needs: Tests
+    needs: [Tests, cvmfs_meson_tests, cvmfs_pyproject_tests]
     runs-on: ubuntu-latest
     permissions:
       checks: write
