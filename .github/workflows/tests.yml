@@ -60,6 +60,9 @@ jobs:
           python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           meson test -C build
+      - name: Rename TestLog
+        if: always() && matrix.build == 'meson'
+        run: |
           mv -v build/meson-logs/testlog.junit.xml test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - uses: actions/upload-artifact@v4
         if: always()
@@ -112,8 +115,18 @@ jobs:
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
             pip install --upgrade --user meson ninja 'pytest<8' pytest-tap
-            CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
-            meson test -Cbuild
+            CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup /nuflux/build /nuflux
+            meson test -C/nuflux/build
+      - name: Rename TestLog
+        if: always()
+        run: |
+          mv -v build/meson-logs/testlog.junit.xml test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-meson-cvmfs-${{matrix.cvmfs}}
+          path: test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
   cvmfs_pyproject_tests:
     name: cvmfs pyproject tests ${{matrix.cvmfs}}
     runs-on: ubuntu-latest
@@ -135,7 +148,13 @@ jobs:
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             python3 -m pip install --upgrade --user pip 'pytest<8'
             BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
-            python3 -m pytest /nf
+            python3 -m pytest /nf --junit-xml=/nf/test-results-pyproject-cvmfs-${{matrix.os}}.junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-pyproject-cvmfs-${{matrix.os}}
+          path: test-results-pyproject-cvmfs-${{matrix.os}}.junit.xml
   publish-test-results:
     name: "Publish Tests Results"
     needs: Tests
@@ -149,11 +168,11 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: .
           pattern: test-results-*
           merge-multiple: true
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
-          files: "artifacts/*.xml"
+          files: "*.xml"
           deduplicate_classes_by_file_name: true
