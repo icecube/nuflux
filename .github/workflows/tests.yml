@@ -4,6 +4,10 @@ on:
     branches:
       - main
   pull_request:
+permissions:
+  contents: read
+  actions: read
+  checks: write
 jobs:
   Tests:
     name: ${{matrix.os}} ${{matrix.build}} tests
@@ -11,16 +15,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-20.04, ubuntu-22.04, macos-12, macos-14]
         build: [meson, pyproject]
         include:
-          - os: ubuntu-latest
+          - os: ubuntu-20.04
+            python-version: "3.8"
+          - os: ubuntu-22.04
             python-version: "3.10"
-          - os: macos-latest
+          - os: macos-12
+            python-version: "3.12"
+          - os: macos-14
             python-version: "3.12"
     steps:
       - name: Checkout nuflux
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -29,8 +37,7 @@ jobs:
         if: startsWith( matrix.os, 'ubuntu')
         run: |
           sudo apt-get update
-          sudo apt-get install ninja-build gcovr libcfitsio-dev python-is-python3 libboost-python-dev doxygen
-          sudo dpkg -r lcov
+          sudo apt-get install ninja-build gcovr libcfitsio-dev libboost-python-dev doxygen
           curl -L https://github.com/icecube/photospline/archive/refs/tags/v2.2.1.tar.gz | tar xz
           cmake -S photospline-2.2.1 -B photospline -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
           sudo make install -C photospline
@@ -39,24 +46,35 @@ jobs:
         run: |
           brew tap icecube/icecube
           brew install boost-python3 ninja doxygen cfitsio gcovr icecube/icecube/photospline
+          echo BOOST_ROOT=$(brew --prefix) >> "$GITHUB_ENV"
       - name: Build nuflux with pyproject
         if: matrix.build == 'pyproject'
         run: |
           python3 -m pip install .[test]
-          python3 -m pytest
+          python3 -m pytest --junit-xml=test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
-          python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-subtests
+          python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
-          ninja -C build test
+          meson test -C build
+      - name: Rename TestLog
+        if: always() && matrix.build == 'meson'
+        run: |
+          mv -v build/meson-logs/testlog.junit.xml test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-${{matrix.build}}-${{matrix.os}}
+          path: test-results-${{matrix.build}}-${{matrix.os}}.junit.xml
       - name: Install and test linking
         if: matrix.build == 'meson' && startsWith( matrix.os, 'macos')
         env:
           PKG_CONFIG_PATH: /Users/runner/inst/lib/pkgconfig
         run: |
-          ninja -C build install
-          c++ -std=c++17 $(pkg-config nuflux --cflags --libs) tests/test_basic.cxx -o test_basic
+          meson install -C build
+          c++ -std=c++17 $(pkg-config nuflux --cflags --libs) -I$(brew --prefix)/include tests/test_basic.cxx -o test_basic
           ./test_basic
       - name: Generate Coverage Report and Docs
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu')
@@ -84,7 +102,7 @@ jobs:
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Build and Run Tests in Docker
         uses: addnab/docker-run-action@v3
         with:
@@ -94,9 +112,18 @@ jobs:
             yum -y install glibc-headers glibc-devel unzip
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
             export PATH=${HOME}/.local/bin:${PATH}
-            pip install --user meson ninja pytest pytest-subtests
-            CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup build /nuflux
-            ninja -Cbuild test
+            pip install --upgrade --user meson ninja 'pytest>=7,<8' pytest-tap
+            CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup /nuflux/build /nuflux
+            meson test -C/nuflux/build
+      - name: Copy TestLog
+        if: always()
+        run: cp -v build/meson-logs/testlog.junit.xml test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-meson-cvmfs-${{matrix.cvmfs}}
+          path: test-results-meson-cvmfs-${{matrix.cvmfs}}.junit.xml
   cvmfs_pyproject_tests:
     name: cvmfs pyproject tests ${{matrix.cvmfs}}
     runs-on: ubuntu-latest
@@ -107,7 +134,7 @@ jobs:
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Build and Run Tests in Docker
         uses: addnab/docker-run-action@v3
         with:
@@ -116,6 +143,33 @@ jobs:
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python3 -m pip install --user pip pytest pytest-subtests
+            python3 -m pip install --upgrade --user pip 'pytest>=7,<8'
             BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
-            python3 -m pytest /nf
+            python3 -m pytest /nf --junit-xml=/nf/test-results-pyproject-cvmfs-${{matrix.cvmfs}}.junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          if-no-files-found: error
+          name: test-results-pyproject-cvmfs-${{matrix.cvmfs}}
+          path: test-results-pyproject-cvmfs-${{matrix.cvmfs}}.junit.xml
+  publish-test-results:
+    name: "Publish Tests Results"
+    needs: [Tests, cvmfs_meson_tests, cvmfs_pyproject_tests]
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
+      contents: read
+    if: always()
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: .
+          pattern: test-results-*
+          merge-multiple: true
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        with:
+          files: "*.xml"
+          deduplicate_classes_by_file_name: true
