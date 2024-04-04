@@ -111,11 +111,8 @@ jobs:
           run: |
             yum -y install glibc-headers glibc-devel unzip
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python -m venv venv
-            source ./venv/bin/activate
-            #export PATH=${HOME}/.local/bin:${PATH}
-            #pip install --upgrade --user meson ninja 'pytest>=7,<8' pytest-tap
-            pip install --upgrade meson ninja pytest pytest-tap
+            export PATH=${HOME}/.local/bin:${PATH}
+            pip install --upgrade --user meson ninja 'pytest>=7,<8' pytest-tap
             CMAKE_PREFIX_PATH=${SROOT} BOOST_ROOT=${SROOT} meson setup /nuflux/build /nuflux
             meson test -C/nuflux/build
       - name: Copy TestLog
@@ -133,7 +130,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.3.0]
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
@@ -146,9 +143,7 @@ jobs:
           run: |
             yum -y install glibc-headers glibc-devel
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python -m venv venv
-            source ./venv/bin/activate
-            python3 -m pip install --upgrade pip pytest
+            python3 -m pip install --upgrade --user pip 'pytest>=7,<8'
             BOOST_ROOT=${SROOT} python3 -m pip install --user --verbose /nf
             python3 -m pytest /nf --junit-xml=/nf/test-results-pyproject-cvmfs-${{matrix.cvmfs}}.junit.xml
       - uses: actions/upload-artifact@v4
