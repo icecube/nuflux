@@ -109,7 +109,8 @@ jobs:
           image: centos:centos7.9.2009
           run: |
             eval $(/cvmfs/icecube.opensciencegrid.org/${{matrix.cvmfs}}/setup.sh)
-            python3 -m pip install --user 'pytest>=7,<8' /nuflux/nuflux-*-${{matrix.python-tag}}-*.whl
+            unset PYTHONPATH
+            python3 -m pip install --user pytest /nuflux/nuflux-*-${{matrix.python-tag}}-*.whl
             python3 /nuflux/tests/test_fluxes.py --junit-xml=test-results-cibw-cvmfs-${{ matrix.cvmfs }}.junit.xml
   upload_pypi:
     needs: [cvmfs_test_wheel, test_wheels, build_sdist]
