@@ -85,12 +85,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.2.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.3.0]
         include:
           - cvmfs: py3-v4.1.1
             python-tag: cp37
-          - cvmfs: py3-v4.2.1
-            python-tag: cp310
           - cvmfs: py3-v4.3.0
             python-tag: cp311
     steps:
