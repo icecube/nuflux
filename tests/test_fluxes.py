@@ -22,6 +22,9 @@ coszeniths = [-1, -0.5, 0, 0.5, 1]
 low_energies = [1.0e00, 1.0e01, 1.0e02, 1.0e03]
 high_energies = np.logspace(2, 9, 8)
 
+with (Path(__file__).parent / "pion_contrib.json").open() as f:
+    pion_data = json.load(f)
+
 
 @pytest.mark.parametrize(("energy", "model", "knee"), models)
 def test_flux(energy, model, knee):
@@ -46,6 +49,34 @@ def test_flux(energy, model, knee):
             flux.getFlux(nu, geom_energy, 0)
         with pytest.raises(RuntimeError):
             flux.getFlux(-nu, geom_energy, 0)
+
+
+pik_models = [
+    (energy, model, knee)
+    for energy, v1 in pion_data.items()
+    if energy != "doc"
+    for model, v2 in v1.items()
+    for knee in v2
+]
+
+
+@pytest.mark.parametrize(("model", "knee", "pion_contrib"), pik_models)
+def test_pion_kaon_contributions(model, knee, pion_contrib):
+    energies = np.logspace(2, 9, 8)
+    coszeniths = [-1, -0.5, 0, 0.5, 1]
+    E, cz = np.meshgrid(energies, coszeniths)
+    flux = nuflux.makeFlux(model)
+    emin, emax = flux.energy_range
+    flux.knee_reweighting_model = knee
+
+    print("testing ", model, knee, pion_contrib)
+    flux.relative_pion_contribution = float(pion_contrib)
+    flux.relative_kaon_contribution = 1.0
+    for ptype, y in pion_data[model][knee][pion_contrib].items():
+        pdgid = nuflux.ParticleType.names[ptype]
+        np.testing.assert_allclose(
+            flux.getFlux(pdgid, E, cz), y, rtol=1e-13, atol=1e-13
+        )
 
 
 if __name__ == "__main__":

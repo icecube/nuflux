@@ -1,6 +1,5 @@
 __all__ = [
     "FluxFunction",
-    "KneeReweightable",
     "LegacyConventionalFlux",
     "LegacyPromptFlux",
     "NuE",
@@ -10,7 +9,6 @@ __all__ = [
     "NuTau",
     "NuTauBar",
     "ParticleType",
-    "PionKaonAdjustable",
     "SplineFlux",
     "SplineFlux2",
     "availableFluxes",
@@ -23,7 +21,6 @@ __all__ = [
 
 from _nuflux import (
     FluxFunction,
-    KneeReweightable,
     LegacyConventionalFlux,
     LegacyPromptFlux,
     NuE,
@@ -33,7 +30,6 @@ from _nuflux import (
     NuTau,
     NuTauBar,
     ParticleType,
-    PionKaonAdjustable,
     SplineFlux,
     SplineFlux2,
     availableFluxes,
