@@ -87,7 +87,7 @@ namespace nuflux{
     std::string getDataPath(std::string fname);
 
     void registerKneeModel(const std::string baseModel, const std::string name);
-    
+
     struct KneeRegisterererer{
       KneeRegisterererer(const std::string baseModel, const std::string name){
         registerKneeModel(baseModel,name);
