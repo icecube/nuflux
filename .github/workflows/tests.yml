@@ -94,7 +94,7 @@ jobs:
           ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
   publish-test-results:
     name: "Publish Tests Results"
-    needs: [Tests, cvmfs_meson_tests, cvmfs_pyproject_tests]
+    needs: [Tests]
     runs-on: ubuntu-latest
     permissions:
       checks: write
