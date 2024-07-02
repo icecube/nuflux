@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "A library for calculating atmospheric neutrino fluxes"
 readme = "README.md"
 requires-python = "~=3.7"
-dependencies = ['numpy']
+dependencies = ['numpy<2']
 license = {file = "LICENSE"}
 keywords = ["python", "science", "astronomy", "astrophysics", "IceCube", "atmospheric", "neutrino"]
 classifiers = [

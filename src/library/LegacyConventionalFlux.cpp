@@ -21,16 +21,15 @@ namespace nuflux{
   }
 
   LegacyConventionalFlux::LegacyConventionalFlux(const std::string& fluxName):
-    FluxFunction(fluxName),
-    KneeReweightable("none"),
-    PionKaonAdjustable(1.0,1.0){
+    FluxFunction(fluxName)
+  {
     components[NuMu]   =readConvComponent(fluxName+"_numu.dat");
     components[NuMuBar]=readConvComponent(fluxName+"_numubar.dat");
     components[NuE]    =readConvComponent(fluxName+"_nue.dat");
     components[NuEBar] =readConvComponent(fluxName+"_nuebar.dat");
     //this looks dumb but is actually necessary to enforce the continuity constraint
-    setRelativePionContribution(getRelativePionContribution());
-    setRelativeKaonContribution(getRelativeKaonContribution());
+    setRelativePionContribution(1.0);
+    setRelativeKaonContribution(1.0);
   }
 
   boost::shared_ptr<FluxFunction> LegacyConventionalFlux::makeFlux(const std::string& fluxName){

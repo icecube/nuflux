@@ -19,8 +19,8 @@ namespace nuflux{
   }
 
   LegacyPromptFlux::LegacyPromptFlux(const std::string& fluxName):
-    FluxFunction(fluxName),
-    KneeReweightable("none"){
+    FluxFunction(fluxName)
+  {
     components[NuMu]   =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numupro.dat"));
     components[NuMuBar]=readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_numubarpro.dat"));
     components[NuE]    =readPromptComponent(detail::getDataPath("LegacyPromptFlux/"+fluxName+"_nuepro.dat"));

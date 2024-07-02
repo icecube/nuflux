@@ -31,7 +31,6 @@ namespace nuflux{
 
 std::string getDataPath(std::string fname);
 
-#include <nuflux/Interfaces.h>
 #include <nuflux/Fluxes.h>
 
 #endif //NEWNUFLUX_H

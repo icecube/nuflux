@@ -122,24 +122,17 @@ register_FluxFunction()
           (bp::args("particle_type"), "energy", "cos_zen"))
     .add_property("name", &FluxFunction::getName)
     .add_property("energy_range",&energy_range)
-
+    .add_property("knee_reweighting_model", &FluxFunction::getKneeReweightingModel, &FluxFunction::setKneeReweightingModel)
     ;
 
-  bp::class_<KneeReweightable, boost::shared_ptr<KneeReweightable>, boost::noncopyable>("KneeReweightable", bp::no_init)
-    .add_property("knee_reweighting_model", &KneeReweightable::getKneeReweightingModel, &KneeReweightable::setKneeReweightingModel)
+  bp::class_<LegacyConventionalFlux, boost::shared_ptr<LegacyConventionalFlux>,
+             bp::bases<FluxFunction> >("LegacyConventionalFlux", bp::no_init)
+      .add_property("relative_pion_contribution", &LegacyConventionalFlux::getRelativePionContribution, &LegacyConventionalFlux::setRelativePionContribution)
+      .add_property("relative_kaon_contribution", &LegacyConventionalFlux::getRelativeKaonContribution, &LegacyConventionalFlux::setRelativeKaonContribution)
     ;
 
-  bp::class_<PionKaonAdjustable, boost::shared_ptr<PionKaonAdjustable>, boost::noncopyable>("PionKaonAdjustable", bp::no_init)
-    .add_property("relative_pion_contribution", &PionKaonAdjustable::getRelativePionContribution, &PionKaonAdjustable::setRelativePionContribution)
-    .add_property("relative_kaon_contribution", &PionKaonAdjustable::getRelativeKaonContribution, &PionKaonAdjustable::setRelativeKaonContribution)
-    ;
-
-  bp::class_< LegacyConventionalFlux, boost::shared_ptr<LegacyConventionalFlux>,
-              bp::bases<FluxFunction, PionKaonAdjustable, KneeReweightable> >("LegacyConventionalFlux", bp::no_init)
-    ;
-
-  bp::class_< LegacyPromptFlux, boost::shared_ptr<LegacyPromptFlux>,
-              bp::bases<FluxFunction, KneeReweightable> >("LegacyPromptFlux", bp::no_init)
+  bp::class_<LegacyPromptFlux, boost::shared_ptr<LegacyPromptFlux>,
+             bp::bases<FluxFunction> >("LegacyPromptFlux", bp::no_init)
     ;
 
   {

@@ -29,7 +29,10 @@ namespace nuflux{
   ///The interface for all neutrino fluxes
   class FluxFunction{
   public:
-    FluxFunction(std::string name):name(name){}
+    FluxFunction(std::string name):
+      name(name),
+      kneeCorrectionName("none")
+      {}
     virtual ~FluxFunction(){}
 
     std::string getName() const{ return(name); }
@@ -48,8 +51,16 @@ namespace nuflux{
     virtual double getMaxEnergy() const{ return NAN;}
     virtual double readExtents(ParticleType type) const{ return NAN;}
 
+    virtual void setKneeReweightingModel(std::string reweightModel){
+      if (reweightModel != "none"){
+        throw std::runtime_error("This model does not support knee reweighting");
+      }
+    }
+    std::string getKneeReweightingModel() const{ return(kneeCorrectionName); }
+
   protected:
     std::string name;
+    std::string kneeCorrectionName;
   };
 
   ///Things which are useful or necessary internally for the library but which aren't useful for users
@@ -75,6 +86,14 @@ namespace nuflux{
     };
     std::string getDataPath(std::string fname);
 
+    void registerKneeModel(const std::string baseModel, const std::string name);
+
+    struct KneeRegisterererer{
+      KneeRegisterererer(const std::string baseModel, const std::string name){
+        registerKneeModel(baseModel,name);
+      }
+    };
+
   } //namespace detail
 
 } //namespace nuflux
@@ -83,5 +102,7 @@ namespace nuflux{
   namespace{ nuflux::detail::FluxRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (name,factory); }
 #define NNF_REGISTER_DEPRECATED_FLUX(name,factory,reason)\
   namespace{ nuflux::detail::FluxRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (name,factory,reason); }
+#define NNF_REGISTER_KNEE(baseModel,name)                               \
+  namespace{ nuflux::detail::KneeRegisterererer BOOST_PP_CAT( registerererer , __LINE__ ) (baseModel,name); }
 
 #endif

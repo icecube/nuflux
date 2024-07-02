@@ -55,7 +55,7 @@ jobs:
       - name: Build nuflux with Meson
         if: matrix.build == 'meson'
         run: |
-          python3 -m pip install meson numpy sphinx breathe sphinx_rtd_theme pytest pytest-tap
+          python3 -m pip install meson 'numpy<2' sphinx breathe sphinx_rtd_theme pytest pytest-tap
           meson setup build . -D b_coverage=true --prefix=${HOME}/inst/
           meson test -C build
       - name: Rename TestLog
