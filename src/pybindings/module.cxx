@@ -126,13 +126,13 @@ register_FluxFunction()
     ;
 
   bp::class_<LegacyConventionalFlux, boost::shared_ptr<LegacyConventionalFlux>,
-             bp::bases<FluxFunction> >("LegacyConventionalFlux", bp::no_init)
+            bp::bases<FluxFunction> >("LegacyConventionalFlux", bp::no_init)
       .add_property("relative_pion_contribution", &LegacyConventionalFlux::getRelativePionContribution, &LegacyConventionalFlux::setRelativePionContribution)
       .add_property("relative_kaon_contribution", &LegacyConventionalFlux::getRelativeKaonContribution, &LegacyConventionalFlux::setRelativeKaonContribution)
     ;
 
   bp::class_<LegacyPromptFlux, boost::shared_ptr<LegacyPromptFlux>,
-             bp::bases<FluxFunction> >("LegacyPromptFlux", bp::no_init)
+            bp::bases<FluxFunction> >("LegacyPromptFlux", bp::no_init)
     ;
 
   {
