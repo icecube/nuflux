@@ -31,9 +31,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: cibw-sdist
-          path: |
-            dist/nuflux-*.tar.gz
-            test-results-cibw-sdist.junit.xml
+          path: dist/nuflux-*.tar.gz
   build_wheels:
     name: Build wheels cp${{ matrix.python }}-manylinux_x86_64
     runs-on: ${{ matrix.os }}
