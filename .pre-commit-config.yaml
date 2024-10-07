@@ -12,13 +12,13 @@ repos:
     hooks:
       - id: codespell
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.0
+    rev: v0.6.9
     hooks:
       - id: ruff
         args: [--fix, --show-fixes]
       - id: ruff-format
   - repo: https://github.com/PyCQA/doc8
-    rev: "v1.1.1"
+    rev: "v1.1.2"
     hooks:
       - id: doc8
   - repo: https://github.com/pre-commit/pygrep-hooks
@@ -37,7 +37,7 @@ repos:
       - id: forbid-crlf
       - id: forbid-tabs
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-builtin-literals
@@ -60,7 +60,7 @@ repos:
       - id: trailing-whitespace
         exclude: \.svg$
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: "2.7.3"
+    rev: "3.0.3"
     hooks:
       - id: editorconfig-checker
         alias: ec
