@@ -114,3 +114,17 @@ from c++:
     }
 
 [comment]: # "END CODE"
+
+## Troubleshooting
+
+If you get an error message like this:
+
+      conv_flux = nuflux.makeFlux("honda2006")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  Boost.Python.ArgumentError: Python argument types in
+      _nuflux.makeFlux(str)
+  did not match C++ signature:
+      makeFlux(std::string)
+
+It is most likely due to a conflict between nuflux and icetray registering python bindings.
+The solution is to import nuflux before icetray in your python script
