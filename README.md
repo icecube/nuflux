@@ -119,8 +119,8 @@ from c++:
 
 If you get an error message like this:
 
-      conv_flux = nuflux.makeFlux("honda2006")
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  conv_flux = nuflux.makeFlux("honda2006")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   Boost.Python.ArgumentError: Python argument types in
       _nuflux.makeFlux(str)
   did not match C++ signature:
