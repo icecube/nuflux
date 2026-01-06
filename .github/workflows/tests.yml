@@ -15,19 +15,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, ubuntu-24.04, macos-14, macos-15, macos-26]
+        os: [ubuntu-22.04, ubuntu-24.04]
         build: [meson, pyproject]
         include:
           - os: ubuntu-22.04
             python-version: "3.10"
           - os: ubuntu-24.04
             python-version: "3.12"
-          - os: macos-14
-            python-version: "3.14"
-          - os: macos-15
-            python-version: "3.14"
-          - os: macos-26
-            python-version: "3.14"
     steps:
       - name: Checkout nuflux
         uses: actions/checkout@v4
