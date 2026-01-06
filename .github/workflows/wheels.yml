@@ -39,7 +39,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python: ["37", "38", "39", "310", "311", "312"]
+        python: ["38", "39", "310", "311", "312", "313", "314"]
     steps:
       - uses: actions/checkout@v4
       - name: Build wheels
@@ -57,7 +57,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
     steps:
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -83,12 +83,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cvmfs: [py3-v4.1.1, py3-v4.3.0]
+        cvmfs: [py3-v4.1.1, py3-v4.3.0, py3-v4.4.2]
         include:
           - cvmfs: py3-v4.1.1
             python-tag: cp37
           - cvmfs: py3-v4.3.0
             python-tag: cp311
+          - cvmfs: py3-v4.4.2
+            python-tag: cp312
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
