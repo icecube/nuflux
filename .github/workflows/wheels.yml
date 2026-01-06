@@ -89,8 +89,6 @@ jobs:
             python-tag: cp37
           - cvmfs: py3-v4.3.0
             python-tag: cp311
-          - cvmfs: py3-v4.4.2
-            python-tag: cp312
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3
       - name: Checkout nuflux
