@@ -87,7 +87,7 @@ jobs:
         if: matrix.build == 'meson' && startsWith( matrix.os, 'ubuntu') && github.ref == 'refs/heads/main'
         run: docs/docs-upload.sh
         env:
-          ICECUBE_PASSWORD: ${{ secrets.ICECUBE_PASSWORD }}
+          DOCS_PASSWORD: ${{ secrets.DOCS_ICECUBE_AQ_PASSWORD }}
   publish-test-results:
     name: "Publish Tests Results"
     needs: [Tests]
