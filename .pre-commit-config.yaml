@@ -8,11 +8,11 @@ repos:
       - id: prettier
         files: \.ya?ml$
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.10
+    rev: v0.15.9
     hooks:
       - id: ruff
         args: [--fix, --show-fixes]
@@ -32,7 +32,7 @@ repos:
       - id: rst-directive-colons
       - id: rst-inline-touching-normal
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.5
+    rev: v1.5.6
     hooks:
       - id: forbid-crlf
       - id: forbid-tabs
@@ -60,7 +60,7 @@ repos:
       - id: trailing-whitespace
         exclude: \.svg$
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: "3.6.0"
+    rev: "3.6.1"
     hooks:
       - id: editorconfig-checker
         alias: ec
