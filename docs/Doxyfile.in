@@ -1,8 +1,10 @@
 PROJECT_NAME           = "nuflux"
-INPUT                  = @CPP_SOURCE_DIR@/include/nuflux @CPP_SOURCE_DIR@/library/
-GENERATE_HTML          = NO
+INPUT                  = @CMAKE_SOURCE_DIR@/include/nuflux @CMAKE_SOURCE_DIR@/src/nuflux/
+PROJECT_LOGO           = @CMAKE_SOURCE_DIR@/docs/nuflux_logo_sm.png
+GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
 GENERATE_XML           = YES
+HTML_OUTPUT            = @DOXYGEN_HTML_DIR@
 XML_OUTPUT             = @DOXYGEN_XML_DIR@
 XML_PROGRAMLISTING     = NO
 EXCLUDE_SYMBOLS        = NNF_REGISTER_* SET_LOGGER I3LoggingStringF Log

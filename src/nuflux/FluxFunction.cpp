@@ -1,6 +1,5 @@
 #include <nuflux/nuflux.h>
 #include <iostream>
-#include "config.h"
 
 namespace nuflux{
 

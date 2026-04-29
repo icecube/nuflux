@@ -2,7 +2,8 @@
 #define NEWNUFLUX_H
 
 #include <vector>
-#include <nuflux/FluxFunction.h>
+
+#include "FluxFunction.h"
 
 namespace nuflux{
 
@@ -27,9 +28,6 @@ namespace nuflux{
   std::string getVersion();
 
 } //namespace nuflux
-
-
-std::string getDataPath(std::string fname);
 
 #include <nuflux/Fluxes.h>
 

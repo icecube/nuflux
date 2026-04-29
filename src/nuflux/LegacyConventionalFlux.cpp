@@ -11,7 +11,6 @@ namespace nuflux{
 
     std::string path = detail::getDataPath("LegacyConventionalFlux/"+fname);
 
-
     std::ifstream infile(path.c_str());
     if(!infile)
       throw std::runtime_error("Unable to read "+path);

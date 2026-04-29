@@ -7,9 +7,9 @@ namespace bp = boost::python;
 
 namespace nuflux{
   namespace detail{
-    std::string getDataPath(std::string fname){
+    std::string getBasePathRuntime(){
       std::string basedir = bp::extract<std::string>(bp::import("nuflux").attr("__file__"));
-      return fs::path(basedir).parent_path() / "data" / fname;
+      return fs::path(basedir).parent_path() / "data";
     }
   }
 }

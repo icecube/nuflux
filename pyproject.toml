@@ -1,6 +1,6 @@
 [build-system]
-build-backend = 'mesonpy'
-requires = ['meson-python', 'oldest-supported-numpy']
+requires = ["scikit-build-core>=0.5", "numpy>=2.0", "setuptools-scm>=8"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "nuflux"
@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "A library for calculating atmospheric neutrino fluxes"
 readme = "README.md"
 requires-python = "~=3.7"
-dependencies = ['numpy<2']
+dependencies = ["numpy>=2.0"]
 license = {file = "LICENSE"}
 keywords = ["python", "science", "astronomy", "astrophysics", "IceCube", "atmospheric", "neutrino"]
 classifiers = [
@@ -24,6 +24,8 @@ classifiers = [
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
     'Topic :: Scientific/Engineering :: Astronomy',
     'Topic :: Scientific/Engineering :: Physics',
     ]
@@ -36,10 +38,14 @@ doi = "https://doi.org/10.5281/zenodo.8180337"
 
 [project.optional-dependencies]
 test = ["pytest"]
-dev = ["tbump"]
+dev = []
 
-[tool.meson-python.args]
-setup = ['-Dpymodule=true']
+[tool.scikit-build]
+cmake.args = ["-DPYTHON_ONLY=ON"]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+# no settings required
 
 [tool.pytest.ini_options]
 addopts = "--doctest-glob='README.md'"
@@ -50,35 +56,6 @@ build = "cp3{7,8,9,10,11,12}-manylinux_x86_64"
 manylinux-x86_64-image = "kjmeagher/nuflux-manylinux2014_x86_64"
 test-extras = ["test"]
 test-command = "{project}/tests/test_fluxes.py"
-
-[tool.tbump]
-github_url = "https://github.com/icecube/nuflux"
-
-[tool.tbump.version]
-current = "2.0.7"
-regex = '''
-  (?P<major>\d+)
-  \.
-  (?P<minor>\d+)
-  \.
-  (?P<patch>\d+)
-  '''
-
-[tool.tbump.git]
-message_template = "Bump to {new_version}"
-tag_template = "v{new_version}"
-
-[[tool.tbump.file]]
-src = "meson.build"
-search = "version: '{current_version}'"
-
-[[tool.tbump.file]]
-src = "CITATION.cff"
-search = "version: {current_version}"
-
-[[tool.tbump.before_commit]]
-name = "Update release date in citation file"
-cmd = "sed -i '' \"s/date-released: .*$/date-released: $(date -uI)/\" CITATION.cff"
 
 [tool.codespell]
 skip = '*.pdf,*.dat,*.fits'

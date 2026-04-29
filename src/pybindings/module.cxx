@@ -8,14 +8,15 @@
 namespace bp = boost::python;
 
 #if defined(__has_include)
-#if __has_include(<numpy/ndarrayobject.h>)
+#if __has_include(<numpy/arrayobject.h>)
 #define USE_NUMPY
 #endif
 #endif
 
 #ifdef USE_NUMPY
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
-#include <numpy/ndarrayobject.h>
+#define NPY_TARGET_VERSION NPY_2_0_API_VERSION
+#define NPY_NO_DEPRECATED_API NPY_2_3_API_VERSION
+#include <numpy/arrayobject.h>
 
 bp::object
 make_array(bp::object obj, int typenum)
@@ -92,9 +93,6 @@ bp::tuple energy_range(const nuflux::FluxFunction& flux){
 }
 
 
-
-bool isStandAlone=true;
-
 void
 register_FluxFunction()
 {
@@ -152,14 +150,12 @@ register_FluxFunction()
               bp::bases<FluxFunction>, boost::noncopyable >("SplineFlux2", bp::no_init)
     ;
 #endif
-
-  bp::scope().attr("stand_alone") = isStandAlone;
 }
 
 BOOST_PYTHON_MODULE(_nuflux)
 {
 #ifdef USE_NUMPY
-  import_array1();
+  PyArray_ImportNumPyAPI();
 #endif
   register_FluxFunction();
 }

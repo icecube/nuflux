@@ -25,7 +25,7 @@ namespace nuflux{
       ///These are the maximum energies for which the low energy polynomial is to be used
       //for 4 predefined abs(cos(zenith)) bands: (.5,1], (.3,.5], (.1,.3], [0,.1]
       double lowECutoffs[4];
-      ///These are (usually?) the contributions form pions and kaons
+      ///These are (usually?) the contributions from pions and kaons
       progenitorComponent directComponents[2];
       ///Like the 'direct' components, but multiplied by the 'modification'
       progenitorComponent modifiedComponents[3];
