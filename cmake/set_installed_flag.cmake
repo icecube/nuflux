@@ -12,5 +12,8 @@ function(set_installed_flag)
 		execute_process(COMMAND sh -c
 		\"LC_ALL=C sed '${arg_SUBST}' < '${arg_INSTALLED_FILE}' | head -c \${DATA_SIZE} /dev/stdin > '${CMAKE_CURRENT_BINARY_DIR}/install_tmp/${INSTALLED_FILE_NAME}'\")
 		file(RENAME \"${CMAKE_CURRENT_BINARY_DIR}/install_tmp/${INSTALLED_FILE_NAME}\" \"${arg_INSTALLED_FILE}\")
+		if(APPLE)
+			execute_process(COMMAND codesign -s - \"${arg_INSTALLED_FILE}\")
+		endif(APPLE)
 	")
 endfunction()
