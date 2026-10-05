@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import nuflux
 import numpy as np
 import pylab as plt
+
+import nuflux
 
 models = [
     ("bartol", "C0", "-"),
