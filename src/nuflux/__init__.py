@@ -12,11 +12,11 @@ __all__ = [
     "SplineFlux",
     "SplineFlux2",
     "availableFluxes",
+    "getVersion",
     "kneesForFlux",
     "makeFlux",
     "printModels",
     "stand_alone",
-    "getVersion",
 ]
 
 from _nuflux import (

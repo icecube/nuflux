@@ -4,10 +4,11 @@ import json
 import sys
 from pathlib import Path
 
-import nuflux
 import numpy as np
 import pytest
 from numpy.testing import assert_allclose
+
+import nuflux
 
 with (Path(__file__).parent / "test_data.json").open() as f:
     data = json.load(f)
